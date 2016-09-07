@@ -59,7 +59,7 @@
                 });
 
                 function gotoHref(href, ppm, pm, m) {
-                    alert(href);
+                    //alert(href);
                     $.post($("#setmidUrl").val(), {ppmId:ppm, pmId:pm, mid:m}, function(res) {
                         if(res=='1') {window.location.href = href;}
                     }, "json");
