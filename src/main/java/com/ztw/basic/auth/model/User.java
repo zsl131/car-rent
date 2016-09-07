@@ -24,6 +24,9 @@ public class User {
     /** 用户昵称 */
     private String nickname;
 
+    @Column(name="is_admin")
+    private Integer isAdmin;
+
     public Integer getId() {
         return id;
     }
@@ -78,5 +81,13 @@ public class User {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public Integer getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Integer isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }
