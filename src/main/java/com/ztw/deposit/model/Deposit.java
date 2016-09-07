@@ -86,4 +86,5 @@ public class Deposit {
     public void setMoney(Integer money) {
         this.money = money;
     }
+
 }
