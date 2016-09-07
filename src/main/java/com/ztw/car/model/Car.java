@@ -1,10 +1,10 @@
 package com.ztw.car.model;
 
 import javax.persistence.*;
-import javax.sound.sampled.FloatControl;
+
 
 /**
- * Created by admin on 2016/9/7.
+ * Created by zxt on 2016/9/7.
  */
 @Entity
 @Table(name = "a_car")
