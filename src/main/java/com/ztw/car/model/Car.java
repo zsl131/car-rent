@@ -1,4 +1,4 @@
-package com.ztw.basic.auth.model;
+package com.ztw.car.model;
 
 import javax.persistence.*;
 import javax.sound.sampled.FloatControl;
