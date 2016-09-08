@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Created by zxt on 2016/9/7.
  */
-public interface ICarService extends JpaRepository<Car,Long> {
+public interface ICarService extends JpaRepository<Car,Integer> {
 
 }
