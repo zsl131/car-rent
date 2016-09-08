@@ -39,10 +39,12 @@
 					       '<a type="button" href="javascript:runDel()" class="btn btn-danger"><i class="icon-trash bigger-110"></i>&nbsp;确定并提交</a>' +
 					       '</div>' +
 						   '</div></div></div>';
-			
-			$(modalDiv).modal({keyboard:false, backdrop:'static'});
-			
+
+			alert(modalDiv);
 			event.preventDefault();
+			$(modalDiv).modal({keyboard:false, backdrop:'static'});
+			alert("============");
+
 			
 		}
 		

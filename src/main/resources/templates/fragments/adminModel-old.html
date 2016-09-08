@@ -4,59 +4,59 @@
       xmlns:th="http://www.thymeleaf.org"
       th:fragment="mymodel">
 
-<head th:fragment="head">
-    <title>汽车租赁</title>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <head th:fragment="head">
+        <title>汽车租赁</title>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <script src="/webjars/jquery/2.2.1/jquery.min.js"
-            th:src="@{/js-lib/jquery-1.12.3.min.js}"></script>
-    <link href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css"
-          th:href="@{/bootstrap3/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen" />
-    <link href="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"
-          th:href="@{/bootstrap3/js/bootstrap.min.js}"
-          rel="stylesheet" media="screen" />
+        <script src="/webjars/jquery/2.2.1/jquery.min.js"
+              th:src="@{/js-lib/jquery-1.12.3.min.js}"></script>
+        <link href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+              th:href="@{/bootstrap3/css/bootstrap.min.css}"
+              rel="stylesheet" media="screen" />
+        <link href="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"
+              th:href="@{/bootstrap3/js/bootstrap.min.js}"
+              rel="stylesheet" media="screen" />
 
 
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
 
-    <!--[if IE 7]>
-    <link rel="stylesheet" href="/assets/css/font-awesome-ie7.min.css" />
-    <![endif]-->
+        <!--[if IE 7]>
+        <link rel="stylesheet" href="/assets/css/font-awesome-ie7.min.css" />
+        <![endif]-->
 
-    <link rel="stylesheet" href="/assets/css/jquery-ui-1.10.3.custom.min.css" />
-    <link rel="stylesheet" href="/assets/css/jquery.gritter.css" />
+          <link rel="stylesheet" href="/assets/css/jquery-ui-1.10.3.custom.min.css" />
+          <link rel="stylesheet" href="/assets/css/jquery.gritter.css" />
 
-    <!-- fonts,字体，需要下载到本地 -->
-    <link rel="stylesheet" href="/assets/css/family.css" />
+        <!-- fonts,字体，需要下载到本地 -->
+        <link rel="stylesheet" href="/assets/css/family.css" />
 
-    <!-- ace styles -->
+        <!-- ace styles -->
 
-    <link rel="stylesheet" href="/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="/assets/css/ace.min.css" />
 
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="/assets/css/ace-ie.min.css" />
-    <![endif]-->
+        <!--[if lte IE 8]>
+        <link rel="stylesheet" href="/assets/css/ace-ie.min.css" />
+        <![endif]-->
 
-    <!-- 折叠js -->
-    <script src="/assets/js/ace-extra.min.js"></script>
+        <!-- 折叠js -->
+        <script src="/assets/js/ace-extra.min.js"></script>
 
-    <!--[if lt IE 9]>
-    <script src="/assets/js/html5shiv.js"></script>
-    <script src="/assets/js/respond.min.js"></script>
-    <![endif]-->
+        <!--[if lt IE 9]>
+        <script src="/assets/js/html5shiv.js"></script>
+        <script src="/assets/js/respond.min.js"></script>
+        <![endif]-->
 
-    <script type="text/javascript" src="/admin/myself/delete.js"></script>
-    <script type="text/javascript" src="/admin/myself/auth.js"></script>
-    <script type="text/javascript" src="/admin/myself/cms.admin.js"></script>
-    <script type="text/javascript">
+        <script type="text/javascript" src="/admin/myself/delete.js"></script>
+        <script type="text/javascript" src="/admin/myself/auth.js"></script>
+        <script type="text/javascript" src="/admin/myself/cms.admin.js"></script>
+        <script type="text/javascript">
             $(function() {
                 $(".logout-href").deleteFun({title:'退出提示',msg:'确定退出系统吗？'});
             });
         </script>
-</head>
+    </head>
 <body>
 <div class="container-fluid" style="padding:0px; ">
     <div class="navbar navbar-default1" id="navbar">

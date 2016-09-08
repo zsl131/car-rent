@@ -17,8 +17,8 @@ public class PageableTools {
      * @param orderField 排序字段
      * @return
      */
-    public static Pageable basicPage(Integer page, Integer size, Enum orderType, String orderField) {
-        Sort sort = new Sort(String.valueOf(orderType), orderField);
+    public static Pageable basicPage(Integer page, Integer size, String orderType, String orderField) {
+        Sort sort = new Sort(Sort.Direction.fromString(orderType), orderField);
         page = (page==null || page<0)?0:page;
         size = (size==null || size<=0)?15:size;
         Pageable pageable = new PageRequest(page, size, sort);
@@ -32,7 +32,7 @@ public class PageableTools {
      * @return
      */
     public static Pageable basicPage(Integer page) {
-        return basicPage(page, null, Sort.Direction.DESC, "id");
+        return basicPage(page, null, "desc", "id");
     }
 
     /**
@@ -42,7 +42,7 @@ public class PageableTools {
      * @param orderField 排序字段
      * @return
      */
-    public static Pageable basicPage(Integer page, Enum orderType, String orderField) {
+    public static Pageable basicPage(Integer page, String orderType, String orderField) {
         return basicPage(page, null, orderType, orderField);
     }
 
@@ -54,7 +54,7 @@ public class PageableTools {
      * @return
      */
     public static Pageable basicPage(Integer page, Integer size, String orderField) {
-        return basicPage(page, size, Sort.Direction.DESC, orderField);
+        return basicPage(page, size, "desc", orderField);
     }
 
     /**
@@ -66,7 +66,7 @@ public class PageableTools {
      * @return
      */
     public static Pageable basicPage(Integer page, String orderField) {
-        return basicPage(page, null, Sort.Direction.DESC, orderField);
+        return basicPage(page, null, "desc", orderField);
     }
 
     /**
@@ -78,6 +78,6 @@ public class PageableTools {
      * @return
      */
     public static Pageable basicPage(Integer page, Integer size) {
-        return basicPage(page, size, Sort.Direction.DESC, "id");
+        return basicPage(page, size, "desc", "id");
     }
 }

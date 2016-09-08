@@ -25,6 +25,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value="admin/user")
+@AdminAuth(name = "用户管理", psn="权限管理", orderNum = 3, pentity=0, porderNum=2)
 public class UserController {
 
     @Autowired
