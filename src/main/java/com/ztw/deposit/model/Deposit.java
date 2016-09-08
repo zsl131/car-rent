@@ -7,7 +7,7 @@ import javax.persistence.*;
  * Created by 马旭 on 2016/9/7.
  */
 @Entity
-@Table(name = "a_deposit")
+@Table(name = "t_deposit")
 public class Deposit {
 
     @Id
