@@ -1,6 +1,7 @@
 package com.ztw.car.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 /**
@@ -22,9 +23,9 @@ public class Car {
     //排量
     @Column(name = "out_put")
     private Float output;
-    //驱动方式： 前驱，后驱，四驱
+    //驱动方式： 1:前驱，2:后驱，3:四驱
     private Integer drive;
-    //变数箱
+    //变数箱,1:手动，2:自动
     @Column(name = "variable_box")
     private Integer variableBox;
     //生产方式，进口，国产 (0：全部，1：国产，2：进口)
@@ -32,9 +33,32 @@ public class Car {
     private Integer productionMode;
     //颜色
     private String color;
+
     //年代款 2013款,2014款....
     @Column(name = "year_style")
     private Integer yearStyle;
+    //创建时间
+    @Column(name = "create_date")
+    private Date createDate;
+
+    //图片存储路径
+    private String img;
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public void setId(Integer id) {
         this.id = id;
