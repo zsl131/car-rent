@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/page">
+
+    <head>
+        <title>用户管理</title>
+    </head>
+    <body>
+        <div th:fragment="pager">
+            <div class="text-right">
+                <ul class="pagination">
+                    <li><a href="#" th:href="${pageUrl}">首页</a></li>
+                    <div th:each="pg : ${datas}" th:remove="tag">
+                        <li><a href="#" th:href="${pageUrl}">=</a></li>
+                    </div>
+                    <li><a href="#" th:href="${pageUrl}">尾页</a></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

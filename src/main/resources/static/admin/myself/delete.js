@@ -40,12 +40,8 @@
 					       '</div>' +
 						   '</div></div></div>';
 
-			alert(modalDiv);
-			event.preventDefault();
 			$(modalDiv).modal({keyboard:false, backdrop:'static'});
-			alert("============");
-
-			
+            event.preventDefault();
 		}
 		
 		function _init() {
