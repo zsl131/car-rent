@@ -63,8 +63,9 @@
                         </tr>
                     </tbody>
                     <tfoot>
-                    ===
-                        <div th:include="fragments/page :: pager (datas=${datas}, pageUrl='list')" th:remove="tag"></div>
+                        <tr>
+                            <td colspan="5"><div th:include="fragments/page :: pager" th:remove="tag"></div></td>
+                        </tr>
                     </tfoot>
                 </table>
             </div>

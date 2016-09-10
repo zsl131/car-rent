@@ -6,7 +6,9 @@ import com.ztw.basic.auth.iservice.IRoleService;
 import com.ztw.basic.auth.iservice.IUserService;
 import com.ztw.basic.auth.model.Role;
 import com.ztw.basic.auth.model.User;
+import com.ztw.basic.auth.service.UserRoleServiceImpl;
 import com.ztw.basic.auth.tools.TokenTools;
+import com.ztw.basic.exception.SystemException;
 import com.ztw.basic.tools.PageableTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +35,9 @@ public class UserController {
 
     @Autowired
     private IRoleService roleService;
+
+    @Autowired
+    private UserRoleServiceImpl userRoleServiceImpl;
 
     /** 列表 */
     @AdminAuth(name = "用户列表", orderNum = 1, icon="icon-list")
@@ -74,7 +79,8 @@ public class UserController {
 //		Boolean isRepeat = (Boolean) request.getAttribute("isRepeat");
 //		if(isRepeat==null || !isRepeat) { //不是重复提交
         if(TokenTools.isNoRepeat(request)) {
-            user.setStatus("on".equalsIgnoreCase(request.getParameter("statusBox"))?1:0);
+            User u = userService.findByUsername(user.getUsername());
+            if(u!=null) {throw new SystemException("用户名【"+user.getUsername()+"】已经存在，不可重复添加！");}
             userService.save(user);
         }
         return "redirect:/admin/user/list";
@@ -92,13 +98,10 @@ public class UserController {
     @Token(flag=Token.CHECK)
     @RequestMapping(value="update/{id}", method=RequestMethod.POST)
     public String update(Model model, @PathVariable Integer id, User user, HttpServletRequest request) {
-//		Boolean isRepeat = (Boolean) request.getAttribute("isRepeat");
-//		if(isRepeat==null || !isRepeat) {
         if(TokenTools.isNoRepeat(request)) {
             User u = userService.findById(id);
             u.setIsAdmin(user.getIsAdmin());
-//			u.setStatus(user.getStatus());
-            u.setStatus("on".equalsIgnoreCase(request.getParameter("statusBox"))?1:0);
+			u.setStatus(user.getStatus());
             u.setNickname(user.getNickname());
             userService.save(u);
         }
@@ -114,5 +117,16 @@ public class UserController {
         } catch (Exception e) {
             return "0";
         }
+    }
+
+    @RequestMapping(value = "addOrDelUserRole", method = RequestMethod.POST)
+    @AdminAuth(name="为用户分配角色", orderNum=5, type="2")
+    public @ResponseBody String addOrDelUserRole(Integer userId, Integer roleId) {
+        try {
+            userRoleServiceImpl.addOrDelete(userId, roleId);
+        } catch (Exception e) {
+            throw new SystemException("为用户分配角色失败");
+        }
+        return "1";
     }
 }

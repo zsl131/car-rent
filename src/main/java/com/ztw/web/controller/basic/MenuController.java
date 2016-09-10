@@ -39,9 +39,9 @@ public class MenuController {
         String treeJson = menuServiceImpl.queryTreeJson(null);
         Page<Menu> datas ;
         if(pid==null || pid<=0) {
-            datas = menuService.pageAll(PageableTools.basicPage(page));
+            datas = menuService.pageAll(PageableTools.basicPage(page, 15, "asc", "orderNum"));
         } else {
-            datas = menuService.pageAll(pid, PageableTools.basicPage(page));
+            datas = menuService.pageAll(pid, PageableTools.basicPage(page, 15, "asc", "orderNum"));
         }
         model.addAttribute("treeJson", treeJson);
         model.addAttribute("datas", datas);
@@ -56,7 +56,7 @@ public class MenuController {
     }
 
     @RequestMapping("updateSort")
-    @AdminAuth(name="菜单序号", orderNum=4, type="2")
+    @AdminAuth(name="菜单排序", orderNum=4, type="2")
     public @ResponseBody String updateSort(Integer[] ids) {
         try {
             menuServiceImpl.updateSort(ids);

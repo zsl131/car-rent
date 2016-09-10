@@ -6,7 +6,9 @@ import com.ztw.basic.auth.iservice.IMenuService;
 import com.ztw.basic.auth.iservice.IRoleService;
 import com.ztw.basic.auth.model.Role;
 import com.ztw.basic.auth.service.MenuServiceImpl;
+import com.ztw.basic.auth.service.RoleMenuServiceImpl;
 import com.ztw.basic.auth.tools.TokenTools;
+import com.ztw.basic.exception.SystemException;
 import com.ztw.basic.tools.PageableTools;
 import com.ztw.basic.tools.PinyinToolkit;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,8 @@ public class RoleController {
     @Autowired
     private MenuServiceImpl menuServiceImpl;
 
+    @Autowired
+    private RoleMenuServiceImpl roleMenuServiceImpl;
 
     /** 列表 */
     @AdminAuth(name = "角色列表", orderNum = 1, icon="icon-list")
@@ -116,5 +120,16 @@ public class RoleController {
         } catch (Exception e) {
             return "0";
         }
+    }
+
+    @RequestMapping(value = "addOrDelRoleMenu", method = RequestMethod.POST)
+    @AdminAuth(name="为角色授权资源", orderNum=5, type="2")
+    public @ResponseBody String addOrDelRoleMenu(Integer roleId, Integer menuId) {
+        try {
+            roleMenuServiceImpl.addOrDelete(roleId, menuId);
+        } catch (Exception e) {
+            throw new SystemException("为角色授权资源失败");
+        }
+        return "1";
     }
 }

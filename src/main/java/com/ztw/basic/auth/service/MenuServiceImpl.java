@@ -7,6 +7,7 @@ import com.ztw.basic.auth.model.Menu;
 import com.ztw.basic.tools.PinyinToolkit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +20,7 @@ import java.util.List;
  * Created by zsl-pc on 2016/9/2.
  */
 @Component
+@Transactional
 public class MenuServiceImpl {
 
     @PersistenceContext
@@ -117,9 +119,9 @@ public class MenuServiceImpl {
 
     public void updateSort(Integer [] ids) {
         int index = 1;
-        String hql = "UPDATE Menu m set m.orderNum=? WHERE m.id=?";
+//        String hql = "UPDATE Menu m set m.orderNum=? WHERE m.id=?";
         for(Integer id : ids) {
-            em.createQuery(hql).setParameter(1, index++).setParameter(2, id).executeUpdate();
+            em.createQuery("update Menu m set m.orderNum="+(index++)+" WHERE m.id="+id).executeUpdate();
         }
     }
 

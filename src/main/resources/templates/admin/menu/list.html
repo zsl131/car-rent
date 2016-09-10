@@ -61,7 +61,7 @@
 
         <input type="hidden" id="thisUrl" value="/admin/menu/list?pid="/>
         <input type="hidden" id="treeJson" th:value="${treeJson}"/>
-        <input type="hidden" id="curPid" th:value="${param.pid}"/>
+        <input type="hidden" id="curPid" th:value="${#httpServletRequest.getParameter('pid')}"/>
         <div class="header lighter smaller blue">
             <h3><span class="glyphicon glyphicon-th-list"></span>&nbsp;菜单列表<small>（<span th:text="${datas.totalElements}" th:remove="tag"></span>）</small></h3>
             <div th:replace="admin/menu/nav :: content" th:remove="tag"></div>
@@ -103,7 +103,9 @@
                         </tr>
                         </tbody>
                         <tfoot>
-                            <div th:include="fragments/page :: pager (page='123', size='15')"></div>
+                            <tr><td colspan="7">
+                                <div th:include="fragments/page :: pager" th:remove="tag"></div>
+                            </td></tr>
                         </tfoot>
                     </table>
                 </div>

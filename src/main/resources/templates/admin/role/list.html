@@ -35,24 +35,30 @@
 				</thead>
 
 				<tbody th:each="obj : ${datas}">
-						<tr>
-							<td th:text="${obj.id}">${obj.id}</td>
-							<td th:text="${obj.name}">${obj.name}</td>
-							<td th:text="${obj.sn}">${obj.sn}</td>
-							<td>
-								<div class="action-buttons">
-									<a class="blue auth" sn="RoleController.menus" title="分配权限" href="/admin/role/menus/${obj.id}"><i class="icon-key bigger-130"></i></a>
-									<a class="green auth" sn="RoleController.update" title="修改" href="/admin/role/update/${obj.id}">
-										<i class="icon-pencil bigger-130"></i>
-									</a>
+					<tr>
+						<td th:text="${obj.id}">${obj.id}</td>
+						<td th:text="${obj.name}">${obj.name}</td>
+						<td th:text="${obj.sn}">${obj.sn}</td>
+						<td>
+							<div class="action-buttons">
+								<a class="blue auth" sn="RoleController.menus" title="分配权限" th:href="'/admin/role/menus/'+${obj.id}"><i class="icon-key bigger-130"></i></a>
+								<a class="green auth" sn="RoleController.update" title="修改" th:href="'/admin/role/update/'+${obj.id}">
+									<i class="icon-pencil bigger-130"></i>
+								</a>
 
-									<a class="delete-obj-href red auth" sn="RoleController.delete" title="此操作不可逆，确定删除【${obj.name}】吗？" href="/admin/role/delete/${obj.id}">
-										<i class="icon-trash bigger-130"></i>
-									</a>
-								</div>
-							</td>
-						</tr>
+								<a class="delete-obj-href red auth" sn="RoleController.delete" th:title="'此操作不可逆，确定删除【'+${obj.name}+'】吗？'" th:href="'/admin/role/delete/'+${obj.id}">
+									<i class="icon-trash bigger-130"></i>
+								</a>
+							</div>
+						</td>
+					</tr>
 				</tbody>
+
+				<tfoot>
+					<tr><td colspan="5">
+						<div th:include="fragments/page :: pager" th:remove="tag"></div>
+					</td></tr>
+				</tfoot>
 			</table>
 		</div>
 	</div>

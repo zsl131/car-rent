@@ -10,11 +10,7 @@
     <body>
         <div th:fragment="pager">
             <div class="text-right" th:with="baseUrl=${#httpServletRequest.getRequestURL().toString()},pars=${#httpServletRequest.getQueryString()}">
-                <ul class="pagination" th:with="newPar=${new java.lang.String(pars eq null ? '' : pars).replace('page='+(datas.number), '')},
-                                                curTmpUrl=${baseUrl+'?'+newPar},
-                                                curUrl=${curTmpUrl.endsWith('&amp;') ? curTmpUrl.substring(0, curTmpUrl.length()-1):curTmpUrl}" >
-                    <!--<li th:text="${curUrl}"></li>-->
-
+                <ul class="pagination" th:with="newPar=${new java.lang.String(pars).replace('page='+(datas.number), '')},curUrl=${baseUrl+'?'+newPar}" >
                     <li><a href="#" th:href="@{${curUrl}(page=0)}">首页</a></li>
                     <li th:if="${datas.hasPrevious()}"><a href="#" th:href="@{${curUrl}(page=${datas.number-1})}">上一页</a></li>
 
