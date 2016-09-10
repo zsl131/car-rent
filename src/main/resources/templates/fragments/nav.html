@@ -9,32 +9,38 @@
     </head>
     <body>
         <div th:fragment="content">
-            <ul class="nav nav-list" th:each="ppm, menuVs:${session.LOGIN_USER.authMenu}">
+            <ul class="nav nav-list">
+                <div th:each="ppm, menuVs:${session.LOGIN_USER.authMenu}" th:remove="tag">
                     <li th:id="'menu_'+${ppm.pm.id}" th:class="'menu-level-'+${menuVs.count}">
                         <a href="#" class="dropdown-toggle">
                             <i th:class="${ppm.pm.icon}"></i>
-                            <span class="menu-text" th:text="${ppm.pm.name}" th:remove="tag">菜单名称</span>
+                            <span class="menu-text" th:text="${ppm.pm.name}">菜单名称</span>
                             <b class="arrow icon-angle-down"></b>
                         </a>
 
-                        <ul class="submenu" th:each="pm : ${ppm.children}">
-                            <li th:id="'menu_'+${pm.pm.id}" th:class="'menu-level-'+${menuVs.count}">
-                                <a href="javascript:" class="dropdown-toggle">
-                                    <i class="icon-double-angle-right"></i>
-                                    <span th:text="${pm.pm.name}" th:remove="tag">菜单名称</span>
-                                    <b class="arrow icon-angle-down"></b>
-                                </a>
+                        <ul class="submenu">
+                            <div th:each="pm : ${ppm.children}" th:remove="tag">
+                                <li th:id="'menu_'+${pm.pm.id}" th:class="'menu-level-'+${menuVs.count}">
+                                    <a href="javascript:" class="dropdown-toggle">
+                                        <i class="icon-double-angle-right"></i>
+                                        <span th:text="${pm.pm.name}" th:remove="tag">菜单名称</span>
+                                        <b class="arrow icon-angle-down"></b>
+                                    </a>
 
-                                <ul class="submenu" th:each="m : ${pm.children}">
-                                    <li th:id="'menu_'+${m.id}" th:class="'menu-level-'+${menuVs.count}">
-                                        <a th:href="'javascript:gotoHref(\''+${m.href}+'\', \''+${ppm.pm.id}+'\', \''+${pm.pm.id}+'\', \''+${m.id}+'\')'" >
-                                            <i th:class="${m.icon}"></i><span th:text="${m.name}" th:remove="tag"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                    <ul class="submenu">
+                                        <div th:each="m : ${pm.children}" th:remove="tag">
+                                        <li th:id="'menu_'+${m.id}" th:class="'menu-level-'+${menuVs.count}">
+                                            <a th:href="'javascript:gotoHref(\''+${m.href}+'\', \''+${ppm.pm.id}+'\', \''+${pm.pm.id}+'\', \''+${m.id}+'\')'" >
+                                                <i th:class="${m.icon}"></i><span th:text="${m.name}" th:remove="tag"></span>
+                                            </a>
+                                        </li>
+                                        </div>
+                                    </ul>
+                                </li>
+                            </div>
                         </ul>
                     </li>
+                </div>
             </ul>
             <input type="hidden" id="setmidUrl" value="/setCurrentMenuId"/>
             <input type="hidden" id="curPpmId" th:value="${session.ppmId}"/>
