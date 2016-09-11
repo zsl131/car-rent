@@ -39,7 +39,7 @@ public class TestController {
             try {
                 for(int i=0; i< files.length; i++) {
                     fileName = files[i].getOriginalFilename();
-                    File outFile = new File("D:/temp/upload/"+fileName);
+                    File outFile = new File(configTools.getUploadPath()+fileName);
                     FileUtils.copyInputStreamToFile(files[i].getInputStream(), outFile);
                 }
             } catch (IOException e) {
