@@ -1,7 +1,7 @@
 FROM java:8
 EXPOSE 7771
 
-VOLUME /web/car-rent/upload/:/web/car-rent/upload/
+VOLUME /web/car-rent/upload/
 
 ADD run.sh /run.sh
 
