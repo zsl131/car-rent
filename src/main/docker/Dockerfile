@@ -1,5 +1,5 @@
 FROM java:8
-EXPOSE 7788
+EXPOSE 7771
 
 VOLUME /web/car-rent/upload/:/web/car-rent/upload/
 
