@@ -1,6 +1,8 @@
 FROM java:8
 EXPOSE 7771
 
+RUN mkdir -p /usr/upload/
+
 VOLUME /usr/upload/
 
 ADD run.sh /run.sh
