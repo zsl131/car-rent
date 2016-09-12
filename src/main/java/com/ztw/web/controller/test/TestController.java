@@ -40,7 +40,9 @@ public class TestController {
             BufferedOutputStream bw = null;
             try {
                 for(int i=0; i< files.length; i++) {
+                    if(files[i]==null) {continue;}
                     fileName = files[i].getOriginalFilename();
+                    if(fileName==null || "".equalsIgnoreCase(fileName.trim())) {continue;}
                     File outFile = new File(configTools.getUploadPath()+fileName);
                     FileUtils.copyInputStreamToFile(files[i].getInputStream(), outFile);
                 }
