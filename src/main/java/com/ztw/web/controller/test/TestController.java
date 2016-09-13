@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Encoder;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by zsl-pc on 2016/9/8.
@@ -30,7 +29,7 @@ public class TestController {
         System.out.println("=============="+configTools.getUploadPath());
         File file = new File(configTools.getUploadPath());
         for(File f : file.listFiles()) {
-            System.out.println("========"+f.getName());
+            System.out.println(f.exists() + "========" + f.getAbsolutePath());
         }
         return "test/index";
     }
