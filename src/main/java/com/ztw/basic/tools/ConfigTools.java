@@ -32,7 +32,7 @@ public class ConfigTools extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //设置静态资源路径
         registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/", "classpath:/static/", "classpath:/public/", "file:/"+uploadPath);
+                .addResourceLocations("classpath:/", "classpath:/static/", "classpath:/public/", "file:"+File.separator+uploadPath);
 //        super.addResourceHandlers(registry);
     }
 }
