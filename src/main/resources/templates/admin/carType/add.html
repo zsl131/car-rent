@@ -13,7 +13,7 @@
 <div th:fragment="content" th:remove="tag">
     <div class="header lighter smaller blue">
         <h3><i class="icon-plus"></i>&nbsp;添加车库种类 </h3>
-        <div th:replace="admin/user/nav :: content" th:remove="tag"></div>
+        <div th:replace="admin/carType/nav :: content" th:remove="tag"></div>
     </div>
 
     <form method="POST" th:object="${carType}" id="dataForm">
