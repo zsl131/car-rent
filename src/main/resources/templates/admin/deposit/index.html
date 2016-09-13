@@ -11,27 +11,20 @@
 <body>
     <div th:fragment="content" th:remove="tag">
         <div class="header lighter small blue">
-            <h3><span class="glyphicon glyphicon-th-list"></span><i class="icon-setting"></i>&nbsp;保证金管理<small>&nbsp;</small></h3>
+            <h3>
+                <span class="glyphicon glyphicon-th-list"></span><i class="icon-setting"></i>&nbsp;保证金管理<small>&nbsp;</small>
+            </h3>
 
-
-
-            <form class="form-search nav-search">
+            <form class="form-search">
                 <span class="input-icon">
-                    <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                    <input type="text" placeholder="请输入身份证号查询"  name="tenant_sfz" size="30" class="search-input" id="search-input" autocomplete="off" />
                     <i class="ace-icon fa fa-search nav-search-icon"></i>
+                    <button type="submit" class="btn btn-primary">查询</button>
                 </span>
             </form>
-
         </div>
 
-        <form role="form" class="form-inline">
-            <div class="input-group">
-                <input type="text" class="form-control" name="tenant_sfz" id="search" size="20" placeholder="请输入身份证号查询"/>
-            </div>
-            <button type="submit" class="btn btn-sm btn-primary">查询</button>
-        </form>
-
-        <div class="table-responsive m-t-1">
+        <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
