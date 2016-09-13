@@ -28,7 +28,10 @@ public class TestController {
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index() throws Exception {
         System.out.println("=============="+configTools.getUploadPath());
-
+        File file = new File(configTools.getUploadPath());
+        for(File f : file.listFiles()) {
+            System.out.println("========"+f.getName());
+        }
         return "test/index";
     }
 
