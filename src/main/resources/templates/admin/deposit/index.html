@@ -6,13 +6,22 @@
 <head>
     <meta charset="utf-8"/>
     <title>保证金管理</title>
-    <link rel="stylesheet" href="../../../static/bootstrap3/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/admin/css/style.css"/>
 </head>
 <body>
     <div th:fragment="content" th:remove="tag">
         <div class="header lighter small blue">
             <h3><span class="glyphicon glyphicon-th-list"></span><i class="icon-setting"></i>&nbsp;保证金管理<small>&nbsp;</small></h3>
+
+
+
+            <form class="form-search">
+                <span class="input-icon">
+                    <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                    <i class="ace-icon fa fa-search nav-search-icon"></i>
+                </span>
+            </form>
+
         </div>
 
         <form role="form" class="form-inline">
