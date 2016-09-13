@@ -49,13 +49,13 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a class="blue auth" sn="UserController.roles" title="分配权限" th:href="'/admin/user/roles/'+${obj.id}"><i class="icon-key bigger-130"></i></a>
+                                    <a class="blue auth" sn="UserController.roles" title="分配权限" th:href="'/admin/user/roles/'+${obj.id}"><i class="fa fa-key bigger-130"></i></a>
                                     <a class="green auth" title="修改" sn="UserController.update" th:href="'/admin/user/update/'+${obj.id}">
-                                        <i class="icon-pencil bigger-130"></i>
+                                        <i class="fa fa-pencil bigger-130"></i>
                                     </a>
                                     <span th:if="${obj.username ne 'admin' and obj.username ne 'sadmin'}">
                                         <a class="delete-obj-href red auth"  sn="UserController.delete" th:title="'此操作不可逆，确定删除【'+${obj.nickname}+'】吗？'" th:href="'/admin/user/delete/'+${obj.id}">
-                                            <i class="icon-trash bigger-130"></i>
+                                            <i class="fa fa-trash bigger-130"></i>
                                         </a>
                                     </span>
                                 </div>

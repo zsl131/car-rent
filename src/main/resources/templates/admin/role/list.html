@@ -41,13 +41,13 @@
 						<td th:text="${obj.sn}">${obj.sn}</td>
 						<td>
 							<div class="action-buttons">
-								<a class="blue auth" sn="RoleController.menus" title="分配权限" th:href="'/admin/role/menus/'+${obj.id}"><i class="icon-key bigger-130"></i></a>
+								<a class="blue auth" sn="RoleController.menus" title="分配权限" th:href="'/admin/role/menus/'+${obj.id}"><i class="fa fa-key bigger-130"></i></a>
 								<a class="green auth" sn="RoleController.update" title="修改" th:href="'/admin/role/update/'+${obj.id}">
-									<i class="icon-pencil bigger-130"></i>
+									<i class="fa fa-pencil bigger-130"></i>
 								</a>
 
 								<a class="delete-obj-href red auth" sn="RoleController.delete" th:title="'此操作不可逆，确定删除【'+${obj.name}+'】吗？'" th:href="'/admin/role/delete/'+${obj.id}">
-									<i class="icon-trash bigger-130"></i>
+									<i class="fa fa-trash bigger-130"></i>
 								</a>
 							</div>
 						</td>
