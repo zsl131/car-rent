@@ -27,7 +27,7 @@ public class CarTypeController {
 
     @Token(flag = Token.READY)
     @RequestMapping(value = "add",method = RequestMethod.GET)
-    @AdminAuth(name = "汽车种类添加",orderNum = 2,icon = "")
+    @AdminAuth(name = "汽车种类添加",orderNum = 2,icon = "fa fa-plus")
     public String add(Model model){
         model.addAttribute("carType",new CarType());
         return "/admin/carType/add";
@@ -45,7 +45,7 @@ public class CarTypeController {
         return "redirect:/admin/carType/list";
     }
 
-    @AdminAuth(name = "汽车种类列表",orderNum = 1, icon = "icon-list")
+    @AdminAuth(name = "汽车种类列表",orderNum = 1, icon = "fa fa-list")
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String list(Model model,Integer page){
         Page<CarType> datas = carTypeService.findAll(PageableTools.basicPage(page));
