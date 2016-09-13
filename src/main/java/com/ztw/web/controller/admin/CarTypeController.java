@@ -1,11 +1,9 @@
 package com.ztw.web.controller.admin;
 
-import com.sun.java_cup.internal.runtime.virtual_parse_stack;
 import com.ztw.basic.auth.annotations.AdminAuth;
 import com.ztw.basic.auth.annotations.Token;
 import com.ztw.basic.auth.tools.TokenTools;
 import com.ztw.basic.tools.PageableTools;
-import com.ztw.car.iservice.ICarService;
 import com.ztw.car.iservice.ICarTypeService;
 import com.ztw.car.model.CarType;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
@@ -13,11 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 /**
@@ -25,7 +19,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping(value = "/admin/carType")
-@AdminAuth(name = "汽车种类管理",psn = "权限管理",orderNum = 1,porderNum = 2,pentity = 0)
+@AdminAuth(name = "汽车种类管理",psn = "系统管理",orderNum = 1,porderNum = 2,pentity = 0)
 public class CarTypeController {
 
     @Autowired
@@ -66,6 +60,35 @@ public class CarTypeController {
         CarType carType = carTypeService.findOne(id);
         model.addAttribute("carType",carType);
         return "/admin/carType/update";
+    }
+
+
+    @Token(flag = Token.CHECK)
+    @RequestMapping(value = "update/{id}",method = RequestMethod.POST)
+    public String update(Model model, CarType carType, @PathVariable int id, HttpServletRequest request){
+        if(TokenTools.isNoRepeat(request)){
+            CarType c = carTypeService.findOne(id);
+            c.setTypeName(carType.getTypeName());
+            carTypeService.save(c);
+        }
+        return "redirect:/admin/carType/list";
+    }
+
+
+    @RequestMapping(value = "delete/{id}",method = RequestMethod.POST)
+    @AdminAuth(name = "汽车种类删除",type = "2",orderNum = 4)
+    @Token(flag = Token.CHECK)
+    public @ResponseBody String delete(@PathVariable int id,HttpServletRequest request){
+        String result = "";
+        if(TokenTools.isNoRepeat(request)){
+            try {
+                carTypeService.delete(id);
+                result = "1";
+            } catch (Exception e){
+                result = "0";
+            }
+        }
+        return result;
     }
 
 
