@@ -23,7 +23,7 @@ public class CarController {
     @Autowired
     private ICarService carService;
 
-    @RequestMapping(name = "add",method = RequestMethod.GET)
+    @RequestMapping(value = "add",method = RequestMethod.GET)
     @AdminAuth(name = "汽车添加",orderNum = 1)
     @Token(flag = Token.READY)
     public String add(Model model){
@@ -31,12 +31,12 @@ public class CarController {
         return "/admin/car/add";
     }
 
-    @RequestMapping(name = "add",method = RequestMethod.POST)
+   /* @RequestMapping(value = "add",method = RequestMethod.POST)
     @Token(flag = Token.CHECK)
     public String add(Model model,Car car, HttpServletRequest request){
         if(TokenTools.isNoRepeat(request)){
-            Car c= new Car();
+            //Car c= new Car();
         }
         return "";
-    }
+    }*/
 }
