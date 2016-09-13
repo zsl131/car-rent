@@ -33,7 +33,7 @@ public class MenuController {
     private MenuServiceImpl menuServiceImpl;
 
     /** 列表 */
-    @AdminAuth(name = "菜单列表", orderNum = 1, icon="icon-list")
+    @AdminAuth(name = "菜单列表", orderNum = 1, icon="fa fa-list")
     @RequestMapping(value="list", method= RequestMethod.GET)
     public String list(Model model, Integer pid, Integer page, HttpServletRequest request) {
         String treeJson = menuServiceImpl.queryTreeJson(null);
