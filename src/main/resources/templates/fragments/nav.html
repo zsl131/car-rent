@@ -14,7 +14,7 @@
                     <li th:id="'menu_'+${ppm.pm.id}" th:class="'menu-level-'+${menuVs.count}">
                         <a href="#" class="dropdown-toggle">
                             <i th:class="${ppm.pm.icon}"></i>
-                            <span class="menu-text" th:text="${ppm.pm.name}">菜单名称</span>
+                            <span class="menu-text" th:text="${ppm.pm.name}+' '">菜单名称</span>
                             <b class="arrow icon-angle-down"></b>
                         </a>
 
@@ -23,7 +23,7 @@
                                 <li th:id="'menu_'+${pm.pm.id}" th:class="'menu-level-'+${menuVs.count}">
                                     <a href="javascript:" class="dropdown-toggle">
                                         <i class="icon-double-angle-right"></i>
-                                        <span th:text="${pm.pm.name}" th:remove="tag">菜单名称</span>
+                                        <span th:text="${pm.pm.name}+' '" th:remove="tag">菜单名称</span>
                                         <b class="arrow icon-angle-down"></b>
                                     </a>
 
@@ -31,7 +31,7 @@
                                         <div th:each="m : ${pm.children}" th:remove="tag">
                                         <li th:id="'menu_'+${m.id}" th:class="'menu-level-'+${menuVs.count}">
                                             <a th:href="'javascript:gotoHref(\''+${m.href}+'\', \''+${ppm.pm.id}+'\', \''+${pm.pm.id}+'\', \''+${m.id}+'\')'" >
-                                                <i th:class="${m.icon}"></i><span th:text="${m.name}" th:remove="tag"></span>
+                                                <i th:class="${m.icon}"></i><span th:text="${m.name}+' '" th:remove="tag"></span>
                                             </a>
                                         </li>
                                         </div>

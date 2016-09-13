@@ -40,7 +40,7 @@ public class UserController {
     private UserRoleServiceImpl userRoleServiceImpl;
 
     /** 列表 */
-    @AdminAuth(name = "用户列表", orderNum = 1, icon="fa fa-list")
+    @AdminAuth(name = "用户列表", orderNum = 1, icon="icon-list")
     @RequestMapping(value="list", method=RequestMethod.GET)
     public String list(Model model, Integer page, HttpServletRequest request) {
         Page<User> datas = userService.pageAll(PageableTools.basicPage(page));
@@ -63,7 +63,7 @@ public class UserController {
     }
 
     @Token(flag=Token.READY)
-    @AdminAuth(name = "添加用户", orderNum = 2, icon="fa fa-plus")
+    @AdminAuth(name = "添加用户", orderNum = 2, icon="icon-plus")
     @RequestMapping(value="add", method=RequestMethod.GET)
     public String add(Model model, HttpServletRequest request) {
         User user = new User();

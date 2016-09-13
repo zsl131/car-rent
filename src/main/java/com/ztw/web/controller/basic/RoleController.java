@@ -43,7 +43,7 @@ public class RoleController {
     private RoleMenuServiceImpl roleMenuServiceImpl;
 
     /** 列表 */
-    @AdminAuth(name = "角色列表", orderNum = 1, icon="fa fa-list")
+    @AdminAuth(name = "角色列表", orderNum = 1, icon="icon-list")
     @RequestMapping(value="list", method= RequestMethod.GET)
     public String list(Model model, Integer page, HttpServletRequest request) {
         Page<Role> datas = roleService.pageAll(PageableTools.basicPage(page));
@@ -70,7 +70,7 @@ public class RoleController {
 
     /** 添加角色 */
     @Token(flag=Token.READY)
-    @AdminAuth(name = "添加角色", orderNum = 2, icon="fa fa-plus")
+    @AdminAuth(name = "添加角色", orderNum = 2, icon="icon-plus")
     @RequestMapping(value="add", method=RequestMethod.GET)
     public String add(Model model, HttpServletRequest request) {
         Role role = new Role();

@@ -39,7 +39,7 @@ function operate(name, flag) {
         var roleId = $("#objId").val();
 
         $.post("/admin/role/addOrDelRoleMenu", {roleId : roleId, menuId : objId}, function(res) {
-            if(res=='1') {alert("授权资源菜单成功！");}
+            if(res!='1') {alert("授权资源菜单失败！");}
         }, "json");
     }
 }
