@@ -2,36 +2,89 @@
 <html lang="zh-CN"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="fragments/adminModel">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
+    <script type="text/javascript" src="/bootstrap3/js/bootstrap.file-input.js"></script>
     <title>添加车辆</title>
 </head>
 <body>
 <div th:fragment="content" th:remove="tag">
     <div class="header lighter smaller blue">
-        <h3><i class="icon-plus"></i>&nbsp;添加车 </h3>
-        <div th:replace="admin/carType/nav :: content" th:remove="tag"></div>
+        <h3><i class="icon-plus"></i>&nbsp;添加车辆</h3>
+        <div th:replace="admin/car/nav :: content" th:remove="tag"></div>
     </div>
 
-    <form method="POST" th:object="${carType}" id="dataForm">
+    <form method="POST" th:object="${car}" id="dataForm">
         <div class="form-group form-group-lg">
             <label for="typeName">车辆种类</label>
-            <input type="text" name="typeName" th:value="${car.carType}" class="form-control" id="typeName" placeholder="请输入车辆种类"/>
+            <select name="carType " class="form-control">
+                <th:block th:each="obj:${carTypeList}">
+                    <option th:value="${obj.id}" th:text="${obj.typeName}"></option>
+                </th:block>
+            </select>
         </div>
         <div class="form-group form-group-lg">
             <label for="typeName">车辆名称</label>
             <input type="text" name="typeName" th:value="${car.carName}" class="form-control" id="typeName" placeholder="请输入车辆名称"/>
         </div>
         <div class="form-group form-group-lg">
-            <label for="typeName">车辆种类</label>
-            <input type="text" name="typeName" th:value="${carType.typeName}" class="form-control" id="typeName" placeholder="请输入车辆种类"/>
+            <label for="typeName">排量</label>
+            <select name="" class="form-control">
+                <option value="1.2">1.1</option>
+                <option value="1.4">1.4</option>
+                <option value="1.6">1.6</option>
+                <option value="1.8">1.8</option>
+                <option value="2.0">2.1</option>
+            </select>
         </div>
         <div class="form-group form-group-lg">
-            <label for="typeName">车辆种类</label>
-            <input type="text" name="typeName" th:value="${carType.typeName}" class="form-control" id="typeName" placeholder="请输入车辆种类"/>
+            <label for="typeName">驱动方式</label>
+            <select name="" class="form-control">
+                <option value="1">前驱</option>
+                <option value="2">后驱</option>
+                <option value="3">四驱</option>
+            </select>
+        </div>
+        <div class="form-group form-group-lg">
+            <label for="typeName">变数箱</label>
+            <select name="" class="form-control">
+                <option value="1">自动</option>
+                <option value="2">手动</option>
+            </select>
+        </div>
+        <div class="form-group form-group-lg">
+            <label for="productionMode">生产方式</label>
+            <select name="productionMode" class="form-control">
+                <option value="0">全部</option>
+                <option value="1">进口</option>
+                <option value="2">国产</option>
+            </select>
+        </div>
+        <div class="form-group form-group-lg">
+            <label for="color">车身颜色</label>
+            <select name="color" class="form-control">
+                <option value="0">白色</option>
+                <option value="1">黑色</option>
+                <option value="2">灰色</option>
+                <option value="2">蓝色</option>
+            </select>
+        </div>
+        <div class="form-group form-group-lg">
+            <label for="color">车身图片上传</label>
+            <form method="POST" enctype="multipart/form-data" action="/admin/car/uploadFile">
+                <p>车身图片1：<input type="file" name="file" class="btn-primary" title="浏览"/></p>
+                <p>车身图片2：<input type="file" name="file" class="btn-primary" title="浏览"/></p>
+                <p>车身图片3：<input type="file" name="file" class="btn-primary" title="浏览"/></p>
+                <p>车身图片4：<input type="file" name="file" class="btn-primary" title="浏览"/></p>
+                <p><input type="submit" value="上传" class="btn btn-info"/></p>
+            </form>
+        </div>
+        <div class="form-group form-group-lg">
+            <label for="desr">描述</label>
+            <input type="text" name="desr" th:value="${car.desr}" class="form-control" id="desr" placeholder="请输入车辆名称"/>
         </div>
         <input type="hidden" name="token" th:value="${session.token}"/>
         <button type="submit" class="btn btn-primary">确定提交</button>
@@ -56,6 +109,7 @@
                     },
                 }
             });
+            $('input[type=file]').bootstrapFileInput();
         });
     </script>
 </div>

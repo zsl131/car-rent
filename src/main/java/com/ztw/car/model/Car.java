@@ -2,6 +2,7 @@ package com.ztw.car.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -28,21 +29,30 @@ public class Car {
     //变数箱,1:手动，2:自动
     @Column(name = "variable_box")
     private Integer variableBox;
-    //生产方式，进口，国产 (0：全部，1：国产，2：进口)
+    //生产方式，进口，国产 (0：全部，1：进口，2：国产)
     @Column(name = "production_mode")
     private Integer productionMode;
     //颜色
     private String color;
 
-    //年代款 2013款,2014款....
-    @Column(name = "year_style")
-    private Integer yearStyle;
+    //描述
+    private String desr;
+
     //创建时间
     @Column(name = "create_date")
     private Date createDate;
 
     //图片存储路径
-    private String img;
+    @ElementCollection
+    private List<String> imgs;
+
+    public String getDesr() {
+        return desr;
+    }
+
+    public void setDesr(String desr) {
+        this.desr = desr;
+    }
 
     public Date getCreateDate() {
         return createDate;
@@ -52,12 +62,12 @@ public class Car {
         this.createDate = createDate;
     }
 
-    public String getImg() {
-        return img;
+    public List<String> getImgs() {
+        return imgs;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImgs(List<String> imgs) {
+        this.imgs = imgs;
     }
 
     public void setId(Integer id) {
@@ -124,11 +134,4 @@ public class Car {
         this.variableBox = variableBox;
     }
 
-    public Integer getYearStyle() {
-        return yearStyle;
-    }
-
-    public void setYearStyle(Integer yearStyle) {
-        this.yearStyle = yearStyle;
-    }
 }
