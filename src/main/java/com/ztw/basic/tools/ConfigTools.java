@@ -19,9 +19,13 @@ public class ConfigTools { // extends WebMvcConfigurerAdapter
     private String uploadPath;
 
     public String getUploadPath() {
-        File f = new File(uploadPath);
+        return getUploadPath("");
+    }
+
+    public String getUploadPath(String basePath) {
+        File f = new File(uploadPath+basePath);
         if(!f.exists()) {f.mkdirs();}
-        return uploadPath;
+        return f.getAbsolutePath();
     }
 
     public void setUploadPath(String uploadPath) {

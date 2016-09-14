@@ -15,4 +15,7 @@ public interface ICarBrandService extends JpaRepository<CarBrand, Integer> {
     public Page<CarBrand> pageAll(Pageable pageable);
 
     public CarBrand findById(Integer id);
+
+    @Query("SELECT MAX(orderNo) FROM CarBrand ")
+    public Integer findMaxOrderNo();
 }

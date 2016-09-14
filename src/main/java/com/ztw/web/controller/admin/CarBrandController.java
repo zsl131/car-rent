@@ -63,16 +63,16 @@ public class CarBrandController {
     /** 添加POST */
     @Token(flag=Token.CHECK)
     @RequestMapping(value="add", method=RequestMethod.POST)
-    public String add(Model model, CarBrand carBrand, HttpServletRequest request, @RequestParam("file")MultipartFile file) {
+    public String add(Model model, CarBrand carBrand, HttpServletRequest request, @RequestParam("file")MultipartFile [] files) {
         if(TokenTools.isNoRepeat(request)) {
-            if(file!=null ) {
+            if(files!=null && files.length>=1) {
                 BufferedOutputStream bw = null;
                 try {
-                    String fileName = file.getOriginalFilename();
-                    if(fileName!=null && "".equalsIgnoreCase(fileName.trim())) {
-                        File outFile = new File(configTools.getUploadPath() +PATH_PRE + UUID.randomUUID().toString()+ NormalTools.getFileType(fileName));
-                        carBrand.setLogo(outFile.getAbsolutePath());
-                        FileUtils.copyInputStreamToFile(file.getInputStream(), outFile);
+                    String fileName = files[0].getOriginalFilename();
+                    if(fileName!=null && !"".equalsIgnoreCase(fileName.trim())) {
+                        File outFile = new File(configTools.getUploadPath(PATH_PRE) + "/" + UUID.randomUUID().toString()+ NormalTools.getFileType(fileName));
+                        carBrand.setLogo(outFile.getAbsolutePath().replace(configTools.getUploadPath(), ""));
+                        FileUtils.copyInputStreamToFile(files[0].getInputStream(), outFile);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -84,6 +84,8 @@ public class CarBrandController {
                     }
                 }
             }
+            Integer orderNo = carBrandService.findMaxOrderNo();
+            carBrand.setOrderNo((orderNo==null || orderNo<0)?1:orderNo+1);
             carBrandService.save(carBrand);
         }
         return "redirect:/admin/carBrand/list";
@@ -100,21 +102,21 @@ public class CarBrandController {
 
     @Token(flag=Token.CHECK)
     @RequestMapping(value="update/{id}", method=RequestMethod.POST)
-    public String update(Model model, @PathVariable Integer id, CarBrand carBrand, HttpServletRequest request, @RequestParam("file")MultipartFile file) {
+    public String update(Model model, @PathVariable Integer id, CarBrand carBrand, HttpServletRequest request, @RequestParam("file")MultipartFile [] files) {
         if(TokenTools.isNoRepeat(request)) {
             CarBrand cb = carBrandService.findById(id);
             MyBeanUtils.copyProperties(carBrand, cb, new String[]{"id"});
 
-            if(file!=null ) {
+            if(files!=null && files.length>=1) {
                 BufferedOutputStream bw = null;
                 try {
-                    String fileName = file.getOriginalFilename();
-                    if(fileName!=null && "".equalsIgnoreCase(fileName.trim())) {
-                        File oldFile = new File(configTools.getUploadPath() + PATH_PRE + cb.getLogo());
+                    String fileName = files[0].getOriginalFilename();
+                    if(fileName!=null && !"".equalsIgnoreCase(fileName.trim())) {
+                        File oldFile = new File(configTools.getUploadPath() + cb.getLogo());
                         if(oldFile.exists()) {oldFile.delete();}
-                        File outFile = new File(configTools.getUploadPath() + PATH_PRE + UUID.randomUUID().toString()+ NormalTools.getFileType(fileName));
-                        cb.setLogo(outFile.getAbsolutePath());
-                        FileUtils.copyInputStreamToFile(file.getInputStream(), outFile);
+                        File outFile = new File(configTools.getUploadPath(PATH_PRE) +"/" + UUID.randomUUID().toString()+ NormalTools.getFileType(fileName));
+                        cb.setLogo(outFile.getAbsolutePath().replace(configTools.getUploadPath(), ""));
+                        FileUtils.copyInputStreamToFile(files[0].getInputStream(), outFile);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
