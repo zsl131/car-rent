@@ -17,12 +17,12 @@ public class Deposit {
     /**
      * 租户的姓名
      */
-    private String tenant_name;
+    private String tenantName;
 
     /**
      * 租户身份证号
      */
-    private String tenant_sfz;
+    private String tenantSfz;
 
     /**
      * 租户联系电话
@@ -32,7 +32,7 @@ public class Deposit {
     /**
      * 租赁ID:租车订单ID（订单实体类里应有被租车辆的相关信息）
      */
-    private Integer rent_id;
+    private Integer rentId;
 
     /**
      * 保证金数额，单位：元
@@ -47,20 +47,20 @@ public class Deposit {
         this.id = id;
     }
 
-    public String getTenant_name() {
-        return tenant_name;
+    public String getTenantName() {
+        return tenantName;
     }
 
-    public void setTenant_name(String tenant_name) {
-        this.tenant_name = tenant_name;
+    public void setTenantName(String tenantName) {
+        this.tenantName = tenantName;
     }
 
-    public String getTenant_sfz() {
-        return tenant_sfz;
+    public String getTenantSfz() {
+        return tenantSfz;
     }
 
-    public void setTenant_sfz(String tenant_sfz) {
-        this.tenant_sfz = tenant_sfz;
+    public void setTenantSfz(String tenantSfz) {
+        this.tenantSfz = tenantSfz;
     }
 
     public String getPhone() {
@@ -71,12 +71,12 @@ public class Deposit {
         this.phone = phone;
     }
 
-    public Integer getRent_id() {
-        return rent_id;
+    public Integer getRentId() {
+        return rentId;
     }
 
-    public void setRent_id(Integer rent_id) {
-        this.rent_id = rent_id;
+    public void setRentId(Integer rentId) {
+        this.rentId = rentId;
     }
 
     public Integer getMoney() {
