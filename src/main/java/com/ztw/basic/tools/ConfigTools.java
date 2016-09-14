@@ -13,7 +13,7 @@ import java.io.File;
  */
 @Configuration
 @Component
-public class ConfigTools extends WebMvcConfigurerAdapter {
+public class ConfigTools { // extends WebMvcConfigurerAdapter
 
     @Value("${web.upload-path}")
     private String uploadPath;
@@ -28,11 +28,11 @@ public class ConfigTools extends WebMvcConfigurerAdapter {
         this.uploadPath = uploadPath;
     }
 
-    @Override
+    /*@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //设置静态资源路径
-        registry.addResourceHandler("/**")
+        registry.addResourceHandler("*//**")
                 .addResourceLocations("classpath:/", "classpath:/static/", "classpath:/public/", "file:"+File.separator+uploadPath);
 //        super.addResourceHandlers(registry);
-    }
+    }*/
 }
