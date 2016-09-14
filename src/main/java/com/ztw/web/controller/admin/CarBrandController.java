@@ -9,6 +9,7 @@ import com.ztw.basic.tools.NormalTools;
 import com.ztw.basic.tools.PageableTools;
 import com.ztw.car.iservice.ICarBrandService;
 import com.ztw.car.model.CarBrand;
+import com.ztw.car.service.CarBrandServiceImpl;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,9 @@ public class CarBrandController {
 
     @Autowired
     private ICarBrandService carBrandService;
+
+    @Autowired
+    private CarBrandServiceImpl carBrandServiceImpl;
 
     @Autowired
     private ConfigTools configTools;
@@ -145,4 +149,14 @@ public class CarBrandController {
         }
     }
 
+    @RequestMapping("updateSort")
+    @AdminAuth(name="品牌排序", orderNum=4, type="2")
+    public @ResponseBody String updateSort(Integer[] ids) {
+        try {
+            carBrandServiceImpl.updateSort(ids);
+        } catch (Exception e) {
+            return "0";
+        }
+        return "1";
+    }
 }
