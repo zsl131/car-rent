@@ -6,6 +6,17 @@
     <script type="text/javascript" src="/js-lib/jquery-1.12.3.min.js"></script>
     <script type="text/javascript" src="/bootstrap3/js/bootstrap.min.js"></script>
     <link type="text/css" rel="stylesheet" href="/bootstrap3/css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="/pub-js/identityValid.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            var iden = "532127198803011115";
+            alert(identityCodeValid(iden));
+            alert(idCardInfo(iden, "1"));
+            alert(idCardInfo(iden, "2"));
+            alert(idCardInfo(iden, "3"));
+        });
+    </script>
 </head>
 <body>
 

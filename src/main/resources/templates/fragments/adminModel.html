@@ -14,6 +14,8 @@
     <script type="text/javascript" src="/bootstrap3/js/bootstrap.min.js"></script>
     <link type="text/css" rel="stylesheet" href="/bootstrap3/css/bootstrap.min.css"/>
 
+    <script type="text/javascript" src="/admin/myself/public.js"></script>
+
     <!-- Font Awesome-->
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" />
     <!--[if IE 7]>
@@ -27,7 +29,6 @@
     <link rel="stylesheet" href="/assets/css/family.css" />
 
     <!-- ace styles -->
-
     <link rel="stylesheet" href="/assets/css/ace.min.css" />
 
     <!--[if lte IE 8]>
@@ -45,6 +46,7 @@
     <script type="text/javascript" src="/admin/myself/delete.js"></script>
     <script type="text/javascript" src="/admin/myself/auth.js"></script>
     <script type="text/javascript" src="/admin/myself/cms.admin.js"></script>
+    <link type="text/css" rel="stylesheet" href="/admin/css/style.css"/>
     <script type="text/javascript">
             $(function() {
                 $(".logout-href").deleteFun({title:'退出提示',msg:'确定退出系统吗？'});
@@ -125,9 +127,9 @@
         </div>
 
         <div class="main-content">
-            <div class="container-fluid" style="padding-top:10px; padding-bottom:15px;">
+            <div class="container-fluid" style="padding-bottom:15px;">
                 <!-- 这里引用子页面的body内容 -->
-                <div th:include="this :: content"></div>
+                <div th:include="this :: content" style="margin:10px;"></div>
             </div>
 
         </div><!-- /.main-content -->

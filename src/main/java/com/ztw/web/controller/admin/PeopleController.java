@@ -53,7 +53,7 @@ public class PeopleController {
     @RequestMapping(value="add", method=RequestMethod.POST)
     public String add(Model model, People people, HttpServletRequest request) {
         if(TokenTools.isNoRepeat(request)) {
-            People p = peopleService.findById(people.getId());
+            People p = peopleService.findByIdentity(people.getIdentity());
             if(p!=null) {throw new SystemException("身份证号【"+people.getIdentity()+"】已经存在，不可重复添加！");}
             peopleService.save(people);
         }

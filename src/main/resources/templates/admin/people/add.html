@@ -7,6 +7,8 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
+		<script type="text/javascript" src="/pub-js/identityValid.js"></script>
+		<script type="text/javascript" src="/admin/myself/people-add.js"></script>
 		<title>添加客户</title>
 	</head>
 	<body>
@@ -42,6 +44,8 @@
 						</div>
 					</div>
 				</div>
+				<input id="sex" name="sex" type="hidden" th:value="${people.sex}"/>
+				<input id="age" name="age" type="hidden" th:value="${people.age}"/>
 				<input type="hidden" name="token" th:value="${session.token}"/>
 				<button type="submit" class="btn btn-primary">确定提交</button>
 			</form>
