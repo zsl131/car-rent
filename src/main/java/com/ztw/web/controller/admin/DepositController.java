@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping(value = "admin/deposit")
-@AdminAuth(name = "保证金", orderNum = 10, psn = "系统管理", pentity=0, porderNum=20)
+@AdminAuth(name = "保证金", orderNum = 2, psn = "应用管理", pentity=0, porderNum=2)
 public class DepositController {
 
     @Autowired
