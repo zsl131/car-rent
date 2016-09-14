@@ -19,7 +19,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping(value = "/admin/carType")
-@AdminAuth(name = "汽车种类管理",psn = "系统管理",orderNum = 1,porderNum = 2,pentity = 0)
+@AdminAuth(name = "汽车种类管理",psn = "应用管理",orderNum = 1,porderNum = 2,pentity = 0)
 public class CarTypeController {
 
     @Autowired
@@ -27,7 +27,7 @@ public class CarTypeController {
 
     @Token(flag = Token.READY)
     @RequestMapping(value = "add",method = RequestMethod.GET)
-    @AdminAuth(name = "汽车种类添加",orderNum = 2,icon = "fa fa-plus")
+    @AdminAuth(name = "汽车种类添加",orderNum = 2,icon = "icon-plus")
     public String add(Model model){
         model.addAttribute("carType",new CarType());
         return "/admin/carType/add";
@@ -45,10 +45,10 @@ public class CarTypeController {
         return "redirect:/admin/carType/list";
     }
 
-    @AdminAuth(name = "汽车种类列表",orderNum = 1, icon = "fa fa-list")
+    @AdminAuth(name = "汽车种类列表",orderNum = 1, icon = "icon-list")
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String list(Model model,Integer page){
-        Page<CarType> datas = carTypeService.findAll(PageableTools.basicPage(page));
+        Page<CarType> datas = carTypeService.pageAll(PageableTools.basicPage(page));
         model.addAttribute("datas",datas);
         return "/admin/carType/list";
     }
