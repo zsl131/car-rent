@@ -29,7 +29,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping(value = "admin/carBrand")
-@AdminAuth(name = "车辆品牌管理", psn="车库管理", orderNum = 1, pentity=0, porderNum=3)
+@AdminAuth(name = "车辆品牌管理", psn="车库管理", orderNum = 2, pentity=0, porderNum=3)
 public class CarBrandController {
 
     private static final String PATH_PRE = "carBrand/";
@@ -69,7 +69,7 @@ public class CarBrandController {
                 BufferedOutputStream bw = null;
                 try {
                     String fileName = files[0].getOriginalFilename();
-                    if(fileName!=null && !"".equalsIgnoreCase(fileName.trim())) {
+                    if(fileName!=null && !"".equalsIgnoreCase(fileName.trim()) && NormalTools.isImageFile(fileName)) {
                         File outFile = new File(configTools.getUploadPath(PATH_PRE) + "/" + UUID.randomUUID().toString()+ NormalTools.getFileType(fileName));
                         carBrand.setLogo(outFile.getAbsolutePath().replace(configTools.getUploadPath(), ""));
                         FileUtils.copyInputStreamToFile(files[0].getInputStream(), outFile);
@@ -111,7 +111,7 @@ public class CarBrandController {
                 BufferedOutputStream bw = null;
                 try {
                     String fileName = files[0].getOriginalFilename();
-                    if(fileName!=null && !"".equalsIgnoreCase(fileName.trim())) {
+                    if(fileName!=null && !"".equalsIgnoreCase(fileName.trim()) && NormalTools.isImageFile(fileName)) {
                         File oldFile = new File(configTools.getUploadPath() + cb.getLogo());
                         if(oldFile.exists()) {oldFile.delete();}
                         File outFile = new File(configTools.getUploadPath(PATH_PRE) +"/" + UUID.randomUUID().toString()+ NormalTools.getFileType(fileName));
@@ -140,7 +140,7 @@ public class CarBrandController {
         try {
 //            peopleService.delete(id);
             CarBrand cb = carBrandService.findById(id);
-            File file = new File(configTools.getUploadPath() +"carBrand/" + cb.getLogo());
+            File file = new File(configTools.getUploadPath() + cb.getLogo());
             if(file.exists()) {
                 file.delete();
             }

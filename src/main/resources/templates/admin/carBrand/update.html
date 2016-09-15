@@ -7,80 +7,59 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
-<title>修改客户</title>
+<title>修改车辆品牌</title>
 </head>
 <body>
 	<div th:fragment="content" th:remove="tag">
 		<div class="header lighter smaller blue">
-			<h3><i class="icon-plus"></i>&nbsp;修改客户 </h3>
-			<div th:replace="admin/people/nav :: content" th:remove="tag"></div>
+			<h3><i class="icon-plus"></i>&nbsp;修改车辆品牌 </h3>
+			<div th:replace="admin/carBrand/nav :: content" th:remove="tag"></div>
 		</div>
 
-		<form method="POST" th:object="${people}" id="dataForm">
+		<form method="POST" th:object="${carBrand}" enctype="multipart/form-data" id="dataForm">
+
 			<div class="form-group form-group-lg">
-				<label for="name">姓名</label>
-				<input type="text" name="name" th:value="${people.name}" class="form-control" id="name" placeholder="请输入客户姓名"/>
+				<div class="input-group">
+					<div class="input-group-addon">品牌名称：</div>
+					<input type="text" name="name" th:value="${carBrand.name}" class="form-control" id="name" placeholder="请输入品牌名称"/>
+				</div>
 			</div>
+
 			<div class="form-group form-group-lg">
-				<label for="identity">身份证号</label>
-				<input type="text" name="identity" th:value="${people.identity}" class="form-control" id="identity" placeholder="请输入身份证号"/>
-			</div>
-			<div class="form-group form-group-lg">
-				<label for="phone">电话</label>
-				<input type="text" name="phone" th:value="${people.phone}" class="form-control" id="phone" placeholder="请输入手机号码"/>
-			</div>
-			<div class="form-group form-group-lg">
-				<label for="address">联系地址</label>
-				<input type="text" name="address" th:value="${people.address}" class="form-control" id="address" placeholder="请输入联系地址"/>
-			</div>
-			<div class="form-group form-group-lg">
-				<div class="input-group input-group-lg">
-					<div class="input-group-addon">客户状态</div>
-					<div class="form-control">
-						<input type="radio" name="status" value="1" id="status_1" th:checked="${people.status == '1'}?'checked'"/><label for="status_1">正常</label>
-						<input type="radio" name="status" value="-1" id="status_0" th:checked="${people.status == '-1'}?'checked'"/><label for="status_0">黑名单</label>
-					</div>
+				<div class="input-group" style="border-bottom:1px #ddd solid;">
+					<div class="input-group-addon">品牌图标：</div>
+					<input type="file" name="file" class="form-control" id="file" />
+					<p th:if="${carBrand.logo ne null and carBrand.logo ne ''}">
+						<img th:src="${carBrand.logo}" style="width:120px;"/>
+						<p class="remind-red">不替换请勿上传任何文件</p>
+					</p>
 				</div>
 			</div>
 			<input type="hidden" name="token" th:value="${session.token}"/>
 			<button type="submit" class="btn btn-primary">确定提交</button>
 		</form>
 		<script type="text/javascript">
-				jQuery(function($) {
-					$('#dataForm').bootstrapValidator({
-		//		        live: 'disabled',
-						message: '验证不通过',
-						feedbackIcons: {
-							valid: 'glyphicon glyphicon-ok',
-							invalid: 'glyphicon glyphicon-remove',
-							validating: 'glyphicon glyphicon-refresh'
-						},
-						fields: {
-							name: {
-								validators: {
-									notEmpty: {
-										message: '请输入客户姓名'
-									}
-								}
-							},
-							identity: {
-								validators: {
-									notEmpty: {
-										message: '请输入身份证号'
-									}
-								}
-							},
-							phone: {
-								validators: {
-									notEmpty: {
-										message: '请输入手机号码'
-									}
+			jQuery(function($) {
+				$('#dataForm').bootstrapValidator({
+	//		        live: 'disabled',
+					message: '验证不通过',
+					feedbackIcons: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						name: {
+							validators: {
+								notEmpty: {
+									message: '请输入品牌名称'
 								}
 							}
 						}
-					});
+					}
 				});
-			</script>
+			});
+		</script>
 	</div>
 </body>
 </html>

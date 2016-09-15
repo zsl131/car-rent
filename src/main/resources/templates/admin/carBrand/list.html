@@ -54,7 +54,7 @@
                         <tr th:each="obj : ${datas}">
                             <td th:text="${obj.id}">对象Id</td>
                             <td>
-                                <img th:src="${obj.logo}"/>
+                                <img th:src="${obj.logo}" style="width:80px;"/>
                             </td>
                             <td th:text="${obj.name}">名称</td>
                             <td th:text="${obj.orderNo}">序号</td>

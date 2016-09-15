@@ -13,10 +13,13 @@ import java.util.List;
  * Created by admin on 2016/9/8.
  */
 public interface ICarTypeService extends JpaRepository<CarType,Integer> {
-    @Query("select c.id,c.typeName from CarType c")
-    List<CarType> findIDAndTypeName();
 
-    @Query("from CarType ct order by ct.createDate asc")
-    Page<CarType> pageAll(Pageable pageable);
+    @Query("FROM CarType ct ")
+    public Page<CarType> pageAll(Pageable pageable);
+
+    public CarType findById(Integer id);
+
+    @Query("SELECT MAX(orderNo) FROM CarType ")
+    public Integer findMaxOrderNo();
 
 }

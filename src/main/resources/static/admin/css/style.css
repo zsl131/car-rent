@@ -44,3 +44,7 @@
 .ace-settings-container .pagination {
     margin:0px; margin-top:8px; margin-right:12px;
 }
+
+.remind-red {
+    color:#F00; padding:0px 8px;
+}

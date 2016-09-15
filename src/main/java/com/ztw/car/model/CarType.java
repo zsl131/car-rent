@@ -9,37 +9,47 @@ import java.util.Date;
 @Entity
 @Table(name = "t_car_type")
 public class CarType {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "type_name")
-    private String  typeName;
+    private String  name;
 
-    @Column(name = "create_date")
-    private Date createDate;
+    @Column(name = "order_no")
+    private Integer orderNo;
+
+    private String logo;
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
 
     public Integer getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setName(String name) {
+        this.name = name;
     }
 }
