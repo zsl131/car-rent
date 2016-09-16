@@ -1,6 +1,7 @@
 package com.ztw.deposit.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * 保证金实体类
@@ -38,6 +39,39 @@ public class Deposit {
      * 保证金数额，单位：元
      */
     private Integer money;
+
+    /**
+     * 记录在租车期间的违章罚款
+     */
+    private Integer forfeitMoney;
+
+    /**
+     * 记录实际退还的保证金
+     */
+    private Integer returnMoney;
+
+    /**
+     * 保证金交纳开始日，也就是取车的日期
+     */
+    private Date startTime;
+
+    /**
+     * 租车归还日，保证金退还时间是一个月以后，归还时需要扣除违章罚款
+     */
+    private Date endTime;
+
+    /**
+     * 保证金实际退还日期
+     */
+    private Date returnTime;
+
+    /**
+     * 保证金状态
+     * 1： 未退还租客
+     * 2： 已退还
+     */
+    private String status;
+
 
     public Integer getId() {
         return id;
@@ -87,4 +121,51 @@ public class Deposit {
         this.money = money;
     }
 
+    public Integer getForfeitMoney() {
+        return forfeitMoney;
+    }
+
+    public void setForfeitMoney(Integer forfeitMoney) {
+        this.forfeitMoney = forfeitMoney;
+    }
+
+    public Integer getReturnMoney() {
+        return returnMoney;
+    }
+
+    public void setReturnMoney(Integer returnMoney) {
+        this.returnMoney = returnMoney;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Date getReturnTime() {
+        return returnTime;
+    }
+
+    public void setReturnTime(Date returnTime) {
+        this.returnTime = returnTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
