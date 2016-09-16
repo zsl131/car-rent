@@ -5,9 +5,13 @@ import com.ztw.basic.auth.iservice.IMenuService;
 import com.ztw.basic.auth.model.Menu;
 import com.ztw.basic.auth.service.MenuServiceImpl;
 import com.ztw.basic.auth.tools.AuthTools;
+import com.ztw.basic.tools.BaseSpecification;
 import com.ztw.basic.tools.PageableTools;
+import com.ztw.basic.tools.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,9 +43,12 @@ public class MenuController {
         String treeJson = menuServiceImpl.queryTreeJson(null);
         Page<Menu> datas ;
         if(pid==null || pid<=0) {
-            datas = menuService.pageAll(PageableTools.basicPage(page, 15, "asc", "orderNum"));
+            BaseSpecification<Menu> spec = new BaseSpecification<>(new SearchCriteria("pid", "isnull", ""));
+            datas = menuService.findAll(Specifications.where(spec), PageableTools.basicPage(page, 15, "asc", "orderNum"));
         } else {
-            datas = menuService.pageAll(pid, PageableTools.basicPage(page, 15, "asc", "orderNum"));
+//            datas = menuService.pageAll(pid, PageableTools.basicPage(page, 15, "asc", "orderNum"));
+            BaseSpecification<Menu> spec = new BaseSpecification<>(new SearchCriteria("pid", "eq", pid));
+            datas = menuService.findAll(Specifications.where(spec), PageableTools.basicPage(page, 15, "asc", "orderNum"));
         }
         model.addAttribute("treeJson", treeJson);
         model.addAttribute("datas", datas);

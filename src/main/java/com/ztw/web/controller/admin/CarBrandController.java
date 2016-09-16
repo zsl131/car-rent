@@ -3,25 +3,27 @@ package com.ztw.web.controller.admin;
 import com.ztw.basic.auth.annotations.AdminAuth;
 import com.ztw.basic.auth.annotations.Token;
 import com.ztw.basic.auth.tools.TokenTools;
-import com.ztw.basic.tools.ConfigTools;
-import com.ztw.basic.tools.MyBeanUtils;
-import com.ztw.basic.tools.NormalTools;
-import com.ztw.basic.tools.PageableTools;
+import com.ztw.basic.tools.*;
 import com.ztw.car.iservice.ICarBrandService;
 import com.ztw.car.model.CarBrand;
 import com.ztw.car.service.CarBrandServiceImpl;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.criteria.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -46,7 +48,7 @@ public class CarBrandController {
     @AdminAuth(name = "品牌列表", orderNum = 1, icon="icon-list")
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(Model model, Integer page, HttpServletRequest request) {
-        Page<CarBrand> datas = carBrandService.pageAll(PageableTools.basicPage(page, "asc", "orderNo"));
+        Page<CarBrand> datas = carBrandService.findAll(new ParamFilterTools<CarBrand>().buildSpecification(model, request), PageableTools.basicPage(page, "asc", "orderNo"));
         model.addAttribute("datas", datas);
         return "admin/carBrand/list";
     }

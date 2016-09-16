@@ -43,7 +43,7 @@ public class UserController {
     @AdminAuth(name = "用户列表", orderNum = 1, icon="icon-list")
     @RequestMapping(value="list", method=RequestMethod.GET)
     public String list(Model model, Integer page, HttpServletRequest request) {
-        Page<User> datas = userService.pageAll(PageableTools.basicPage(page));
+        Page<User> datas = userService.findAll(PageableTools.basicPage(page));
         model.addAttribute("datas", datas);
         return "admin/user/list";
     }

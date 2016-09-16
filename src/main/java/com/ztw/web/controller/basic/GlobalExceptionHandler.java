@@ -23,6 +23,7 @@ public class GlobalExceptionHandler {
         er.setParams(req.getQueryString());
         er.setDatas("发生异常，无法继续进行！");
         model.addAttribute("errorInfo", er);
+        e.printStackTrace();
         return "errors/system";
     }
 
@@ -35,6 +36,7 @@ public class GlobalExceptionHandler {
         er.setParams(req.getQueryString());
         er.setDatas("发生异常，无法继续进行！");
         model.addAttribute("errorInfo", er);
+        e.printStackTrace();
         return "errors/default";
     }
 }

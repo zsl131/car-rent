@@ -2,16 +2,23 @@ package com.ztw.car.iservice;
 
 import com.ztw.car.model.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by zxt on 2016/9/7.
+ * Created by zsl-pc on 2016/9/15.
  */
-public interface ICarService extends JpaRepository<Car,Integer> {
-    @Modifying
-    @Transactional
-    @Query("update Car c set c.carName= ?2 where c.id= ?1")
-    public void updateCarName(Integer id,String carName);
+public interface ICarService extends JpaRepository<Car, Integer> {
+
+//    @Query("FROM Car c")
+//    public Page<Car> pageAll(Pageable pageable);
+//
+//    @Query("FROM Car c WHERE c.status=?1 ")
+//    public Page<Car> pageAll(String status, Pageable pageable);
+//
+//    public Car findById();
+
+//    public Car findByCarTypeAndCarNo(String carType, String carNo);
+
+//    public Car findByEngineNo(String engineNo);
+
+//    public Car findByFrameNo(String frameNo);
 }

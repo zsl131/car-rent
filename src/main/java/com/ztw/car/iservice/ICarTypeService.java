@@ -21,5 +21,4 @@ public interface ICarTypeService extends JpaRepository<CarType,Integer> {
 
     @Query("SELECT MAX(orderNo) FROM CarType ")
     public Integer findMaxOrderNo();
-
 }

@@ -153,7 +153,7 @@ public class CarTypeController {
     }
 
     @RequestMapping("updateSort")
-    @AdminAuth(name="品牌排序", orderNum=4, type="2")
+    @AdminAuth(name="车辆种类排序", orderNum=4, type="2")
     public @ResponseBody String updateSort(Integer[] ids) {
         try {
             carTypeServiceImpl.updateSort(ids);

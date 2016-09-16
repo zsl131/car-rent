@@ -46,7 +46,7 @@ public class RoleController {
     @AdminAuth(name = "角色列表", orderNum = 1, icon="icon-list")
     @RequestMapping(value="list", method= RequestMethod.GET)
     public String list(Model model, Integer page, HttpServletRequest request) {
-        Page<Role> datas = roleService.pageAll(PageableTools.basicPage(page));
+        Page<Role> datas = roleService.findAll(PageableTools.basicPage(page));
         model.addAttribute("datas", datas);
         return "admin/role/list";
     }

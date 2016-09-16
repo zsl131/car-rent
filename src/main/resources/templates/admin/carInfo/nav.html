@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:fragment="content">
+            <div class="ace-settings-container" id="ace-settings-container">
+                <ul class="pagination">
+                    <li><a class="auth" sn="CarInfoController.list" href="/admin/carInfo/list"><span class="glyphicon glyphicon-th-list"></span>车辆信息列表</a></li>
+                    <li><a class="auth" sn="CarInfoController.add" href="/admin/carInfo/add"><span class="icon-plus"></span>添加车辆信息</a></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

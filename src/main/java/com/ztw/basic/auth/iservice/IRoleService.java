@@ -17,9 +17,6 @@ public interface IRoleService extends JpaRepository<Role, Integer> {
 
     public Role findById(Integer id);
 
-    @Query("FROM Role r ")
-    public Page<Role> pageAll(Pageable pageable);
-
     @Query("SELECT rm.mid FROM RoleMenu rm WHERE rm.rid=?1")
     public List<Integer> listRoleMenuIds(Integer roleId);
 }
