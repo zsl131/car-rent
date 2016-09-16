@@ -20,12 +20,16 @@
 
 			<form method="POST" th:object="${carType}" enctype="multipart/form-data" id="dataForm">
 				<div class="form-group form-group-lg">
-					<label for="name">品牌名称</label>
-					<input type="text" name="name" th:value="${carType.name}" class="form-control" id="name" placeholder="请输入种类名称"/>
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">种类名称</div>
+						<input type="text" name="name" th:value="${carType.name}" class="form-control" id="name" placeholder="请输入种类名称"/>
+					</div>
 				</div>
 				<div class="form-group form-group-lg">
-					<label for="file">品牌图标</label>
-					<input type="file" name="file" class="form-control" id="file" />
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">种类图标</div>
+						<input type="file" name="file" class="form-control" id="file" />
+					</div>
 				</div>
 				<input type="hidden" name="token" th:value="${session.token}"/>
 				<button type="submit" class="btn btn-primary">确定提交</button>

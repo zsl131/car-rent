@@ -20,20 +20,31 @@
 
 			<form method="POST" th:object="${people}" id="dataForm">
 				<div class="form-group form-group-lg">
-					<label for="name">姓名</label>
-					<input type="text" name="name" th:value="${people.name}" class="form-control" id="name" placeholder="请输入客户姓名"/>
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">客户姓名</div>
+						<input type="text" name="name" th:value="${people.name}" class="form-control" id="name" placeholder="请输入客户姓名"/>
+					</div>
 				</div>
+
 				<div class="form-group form-group-lg">
-					<label for="identity">身份证号</label>
-					<input type="text" name="identity" th:value="${people.identity}" class="form-control" id="identity" placeholder="请输入身份证号"/>
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">身份证号</div>
+						<input type="text" name="identity" th:value="${people.identity}" class="form-control" id="identity" placeholder="请输入身份证号"/>
+					</div>
 				</div>
+
 				<div class="form-group form-group-lg">
-					<label for="phone">电话</label>
-					<input type="text" name="phone" th:value="${people.phone}" class="form-control" id="phone" placeholder="请输入手机号码"/>
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">联系电话</div>
+						<input type="text" name="phone" th:value="${people.phone}" class="form-control" id="phone" placeholder="请输入手机号码"/>
+					</div>
 				</div>
+
 				<div class="form-group form-group-lg">
-					<label for="address">联系地址</label>
-					<input type="text" name="address" th:value="${people.address}" class="form-control" id="address" placeholder="请输入联系地址"/>
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">联系地址</div>
+						<input type="text" name="address" th:value="${people.address}" class="form-control" id="address" placeholder="请输入联系地址"/>
+					</div>
 				</div>
 				<div class="form-group form-group-lg">
 					<div class="input-group input-group-lg">

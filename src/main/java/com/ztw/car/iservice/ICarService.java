@@ -8,9 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ICarService extends JpaRepository<Car, Integer> {
 
-//    @Query("FROM Car c")
-//    public Page<Car> pageAll(Pageable pageable);
-//
 //    @Query("FROM Car c WHERE c.status=?1 ")
 //    public Page<Car> pageAll(String status, Pageable pageable);
 //

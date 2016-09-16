@@ -4,26 +4,34 @@
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorator="fragments/adminModel">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
-	<link type="text/css" rel="stylesheet" href="/js-lib/jquery-labelauty.css"/>
-	<script type="text/javascript" src="/js-lib/jquery-labelauty.js"></script>
-	<script type="text/javascript">
-		$(function() {
-			$(':input').labelauty();
-		});
-	</script>
-<title>修改车辆信息</title>
-</head>
-<body>
-	<div th:fragment="content" th:remove="tag">
-		<div class="header lighter smaller blue">
-			<h3><i class="icon-plus"></i>&nbsp;修改车辆信息 </h3>
-			<div th:replace="admin/carInfo/nav :: content" th:remove="tag"></div>
-		</div>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
+		<link type="text/css" rel="stylesheet" href="/js-lib/jquery-labelauty.css"/>
+		<script type="text/javascript" src="/js-lib/jquery-labelauty.js"></script>
+		<title>查看车辆信息</title>
+		<script type="text/javascript">
+			$(function() {
+				$("input").each(function() {
+					$(this).attr("readonly", "readonly");
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div th:fragment="content" th:remove="tag">
+			<div class="header lighter smaller blue">
+				<h3><i class="icon-plus"></i>&nbsp;查看车辆信息 </h3>
+				<div th:replace="admin/carInfo/nav :: content" th:remove="tag"></div>
+			</div>
 
-		<form method="POST" th:object="${carBrand}" enctype="multipart/form-data" id="dataForm">
+			<div>
+				<img th:src="${carInfo.tpdz1}" th:if="${carInfo.tpdz1 ne null and carInfo.tpdz1 ne ''}" style="width:24%;"/>
+				<img th:src="${carInfo.tpdz2}" th:if="${carInfo.tpdz2 ne null and carInfo.tpdz2 ne ''}" style="width:24%;"/>
+				<img th:src="${carInfo.tpdz3}" th:if="${carInfo.tpdz3 ne null and carInfo.tpdz3 ne ''}" style="width:24%;"/>
+				<img th:src="${carInfo.tpdz4}" th:if="${carInfo.tpdz4 ne null and carInfo.tpdz4 ne ''}" style="width:24%;"/>
+			</div>
+
 			<div class="form-group form-group-lg">
 				<div class="input-group input-group-lg">
 					<div class="input-group-addon">车辆种类</div>
@@ -35,8 +43,9 @@
 			<div class="form-group form-group-lg">
 				<div class="input-group input-group-lg">
 					<div class="input-group-addon">车辆品牌</div>
-					<div class="input-group-addon" th:text="${carInfo.brandName}" ></div>
-					<input type="text" name="ppxl" th:value="${carInfo.ppxl}" class="form-control" placeholder="请输入品牌系列，如：品牌选择大众时，则可输入：迈腾、朗逸、捷达……"/>
+					<div class="form-control form-inline">
+						<p th:text="${carInfo.brandName}+${carInfo.ppxl}" th:remove="tag"></p>
+					</div>
 				</div>
 			</div>
 
@@ -156,46 +165,7 @@
 				</div>
 			</div>
 
-			<div class="form-group form-group-lg">
-				<div class="input-group input-group-lg">
-					<div class="input-group-addon">车辆照片</div>
-					<div style="border-bottom:1px #ddd solid;">
-						<input type="file" name="file" class="form-control"/>
-						<p class="remind-red">不修改请勿选择任何文件</p>
-						<img th:src="${carInfo.tpdz1}" th:if="${carInfo.tpdz1 ne null and carInfo.tpdz1 ne ''}" style="max-width:24%;"/>
-					</div>
-
-					<div class="input-group-addon">车辆照片</div>
-					<div style="border-bottom:1px #ddd solid;">
-						<input type="file" name="file" class="form-control"/>
-						<p class="remind-red">不修改请勿选择任何文件</p>
-						<img th:src="${carInfo.tpdz2}" th:if="${carInfo.tpdz2 ne null and carInfo.tpdz2 ne ''}" style="max-width:24%;"/>
-					</div>
-				</div>
-			</div>
-
-			<div class="form-group form-group-lg">
-				<div class="input-group input-group-lg">
-					<div class="input-group-addon">车辆照片</div>
-					<div style="border-bottom:1px #ddd solid;">
-						<input type="file" name="file" class="form-control"/>
-						<p class="remind-red">不修改请勿选择任何文件</p>
-						<img th:src="${carInfo.tpdz3}" th:if="${carInfo.tpdz3 ne null and carInfo.tpdz3 ne ''}" style="max-width:24%;"/>
-					</div>
-
-					<div class="input-group-addon">车辆照片</div>
-					<div style="border-bottom:1px #ddd solid;">
-						<input type="file" name="file" class="form-control"/>
-						<p class="remind-red">不修改请勿选择任何文件</p>
-						<img th:src="${carInfo.tpdz4}" th:if="${carInfo.tpdz4 ne null and carInfo.tpdz4 ne ''}" style="max-width:24%;"/>
-					</div>
-				</div>
-			</div>
-
-			<input type="hidden" name="token" th:value="${session.token}"/>
-			<button type="submit" class="btn btn-primary">确定提交</button>
-		</form>
-		<script type="text/javascript" src="/admin/valid/carInfo-valid.js"></script>
-	</div>
-</body>
+			<button type="button" onclick="history.back(-1)" class="btn btn-primary">返回上级</button>
+		</div>
+	</body>
 </html>

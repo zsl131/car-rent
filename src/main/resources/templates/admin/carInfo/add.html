@@ -7,51 +7,183 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
-		<script type="text/javascript" src="/pub-js/identityValid.js"></script>
-		<script type="text/javascript" src="/admin/myself/people-add.js"></script>
-		<title>添加车辆品牌</title>
+		<link type="text/css" rel="stylesheet" href="/js-lib/jquery-labelauty.css"/>
+		<script type="text/javascript" src="/js-lib/jquery-labelauty.js"></script>
+		<title>添加车辆信息</title>
+		<script type="text/javascript">
+			$(function() {
+				$(':input').labelauty();
+			});
+		</script>
 	</head>
 	<body>
 		<div th:fragment="content" th:remove="tag">
 			<div class="header lighter smaller blue">
-				<h3><i class="icon-plus"></i>&nbsp;添加车辆品牌 </h3>
-				<div th:replace="admin/carBrand/nav :: content" th:remove="tag"></div>
+				<h3><i class="icon-plus"></i>&nbsp;添加车辆信息 </h3>
+				<div th:replace="admin/carInfo/nav :: content" th:remove="tag"></div>
 			</div>
 
-			<form method="POST" th:object="${carBrand}" enctype="multipart/form-data" id="dataForm">
+			<form method="POST" th:object="${carInfo}" enctype="multipart/form-data" id="dataForm">
 				<div class="form-group form-group-lg">
-					<label for="name">品牌名称</label>
-					<input type="text" name="name" th:value="${carBrand.name}" class="form-control" id="name" placeholder="请输入品牌名称"/>
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">车辆种类</div>
+						<div class="form-control form-inline">
+							<div th:each="tl : ${typeList}" th:remove="tag">
+								<input type="radio" class="my-radio-style" name="typeId" th:value="${tl.id}" th:attr="data-labelauty=${tl.name}"/>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="form-group form-group-lg">
-					<label for="file">品牌图标</label>
-					<input type="file" name="file" class="form-control" id="file" />
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">车辆品牌</div>
+						<div class="form-control form-inline">
+							<div th:each="tl : ${brandList}" th:remove="tag">
+								<input type="radio" class="my-radio-style" name="brandId" th:value="${tl.id}" th:attr="data-labelauty=${tl.name}"/>
+							</div>
+						</div>
+						<input type="text" name="ppxl" th:value="${carInfo.ppxl}" class="form-control" placeholder="请输入品牌系列，如：品牌选择大众时，则可输入：迈腾、朗逸、捷达……"/>
+					</div>
 				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">可选颜色</div>
+						<input type="text" name="kxys" th:value="${carInfo.kxys}" class="form-control" placeholder="直接输入颜色"/>
+					</div>
+				</div>
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">车辆型号</div>
+						<input type="text" name="clxs" th:value="${carInfo.clxs}" class="form-control" placeholder="如：三厢、两厢、SUV"/>
+
+						<div class="input-group-addon">配置类型</div>
+						<input type="text" name="pzlx" th:value="${carInfo.pzlx}" class="form-control" placeholder="如：豪华版、精英版"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">操作方式</div>
+						<input type="text" name="czlx" th:value="${carInfo.czlx}" class="form-control" placeholder="如：自动、手动、手自一体"/>
+
+						<div class="input-group-addon">动力大小</div>
+						<input type="text" name="fdjdl" th:value="${carInfo.fdjdl}" class="form-control" placeholder="发动机动力，如：1.6、2.0T"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">座位数量</div>
+						<input type="text" name="zwsl" th:value="${carInfo.zwsl}" class="form-control" placeholder="如：5" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+
+						<div class="input-group-addon">出厂年代</div>
+						<input type="text" name="ccnd" th:value="${carInfo.ccnd}" class="form-control" placeholder="如：2016" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">燃料类型</div>
+						<input type="text" name="rllx" th:value="${carInfo.rllx}" class="form-control" placeholder="如：柴油、汽油"/>
+
+						<div class="input-group-addon">燃油标号</div>
+						<input type="text" name="rybh" th:value="${carInfo.rybh}" class="form-control" placeholder="如：93号汽油、97号汽油"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">油箱容量</div>
+						<input type="text" name="yxrl" th:value="${carInfo.yxrl}" class="form-control" placeholder="如：30" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+
+						<div class="input-group-addon">排量大小</div>
+						<input type="text" name="pl" th:value="${carInfo.pl}" class="form-control" placeholder="如：1988" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">驱动方式</div>
+						<input type="text" name="qdfs" th:value="${carInfo.qdfs}" class="form-control" placeholder="如：前驱、后驱、四驱"/>
+
+						<div class="input-group-addon">车门数量</div>
+						<input type="text" name="cmsl" th:value="${carInfo.cmsl}" class="form-control" placeholder="如：4" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">进气方式</div>
+						<input type="text" name="jqfs" th:value="${carInfo.jqfs}" class="form-control" placeholder="如：自然吸气"/>
+
+						<div class="input-group-addon">天窗类型</div>
+						<input type="text" name="tclx" th:value="${carInfo.tclx}" class="form-control" placeholder="如：无、单天窗、全景天窗"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">座椅类型</div>
+						<input type="text" name="zylx" th:value="${carInfo.zylx}" class="form-control" placeholder="如：皮革座椅"/>
+
+						<div class="input-group-addon">变速箱类型</div>
+						<input type="text" name="bsxlx" th:value="${carInfo.bsxlx}" class="form-control" placeholder="如：AT"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">倒车雷达</div>
+						<input type="text" name="dcld" th:value="${carInfo.dcld}" class="form-control" placeholder="如：有、无"/>
+
+						<div class="input-group-addon">倒车影像</div>
+						<input type="text" name="dcyx" th:value="${carInfo.dcyx}" class="form-control" placeholder="如：有、无"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">影音类型</div>
+						<input type="text" name="yylx" th:value="${carInfo.yylx}" class="form-control" placeholder="如：无、DVD、CD"/>
+
+						<div class="input-group-addon">音箱数量</div>
+						<input type="text" name="yxsl" th:value="${carInfo.yxsl}" class="form-control" placeholder="如：5" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">气囊数量</div>
+						<input type="text" name="qnsl" th:value="${carInfo.qnsl}" class="form-control" placeholder="如：5" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+
+						<div class="input-group-addon">GPS导航</div>
+						<input type="text" name="gps" th:value="${carInfo.gps}" class="form-control" placeholder="如：有、无" />
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">车辆照片</div>
+						<input type="file" name="file" class="form-control"/>
+						<div class="input-group-addon">车辆照片</div>
+						<input type="file" name="file" class="form-control"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">车辆照片</div>
+						<input type="file" name="file" class="form-control"/>
+						<div class="input-group-addon">车辆照片</div>
+						<input type="file" name="file" class="form-control"/>
+					</div>
+				</div>
+
 				<input type="hidden" name="token" th:value="${session.token}"/>
 				<button type="submit" class="btn btn-primary">确定提交</button>
 			</form>
-			<script type="text/javascript">
-				jQuery(function($) {
-					$('#dataForm').bootstrapValidator({
-		//		        live: 'disabled',
-						message: '验证不通过',
-						feedbackIcons: {
-							valid: 'glyphicon glyphicon-ok',
-							invalid: 'glyphicon glyphicon-remove',
-							validating: 'glyphicon glyphicon-refresh'
-						},
-						fields: {
-							name: {
-								validators: {
-									notEmpty: {
-										message: '请输入品牌名称'
-									}
-								}
-							}
-						}
-					});
-				});
-			</script>
+			<script type="text/javascript" src="/admin/valid/carInfo-valid.js"></script>
 		</div>
 	</body>
 </html>

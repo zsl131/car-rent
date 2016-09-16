@@ -17,9 +17,8 @@
 		</div>
 
 		<form method="POST" th:object="${carBrand}" enctype="multipart/form-data" id="dataForm">
-
 			<div class="form-group form-group-lg">
-				<div class="input-group">
+				<div class="input-group input-group-lg">
 					<div class="input-group-addon">品牌名称：</div>
 					<input type="text" name="name" th:value="${carBrand.name}" class="form-control" id="name" placeholder="请输入品牌名称"/>
 				</div>

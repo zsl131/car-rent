@@ -3,10 +3,7 @@ package com.ztw.web.controller.admin;
 import com.ztw.basic.auth.annotations.AdminAuth;
 import com.ztw.basic.auth.annotations.Token;
 import com.ztw.basic.auth.tools.TokenTools;
-import com.ztw.basic.tools.ConfigTools;
-import com.ztw.basic.tools.MyBeanUtils;
-import com.ztw.basic.tools.NormalTools;
-import com.ztw.basic.tools.PageableTools;
+import com.ztw.basic.tools.*;
 import com.ztw.car.iservice.ICarTypeService;
 import com.ztw.car.model.CarType;
 import com.ztw.car.service.CarTypeServiceImpl;
@@ -47,7 +44,7 @@ public class CarTypeController {
     @AdminAuth(name = "种类列表", orderNum = 1, icon="icon-list")
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(Model model, Integer page, HttpServletRequest request) {
-        Page<CarType> datas = carTypeService.pageAll(PageableTools.basicPage(page, "asc", "orderNo"));
+        Page<CarType> datas = carTypeService.findAll(new ParamFilterTools<CarType>().buildSpecification(model, request), PageableTools.basicPage(page, "asc", "orderNo"));
         model.addAttribute("datas", datas);
         return "admin/carType/list";
     }
