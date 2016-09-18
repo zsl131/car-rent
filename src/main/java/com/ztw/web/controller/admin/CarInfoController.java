@@ -126,7 +126,7 @@ public class CarInfoController {
     public String update(Model model, @PathVariable Integer id, CarInfo carInfo, HttpServletRequest request, @RequestParam("file")MultipartFile[] files) {
         if(TokenTools.isNoRepeat(request)) {
             CarInfo ci = carInfoService.findById(id);
-            MyBeanUtils.copyProperties(carInfo, ci, new String[]{"id", "clzl"});
+            MyBeanUtils.copyProperties(carInfo, ci, new String[]{"id", "clzl", "rjj"});
 //            carInfo.setBrandName(carBrandService.findById(carInfo.getBrandId()).getName());
 //            carInfo.setTypeName(carTypeService.findById(carInfo.getTypeId()).getName());
 
