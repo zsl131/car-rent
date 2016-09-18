@@ -45,6 +45,7 @@
 					<div class="input-group-addon">车辆品牌</div>
 					<div class="form-control form-inline">
 						<p th:text="${carInfo.brandName}+${carInfo.ppxl}" th:remove="tag"></p>
+						<b class="red" th:text="${carInfo.rjj} + ' 元/天 '"></b>
 					</div>
 				</div>
 			</div>

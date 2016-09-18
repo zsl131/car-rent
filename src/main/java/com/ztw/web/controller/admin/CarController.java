@@ -79,7 +79,7 @@ public class CarController {
             car.setCarNo(car.getCarNo().toUpperCase());
             car.setEngineNo(car.getEngineNo().toUpperCase());
             car.setFrameNo(car.getFrameNo().toUpperCase());
-            car.setStatus("1");
+            car.setStatus("1"); car.setCarSerial(carInfo.getPpxl());
             carService.save(car);
         }
         return "redirect:/admin/car/list";

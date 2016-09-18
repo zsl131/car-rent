@@ -88,7 +88,7 @@
                         <tbody>
                         <tr th:each="obj : ${datas}">
                             <td th:text="${obj.id}">对象Id</td>
-                            <td th:text="${obj.name}">对象名称</td>
+                            <td><span th:text="' '+${obj.name}" th:class="${obj.icon}">对象名称</span></td>
                             <td th:text="${obj.sn}">SN</td>
                             <td>
                                 <div th:switch="${obj.type}" th:remove="tag">
@@ -98,7 +98,9 @@
                             </td>
                             <td th:text="${obj.href}">链接地址</td>
                             <td>
-                                -
+                                <a class="green auth" sn="MenuController.update" title="修改" th:href="'/admin/menu/update/'+${obj.id}">
+                                    <i class="icon-pencil bigger-130"></i>
+                                </a>
                             </td>
                         </tr>
                         </tbody>

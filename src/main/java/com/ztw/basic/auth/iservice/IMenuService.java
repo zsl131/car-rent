@@ -25,9 +25,5 @@ public interface IMenuService extends JpaRepository<Menu, Integer>, JpaSpecifica
     @Query("FROM Menu m WHERE m.href is not null AND m.href!='' AND m.href!='#' ")
     public List<Menu> listAllUrlMenu();
 
-//    @Query("FROM Menu m WHERE m.pid=?1 ")
-//    public Page<Menu> pageAll(Integer pid, Pageable pageable);
-//
-//    @Query("FROM Menu m WHERE m.pid IS NULL")
-//    public Page<Menu> pageAll(Pageable pageable);
+    public Menu findById(Integer id);
 }

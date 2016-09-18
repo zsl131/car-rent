@@ -3,6 +3,7 @@ package com.ztw.web.controller.admin;
 import com.ztw.basic.auth.annotations.AdminAuth;
 import com.ztw.basic.auth.annotations.Token;
 import com.ztw.basic.auth.tools.TokenTools;
+import com.ztw.basic.exception.SystemException;
 import com.ztw.basic.tools.*;
 import com.ztw.car.iservice.ICarBrandService;
 import com.ztw.car.iservice.ICarInfoService;
@@ -13,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -182,6 +180,19 @@ public class CarInfoController {
     public String show(Model model, @PathVariable Integer id) {
         model.addAttribute("carInfo", carInfoService.findById(id));
         return "admin/carInfo/show";
+    }
+
+    @AdminAuth(name = "设置租金", orderNum = 6, type = "2")
+    @RequestMapping(value = "updatePrice/{id}/{price}", method = RequestMethod.POST)
+    public @ResponseBody String updatePrice(@PathVariable Integer id, @PathVariable Float price) {
+        try {
+            CarInfo carInfo = carInfoService.findById(id);
+            carInfo.setRjj(price);
+            carInfoService.save(carInfo);
+            return "1";
+        } catch (Exception e) {
+            throw new SystemException("设置租金失败："+e.getMessage());
+        }
     }
 
     /*@AdminAuth(name="删除车辆信息", orderNum=4, type="2")

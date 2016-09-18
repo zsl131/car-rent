@@ -7,6 +7,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>车辆信息列表</title>
+    <script type="text/javascript" src="/admin/business/carInfo-list.js"></script>
     <script type="text/javascript">
         $(function() {
             $(".delete-obj-href").deleteFun();
@@ -30,6 +31,7 @@
                     <tr>
                         <th>车辆</th>
                         <th>信息</th>
+                        <th>日均价</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -37,8 +39,11 @@
                     <tbody>
                         <tr th:each="obj : ${datas}">
                             <td th:text="${obj.brandName}+${obj.ppxl}"></td>
-                            <td th:text="${obj.clxs}+'/'+${obj.czlx}+'/'+${obj.fdjdl}">
-
+                            <td th:text="${obj.clxs}+'/'+${obj.czlx}+'/'+${obj.fdjdl}"></td>
+                            <td>
+                                <div th:if="${obj.rjj eq NULL or obj.rjj le 0}"><span class="red">未设置</span></div>
+                                <div th:unless="${obj.rjj eq NULL or obj.rjj le 0}"><b class="blue fa fa-cny" th:text="${obj.rjj} + ' 元/天 '">1000元/天</b></div>
+                                <a class="btn btn-info btn-sm set-money-btn" th:attr="objId=${obj.id},curVal=${obj.rjj}" href="javascript:void(0)">设置日租金</a>
                             </td>
                             <td>
                                 <div class="action-buttons">
