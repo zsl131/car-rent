@@ -120,7 +120,15 @@ public class CarInfo {
     private Float rjj;
 
     /** 车辆号牌种类，如：02：小型汽车等 */
-    private String clzl;
+    private String clzl = "02";
+
+    public String getClzl() {
+        return clzl;
+    }
+
+    public void setClzl(String clzl) {
+        this.clzl = clzl;
+    }
 
     public Integer getId() {
         return id;

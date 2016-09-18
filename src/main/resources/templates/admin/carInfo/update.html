@@ -59,7 +59,11 @@
 			<div class="form-group form-group-lg">
 				<div class="input-group input-group-lg">
 					<div class="input-group-addon">操作方式</div>
-					<input type="text" name="czlx" th:value="${carInfo.czlx}" class="form-control" placeholder="如：自动、手动、手自一体"/>
+					<div class="form-control">
+						<input type="radio" name="czlx" value="手自一体" th:checked="${carInfo.czlx == '手自一体'}?'checked'" data-labelauty="手自一体"/>
+						<input type="radio" name="czlx" value="自动" th:checked="${carInfo.czlx == '自动'}?'checked'" data-labelauty="自动"/>
+						<input type="radio" name="czlx" value="手动" th:checked="${carInfo.czlx == '手动'}?'checked'" data-labelauty="手动"/>
+					</div>
 
 					<div class="input-group-addon">动力大小</div>
 					<input type="text" name="fdjdl" th:value="${carInfo.fdjdl}" class="form-control" placeholder="发动机动力，如：1.6、2.0T"/>
@@ -79,10 +83,19 @@
 			<div class="form-group form-group-lg">
 				<div class="input-group input-group-lg">
 					<div class="input-group-addon">燃料类型</div>
-					<input type="text" name="rllx" th:value="${carInfo.rllx}" class="form-control" placeholder="如：柴油、汽油"/>
+					<div class="form-control">
+						<input type="radio" name="rllx" value="柴油" th:checked="${carInfo.rllx == '柴油'}?'checked'" data-labelauty="柴油"/>
+						<input type="radio" name="rllx" value="汽油" th:checked="${carInfo.rllx == '汽油'}?'checked'" data-labelauty="汽油"/>
+						<input type="radio" name="rllx" value="电" th:checked="${carInfo.rllx == '电'}?'checked'" data-labelauty="电"/>
+					</div>
 
 					<div class="input-group-addon">燃油标号</div>
-					<input type="text" name="rybh" th:value="${carInfo.rybh}" class="form-control" placeholder="如：93号汽油、97号汽油"/>
+					<div class="form-control">
+						<input type="radio" name="rybh" value="柴油" th:checked="${carInfo.rybh == '柴油'}?'checked'" data-labelauty="柴油"/>
+						<input type="radio" name="rybh" value="93号汽油" th:checked="${carInfo.rybh == '93号汽油'}?'checked'" data-labelauty="93号汽油"/>
+						<input type="radio" name="rybh" value="97号汽油" th:checked="${carInfo.rybh == '97号汽油'}?'checked'" data-labelauty="97号汽油"/>
+						<input type="radio" name="rybh" value="电" th:checked="${carInfo.rybh == '电'}?'checked'" data-labelauty="电"/>
+					</div>
 				</div>
 			</div>
 
@@ -98,51 +111,75 @@
 
 			<div class="form-group form-group-lg">
 				<div class="input-group input-group-lg">
-					<div class="input-group-addon">驱动方式</div>
-					<input type="text" name="qdfs" th:value="${carInfo.qdfs}" class="form-control" placeholder="如：前驱、后驱、四驱"/>
+					<div class="input-group-addon">进气方式</div>
+					<div class="form-control">
+						<input type="radio" name="jqfs" value="自然吸气" th:checked="${carInfo.jqfs == '自然吸气'}?'checked'" data-labelauty="自然吸气"/>
+						<input type="radio" name="jqfs" value="机械增压" th:checked="${carInfo.jqfs == '机械增压'}?'checked'" data-labelauty="机械增压"/>
+						<input type="radio" name="jqfs" value="涡轮增压" th:checked="${carInfo.jqfs == '涡轮增压'}?'checked'" data-labelauty="涡轮增压"/>
+					</div>
 
 					<div class="input-group-addon">车门数量</div>
-					<input type="text" name="cmsl" th:value="${carInfo.cmsl}" class="form-control" placeholder="如：4" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+					<div class="form-control">
+						<input type="radio" name="cmsl" value="2" th:checked="${carInfo.cmsl == 2}?'checked'" data-labelauty="2 开门"/>
+						<input type="radio" name="cmsl" value="3" th:checked="${carInfo.cmsl == 3}?'checked'" data-labelauty="3 开门"/>
+						<input type="radio" name="cmsl" value="4" th:checked="${carInfo.cmsl == 4}?'checked'" data-labelauty="4 开门"/>
+						<input type="radio" name="cmsl" value="5" th:checked="${carInfo.cmsl == 5}?'checked'" data-labelauty="5 开门"/>
+					</div>
 				</div>
 			</div>
 
 			<div class="form-group form-group-lg">
 				<div class="input-group input-group-lg">
-					<div class="input-group-addon">进气方式</div>
-					<input type="text" name="jqfs" th:value="${carInfo.jqfs}" class="form-control" placeholder="如：自然吸气"/>
+
+					<div class="input-group-addon">驱动方式</div>
+					<div class="form-control">
+						<input type="radio" name="qdfs" value="前驱" th:checked="${carInfo.qdfs == '前驱'}?'checked'" data-labelauty="前驱"/>
+						<input type="radio" name="qdfs" value="后驱" th:checked="${carInfo.qdfs == '后驱'}?'checked'" data-labelauty="后驱"/>
+						<input type="radio" name="qdfs" value="四驱" th:checked="${carInfo.qdfs == '四驱'}?'checked'" data-labelauty="四驱"/>
+					</div>
 
 					<div class="input-group-addon">天窗类型</div>
-					<input type="text" name="tclx" th:value="${carInfo.tclx}" class="form-control" placeholder="如：无、单天窗、全景天窗"/>
+					<div class="form-control">
+						<input type="radio" name="tclx" value="无" th:checked="${carInfo.tclx == '无'}?'checked'" data-labelauty="无"/>
+						<input type="radio" name="tclx" value="单天窗" th:checked="${carInfo.tclx == '单天窗'}?'checked'" data-labelauty="单天窗"/>
+						<input type="radio" name="tclx" value="全景天窗" th:checked="${carInfo.tclx == '全景天窗'}?'checked'" data-labelauty="全景天窗"/>
+					</div>
 				</div>
 			</div>
 
 			<div class="form-group form-group-lg">
 				<div class="input-group input-group-lg">
 					<div class="input-group-addon">座椅类型</div>
-					<input type="text" name="zylx" th:value="${carInfo.zylx}" class="form-control" placeholder="如：皮革座椅"/>
+					<div class="form-control">
+						<input type="radio" name="zylx" value="织物座椅" th:checked="${carInfo.zylx == '织物座椅'}?'checked'" data-labelauty="织物座椅"/>
+						<input type="radio" name="zylx" value="皮革座椅" th:checked="${carInfo.zylx == '皮革座椅'}?'checked'" data-labelauty="皮革座椅"/>
+						<input type="radio" name="zylx" value="真皮座椅" th:checked="${carInfo.zylx == '真皮座椅'}?'checked'" data-labelauty="真皮座椅"/>
+					</div>
 
 					<div class="input-group-addon">变速箱类型</div>
-					<input type="text" name="bsxlx" th:value="${carInfo.bsxlx}" class="form-control" placeholder="如：AT"/>
+					<div class="form-control">
+						<input type="radio" name="bsxlx" value="MT" th:checked="${carInfo.bsxlx == 'MT'}?'checked'" data-labelauty="MT"/>
+						<input type="radio" name="bsxlx" value="AT" th:checked="${carInfo.bsxlx == 'AT'}?'checked'" data-labelauty="AT"/>
+						<input type="radio" name="bsxlx" value="AMT" th:checked="${carInfo.bsxlx == 'AMT'}?'checked'" data-labelauty="AMT"/>
+						<input type="radio" name="bsxlx" value="DCT" th:checked="${carInfo.bsxlx == 'DCT'}?'checked'" data-labelauty="DCT"/>
+						<input type="radio" name="bsxlx" value="CVT" th:checked="${carInfo.bsxlx == 'CVT'}?'checked'" data-labelauty="CVT"/>
+					</div>
 				</div>
 			</div>
 
 			<div class="form-group form-group-lg">
 				<div class="input-group input-group-lg">
 					<div class="input-group-addon">倒车雷达</div>
-					<input type="text" name="dcld" th:value="${carInfo.dcld}" class="form-control" placeholder="如：有、无"/>
+					<div class="form-control">
+						<input type="radio" name="dcld" value="有" th:checked="${carInfo.dcld == '有'}?'checked'" data-labelauty="有倒车雷达"/>
+						<input type="radio" name="dcld" value="无" th:checked="${carInfo.dcld == '无'}?'checked'" data-labelauty="无倒车雷达"/>
+					</div>
 
 					<div class="input-group-addon">倒车影像</div>
-					<input type="text" name="dcyx" th:value="${carInfo.dcyx}" class="form-control" placeholder="如：有、无"/>
-				</div>
-			</div>
-
-			<div class="form-group form-group-lg">
-				<div class="input-group input-group-lg">
-					<div class="input-group-addon">影音类型</div>
-					<input type="text" name="yylx" th:value="${carInfo.yylx}" class="form-control" placeholder="如：无、DVD、CD"/>
-
-					<div class="input-group-addon">音箱数量</div>
-					<input type="text" name="yxsl" th:value="${carInfo.yxsl}" class="form-control" placeholder="如：5" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+					<div class="form-control">
+						<input type="radio" name="dcyx" value="有" th:checked="${carInfo.dcyx == '有'}?'checked'" data-labelauty="有倒车影像"/>
+						<input type="radio" name="dcyx" value="无" th:checked="${carInfo.dcyx == '无'}?'checked'" data-labelauty="无倒车影像"/>
+					</div>
 				</div>
 			</div>
 
@@ -151,8 +188,25 @@
 					<div class="input-group-addon">气囊数量</div>
 					<input type="text" name="qnsl" th:value="${carInfo.qnsl}" class="form-control" placeholder="如：5" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
 
+					<div class="input-group-addon">音箱数量</div>
+					<input type="text" name="yxsl" th:value="${carInfo.yxsl}" class="form-control" placeholder="如：5" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+				</div>
+			</div>
+
+			<div class="form-group form-group-lg">
+				<div class="input-group input-group-lg">
+					<div class="input-group-addon">影音类型</div>
+					<div class="form-control">
+						<input type="radio" name="yylx" value="无" th:checked="${carInfo.yylx == '无'}?'checked'" data-labelauty="无"/>
+						<input type="radio" name="yylx" value="DVD" th:checked="${carInfo.yylx == 'DVD'}?'checked'" data-labelauty="DVD"/>
+						<input type="radio" name="yylx" value="CD" th:checked="${carInfo.yylx == 'CD'}?'checked'" data-labelauty="CD"/>
+					</div>
+
 					<div class="input-group-addon">GPS导航</div>
-					<input type="text" name="gps" th:value="${carInfo.gps}" class="form-control" placeholder="如：有、无" />
+					<div class="form-control">
+						<input type="radio" name="gps" value="有" th:checked="${carInfo.gps == '有'}?'checked'" data-labelauty="有GPS"/>
+						<input type="radio" name="gps" value="无" th:checked="${carInfo.gps == '无'}?'checked'" data-labelauty="无GPS"/>
+					</div>
 				</div>
 			</div>
 

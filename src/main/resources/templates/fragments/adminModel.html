@@ -46,7 +46,7 @@
     <script type="text/javascript" src="/admin/myself/delete.js"></script>
     <script type="text/javascript" src="/admin/myself/auth.js"></script>
     <script type="text/javascript" src="/admin/myself/cms.admin.js"></script>
-    <script type="text/javascript" src="/admin/myself/cms.admin.js"></script>
+    <script type="text/javascript" src="/admin/myself/my_filter.js"></script>
     <link type="text/css" rel="stylesheet" href="/admin/css/style.css"/>
     <script type="text/javascript">
         $(function() {
@@ -157,6 +157,9 @@
     <div th:each="authTmp : ${session.LOGIN_USER.authList}" th:remove="tag">
         <span th:text="'('+${authTmp}+')'" th:remove="tag"></span>
     </div>
+</div>
+<div th:each="arg : ${args}" class="search-filter-div">
+    <input th:value="${arg.value}" type="hidden" th:attr="targetId=${arg.key}"/>
 </div>
 </body>
 </html>

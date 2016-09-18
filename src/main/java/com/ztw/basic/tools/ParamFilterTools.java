@@ -1,10 +1,10 @@
 package com.ztw.basic.tools;
 
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,6 +17,7 @@ public class ParamFilterTools<T> {
     private static final String PARAM_SPE = "-";
 
     public Specifications<T> buildSpecification(Model model, HttpServletRequest request) {
+        Map<String, Object> args = new HashMap<>();
         Specifications<T> result = null;
         Map<String, String[]> paramMap = request.getParameterMap();
         for(String key : paramMap.keySet()) {
@@ -34,13 +35,14 @@ public class ParamFilterTools<T> {
                     } else {
                         result = result.and(spec);
                     }
-                    model.addAttribute(key, fieldVal);
+                    args.put(key, fieldVal);
                 } catch (Exception e) {
 //                    e.printStackTrace();
                 }
             }
 //            System.out.println(key+"========"+paramMap.get(key).length+"=========="+paramMap.get(key)[0].toString());
         }
+        model.addAttribute("args", args);
         return result;
     }
 }

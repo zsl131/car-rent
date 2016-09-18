@@ -30,7 +30,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping(value ="/admin/carInfo")
-@AdminAuth(name = "车辆信息管理",psn = "车库管理",orderNum = 1,porderNum = 2,pentity = 0, icon = "")
+@AdminAuth(name = "车辆信息管理",psn = "车库管理",orderNum = 1,porderNum = 2,pentity = 0)
 public class CarInfoController {
 
     private static final String PATH_PRE = "car/";
@@ -106,6 +106,7 @@ public class CarInfoController {
                 }
             }
 
+            carInfo.setClzl("02");
             carInfoService.save(carInfo);
         }
         return "redirect:/admin/carInfo/list";
@@ -127,7 +128,7 @@ public class CarInfoController {
     public String update(Model model, @PathVariable Integer id, CarInfo carInfo, HttpServletRequest request, @RequestParam("file")MultipartFile[] files) {
         if(TokenTools.isNoRepeat(request)) {
             CarInfo ci = carInfoService.findById(id);
-            MyBeanUtils.copyProperties(carInfo, ci, new String[]{"id"});
+            MyBeanUtils.copyProperties(carInfo, ci, new String[]{"id", "clzl"});
 //            carInfo.setBrandName(carBrandService.findById(carInfo.getBrandId()).getName());
 //            carInfo.setTypeName(carTypeService.findById(carInfo.getTypeId()).getName());
 

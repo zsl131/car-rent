@@ -17,6 +17,10 @@ public class Car {
     @Column(name = "info_id")
     private Integer infoId;
 
+    /** 品牌名称 */
+    @Column(name = "brand_name")
+    private String brandName;
+
     /** 号牌号码 */
     @Column(name = "car_no")
     private String carNo;
@@ -35,6 +39,14 @@ public class Car {
 
     /** 状态，1：在库；2：已租；3：维修；10：报废 */
     private String status;
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
 
     public Integer getId() {
         return id;

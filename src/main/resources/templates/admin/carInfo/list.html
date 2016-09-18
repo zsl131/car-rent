@@ -21,6 +21,8 @@
             <div th:replace="admin/carInfo/nav :: content" th:remove="tag"></div>
         </div>
 
+        <div th:replace="admin/carInfo/filter :: content" th:remove="tag"></div>
+
         <div class="row">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover">
@@ -45,6 +47,9 @@
                                     </a>
                                     <a class="green auth" title="查看详情" sn="CarInfoController.show" th:href="'/admin/carInfo/show/'+${obj.id}">
                                         <i class="glyphicon glyphicon-eye-open bigger-130"></i>
+                                    </a>
+                                    <a class="green auth" title="添加具体车辆" sn="CarController.add" th:href="'/admin/car/add?infoId='+${obj.id}">
+                                        <i class="glyphicon glyphicon-plus bigger-130"></i>
                                     </a>
                                 </div>
                             </td>

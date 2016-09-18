@@ -4,48 +4,70 @@
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorator="fragments/adminModel">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
-		<title>修改汽车种类</title>
-	</head>
-	<body>
-		<div th:fragment="content" th:remove="tag">
-			<div class="header lighter smaller blue">
-				<h3><i class="icon-plus"></i>&nbsp;修改汽车种类 </h3>
-				<div th:replace="admin/carType/nav :: content" th:remove="tag"></div>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
+	<link type="text/css" rel="stylesheet" href="/js-lib/jquery-labelauty.css"/>
+	<script type="text/javascript" src="/js-lib/jquery-labelauty.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(':input').labelauty();
+		});
+	</script>
+<title>修改车辆</title>
+</head>
+<body>
+	<div th:fragment="content" th:remove="tag">
+		<div class="header lighter smaller blue">
+			<h3><i class="icon-plus"></i>&nbsp;修改车辆</h3>
+			<div th:replace="admin/car/nav :: content" th:remove="tag"></div>
+		</div>
+
+		<form method="POST" th:object="${car}" enctype="multipart/form-data" id="dataForm">
+			<div class="form-group form-group-lg">
+				<div class="input-group input-group-lg">
+					<div class="input-group-addon">车辆所属</div>
+					<div class="form-control form-inline" th:text="${car.brandName}"></div>
+				</div>
 			</div>
 
-			<form method="POST" th:object="${carType}" id="dataForm">
-				<div class="form-group form-group-lg">
-					<label for="name">汽车种类名称</label>
-					<input type="text" name="typeName" th:value="${carType.typeName}" class="form-control" id="typeName" placeholder="请输入汽车种类"/>
+			<div class="form-group form-group-lg">
+				<div class="input-group input-group-lg">
+					<div class="input-group-addon">车牌号码</div>
+					<input type="text" name="carNo" th:value="${car.carNo}" readonly="readonly" style="text-transform:uppercase;" class="form-control" placeholder="如：云C00001"/>
 				</div>
-				<input type="hidden" name="token" value="${session.token}"/>
-				<button type="submit" class="btn btn-primary">确定提交</button>
-			</form>
-			<script type="text/javascript">
-				jQuery(function($) {
-					$('#dataForm').bootstrapValidator({
-		//		        live: 'disabled',
-						message: '验证不通过',
-						feedbackIcons: {
-							valid: 'glyphicon glyphicon-ok',
-							invalid: 'glyphicon glyphicon-remove',
-							validating: 'glyphicon glyphicon-refresh'
-						},
-						typeName: {
-							name: {
-								validators: {
-									notEmpty: {
-										message: '请输入汽车名种类名称'
-									}
-								}
-							}
-						}
-					});
-				});
-			</script>
-		</div>
-	</body>
+			</div>
+
+			<div class="form-group form-group-lg">
+				<div class="input-group input-group-lg">
+					<div class="input-group-addon">发动机号</div>
+					<input type="text" name="engineNo" th:value="${car.engineNo}" readonly="readonly" style="text-transform:uppercase;" class="form-control" placeholder="请输入完整发动机号"/>
+				</div>
+			</div>
+
+			<div class="form-group form-group-lg">
+				<div class="input-group input-group-lg">
+					<div class="input-group-addon">车架号码</div>
+					<input type="text" name="frameNo" th:value="${car.frameNo}" readonly="readonly" style="text-transform:uppercase;" class="form-control" placeholder="请输入完整车架号码"/>
+				</div>
+			</div>
+
+			<div class="form-group form-group-lg">
+				<div class="input-group input-group-lg">
+					<div class="input-group-addon">车架号码</div>
+					<div class="form-control">
+						<input type="radio" name="status" value="1" th:checked="${car.status == '1'}?'checked'" data-labelauty="在库"/>
+						<input type="radio" name="status" value="2" th:checked="${car.status == '2'}?'checked'" data-labelauty="已租"/>
+						<input type="radio" name="status" value="3" th:checked="${car.status == '3'}?'checked'" data-labelauty="维修"/>
+						<input type="radio" name="status" value="10" th:checked="${car.status == '10'}?'checked'" data-labelauty="报废"/>
+					</div>
+				</div>
+			</div>
+
+			<input type="hidden" name="token" th:value="${session.token}"/>
+			<button type="submit" class="btn btn-primary">确定提交</button>
+		</form>
+		<script type="text/javascript" src="/admin/valid/car-valid.js"></script>
+	</div>
+</body>
 </html>

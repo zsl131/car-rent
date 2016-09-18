@@ -13,4 +13,13 @@ $(function() {
         });
         window.location.href=location+params;
     });
+
+    $(".filter_element").each(function() {
+        var thisObj = $(this);
+        var id = $(thisObj).attr("name");
+        var val = $("input[targetId="+id+"]").val();
+        if (typeof(val) != "undefined") {
+            $(thisObj).val(val);
+        }
+    });
 });
