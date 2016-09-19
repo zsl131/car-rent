@@ -6,6 +6,8 @@ import com.ztw.basic.auth.model.User;
 import com.ztw.basic.auth.service.MenuServiceImpl;
 import com.ztw.basic.tools.PageableTools;
 import com.ztw.car.iservice.ICarBrandService;
+import com.ztw.car.iservice.ICarService;
+import com.ztw.car.model.Car;
 import com.ztw.car.model.CarBrand;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +42,17 @@ public class UserTest {
 
     @Autowired
     private ICarBrandService carBrandService;
+
+    @Autowired
+    private ICarService carService;
+
+    @Test
+    public void testListCars() {
+        List<Car> carList = carService.listCars("0000");
+        for(Car c : carList) {
+            System.out.println(c.getCarNo());
+        }
+    }
 
     @Test
     public void testCarBrand() {

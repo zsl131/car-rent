@@ -35,6 +35,30 @@ public class People {
     /** 状态，1：正常；-1：黑名单 */
     private String status;
 
+    /** 身份证照片路径 */
+    @Column(name = "iden_pic")
+    private String idenPic;
+
+    /** 驾驶证照片路径 */
+    @Column(name = "drive_pic")
+    private String drivePic;
+
+    public String getDrivePic() {
+        return drivePic;
+    }
+
+    public String getIdenPic() {
+        return idenPic;
+    }
+
+    public void setDrivePic(String drivePic) {
+        this.drivePic = drivePic;
+    }
+
+    public void setIdenPic(String idenPic) {
+        this.idenPic = idenPic;
+    }
+
     public String getStatus() {
         return status;
     }

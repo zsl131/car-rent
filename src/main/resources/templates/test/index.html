@@ -7,16 +7,12 @@
     <script type="text/javascript" src="/bootstrap3/js/bootstrap.min.js"></script>
     <link type="text/css" rel="stylesheet" href="/bootstrap3/css/bootstrap.min.css"/>
 
-    <script type="text/javascript" src="/pub-js/identityValid.js"></script>
     <script type="text/javascript">
-        $(function() {
-            var iden = "532127198803011115";
-            alert(identityCodeValid(iden));
-            alert(idCardInfo(iden, "1"));
-            alert(idCardInfo(iden, "2"));
-            alert(idCardInfo(iden, "3"));
-        });
-    </script>
+	//启动主
+	function Start1_onclick() {
+		captrue.bStartPlay();
+	}
+</script>
 </head>
 <body>
 
@@ -25,18 +21,13 @@
         <h1>测试js是否起作用</h1>
     </div>
     <div class="alert alert-warning">
-        <form method="POST" enctype="multipart/form-data" action="/test/uploadFiles">
-            <p>文件1：<input type="file" name="file" /></p>
-
-            <p>文件2：<input type="file" name="file" /></p>
-
-            <p>文件3：<input type="file" name="file" /></p>
-
-            <p><input type="submit" value="上传" class="btn btn-info"/></p>
-
-        </form>
-
-        <img class=""  src="/test.jpg"/>
+        <div style="text-align: center;">
+            <object classid="clsid:454C18E2-8B7D-43C6-8C17-B1825B49D7DE"
+                    id="captrue" width="400" height="300"></object>
+        </div>
+        <div align="center" style="margin-top: 5px;">
+            <input type="button" value="启动主" onclick="Start1_onclick()"/>
+        </div>
 
     </div>
 </div>

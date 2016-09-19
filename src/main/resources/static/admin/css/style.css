@@ -48,3 +48,8 @@
 .remind-red {
     color:#F00; padding:0px 8px;
 }
+
+.upload-info-div {
+    border:1px #ddd solid; height:280px; margin:5px; vertical-align: middle; line-height:280px;
+    border-radius: 5px;
+}
