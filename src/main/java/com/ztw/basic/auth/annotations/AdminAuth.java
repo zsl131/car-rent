@@ -17,7 +17,7 @@ public @interface AdminAuth {
 	/** 父节点SN */
 	public String psn() default "";
 	/** 资源图标，使用bootstrap */
-	public String icon() default "glyphicon-tags";
+	public String icon() default "glyphicon glyphicon-tags";
 	/** 是否显示 */
 	public int display() default 1;
 	/** 连接地址 */

@@ -117,7 +117,7 @@ public class CarInfo {
     private String remark;
 
     /** 日均价 */
-    private Float rjj;
+    private Float rjj = 1000f;
 
     /** 车辆号牌种类，如：02：小型汽车等 */
     private String clzl = "02";

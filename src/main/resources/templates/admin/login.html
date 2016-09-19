@@ -3,7 +3,7 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>用户登陆-${appConfig.appName}</title>
+    <title th:text="${session.appConfig.appName}+'-用户登陆'">用户登陆</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -37,7 +37,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 style="color:#FFF" ><span class="glyphicon glyphicon-lock"></span><strong>&nbsp;用户登陆</strong><small th:text="${session.appConfig.appVersion}" style="color:#FFF;">版本</small></h1>
+                <h1 style="color:#FFF" ><span class="glyphicon glyphicon-lock"></span><strong>&nbsp;登陆</strong><small th:text="${session.appConfig.appName}+'('+${session.appConfig.appVersion}+')'" style="color:#FFF;">版本</small></h1>
             </div>
         </div>
     </div>

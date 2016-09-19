@@ -1,11 +1,14 @@
 package com.ztw.web.controller.basic;
 
 import com.ztw.basic.auth.annotations.AdminAuth;
+import com.ztw.basic.auth.annotations.Token;
 import com.ztw.basic.auth.iservice.IMenuService;
 import com.ztw.basic.auth.model.Menu;
 import com.ztw.basic.auth.service.MenuServiceImpl;
 import com.ztw.basic.auth.tools.AuthTools;
+import com.ztw.basic.auth.tools.TokenTools;
 import com.ztw.basic.tools.BaseSpecification;
+import com.ztw.basic.tools.MyBeanUtils;
 import com.ztw.basic.tools.PageableTools;
 import com.ztw.basic.tools.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -60,6 +64,26 @@ public class MenuController {
     public @ResponseBody String rebuildMenus(Model model, HttpServletRequest request) {
         AuthTools.getInstance().buildSystemMenu(menuServiceImpl);
         return "1";
+    }
+
+    @Token(flag=Token.READY)
+    @AdminAuth(name="修改菜单", orderNum=3, type="2")
+    @RequestMapping(value="update/{id}", method=RequestMethod.GET)
+    public String update(Model model, @PathVariable Integer id, HttpServletRequest request) {
+        Menu m = menuService.findById(id);
+        model.addAttribute("menu", m);
+        return "admin/menu/update";
+    }
+
+    @Token(flag=Token.CHECK)
+    @RequestMapping(value="update/{id}", method=RequestMethod.POST)
+    public String update(Model model, @PathVariable Integer id, Menu menu, HttpServletRequest request) {
+        if(TokenTools.isNoRepeat(request)) {
+            Menu m = menuService.findById(id);
+            m.setIcon(menu.getIcon());
+            menuService.save(m);
+        }
+        return "redirect:/admin/menu/list";
     }
 
     @RequestMapping("updateSort")
