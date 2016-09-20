@@ -1,5 +1,5 @@
 
-package com.ztw.peccancy.ws;
+package com.ztw.platform.ws;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

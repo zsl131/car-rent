@@ -1,5 +1,5 @@
 
-package com.ztw.peccancy.ws;
+package com.ztw.platform.ws;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

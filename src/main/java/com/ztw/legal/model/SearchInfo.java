@@ -1,4 +1,4 @@
-package com.ztw.peccancy.model;
+package com.ztw.legal.model;
 
 /**
  * search information

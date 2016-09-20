@@ -1,5 +1,5 @@
 
-package com.ztw.peccancy.ws;
+package com.ztw.platform.ws;
 
 import java.net.MalformedURLException;
 import java.net.URL;

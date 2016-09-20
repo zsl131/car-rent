@@ -1,5 +1,5 @@
 
-package com.ztw.peccancy.ws;
+package com.ztw.platform.ws;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
