@@ -4,6 +4,7 @@ import com.ztw.basic.auth.annotations.AdminAuth;
 import com.ztw.basic.auth.annotations.Token;
 import com.ztw.basic.auth.tools.TokenTools;
 import com.ztw.basic.exception.SystemException;
+import com.ztw.basic.tools.ConfigTools;
 import com.ztw.basic.tools.MyBeanUtils;
 import com.ztw.basic.tools.PageableTools;
 import com.ztw.people.iservice.IPeopleService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 
 /**
  * Created by zsl-pc on 2016/9/13.
@@ -29,6 +31,9 @@ public class PeopleController {
 
     @Autowired
     private IPeopleService peopleService;
+
+    @Autowired
+    private ConfigTools configTools;
 
     @AdminAuth(name = "客户列表", orderNum = 1, icon="icon-list")
     @RequestMapping(value = "list", method = RequestMethod.GET)
@@ -74,6 +79,22 @@ public class PeopleController {
     public String update(Model model, @PathVariable Integer id, People people, HttpServletRequest request) {
         if(TokenTools.isNoRepeat(request)) {
             People p = peopleService.findById(id);
+
+            if(people.getIdenPic()!=null && p.getIdenPic()!=null && !people.getIdenPic().equalsIgnoreCase(p.getIdenPic())) {
+                File f = new File(configTools.getUploadPath("") + p.getIdenPic());
+                if(f.exists()) {f.delete();}
+            }
+
+            if(people.getIdenBackPic()!=null && p.getIdenBackPic()!=null && !people.getIdenBackPic().equalsIgnoreCase(p.getIdenBackPic())) {
+                File f = new File(configTools.getUploadPath("") + p.getIdenBackPic());
+                if(f.exists()) {f.delete();}
+            }
+
+            if(people.getDrivePic()!=null && p.getDrivePic()!=null && !people.getDrivePic().equalsIgnoreCase(p.getDrivePic())) {
+                File f = new File(configTools.getUploadPath("") + p.getDrivePic());
+                if(f.exists()) {f.delete();}
+            }
+
             MyBeanUtils.copyProperties(people, p, new String[]{"id"});
             peopleService.save(p);
         }

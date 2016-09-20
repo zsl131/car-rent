@@ -11,10 +11,6 @@
 		<script type="text/javascript" src="/admin/myself/people-add.js"></script>
 		<script type="text/javascript" src="/pub-js/camera.js"></script>
 
-		<link href="/bootstrap-fileupload/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
-		<script src="/bootstrap-fileupload/js/fileinput.js" type="text/javascript"></script>
-		<script src="/bootstrap-fileupload/js/locales/zh.js" type="text/javascript"></script>
-
 		<script type="text/javascript">
 
 		</script>
@@ -71,21 +67,24 @@
 						<div class="upload-info-div">
 							上传身份证<b class="remind-red">正面</b>照片
 						</div>
-						<button type="button" class="btn btn-info" onclick="myupload('上传身份证正面')">上传身份证（正面）</button>
+						<input type="hidden" class="need-input-val" name="idenPic"/>
+						<button type="button" class="btn btn-info" onclick="myupload('上传身份证正面', this)">上传身份证（正面）</button>
 					</div>
 
 					<div class="col-md-4 text-center">
 						<div class="upload-info-div">
 							上传身份证<b class="remind-red">反面</b>照片
 						</div>
-						<button type="button" class="btn btn-info" onclick="myupload('上传身份证反面')">上传身份证（反面）</button>
+						<input type="hidden" class="need-input-val" name="idenBackPic"/>
+						<button type="button" class="btn btn-info" onclick="myupload('上传身份证反面', this)">上传身份证（反面）</button>
 					</div>
 
 					<div class="col-md-4 text-center">
 						<div class="upload-info-div">
 							上传<b class="remind-red">驾驶证</b>照片
 						</div>
-						<button type="button" class="btn btn-info" onclick="myupload('上传驾驶证')">上传驾驶证</button>
+						<input type="hidden" class="need-input-val" name="drivePic"/>
+						<button type="button" class="btn btn-info" onclick="myupload('上传驾驶证', this)">上传驾驶证</button>
 					</div>
 				</div>
 

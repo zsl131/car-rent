@@ -8,55 +8,39 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
 		<script type="text/javascript" src="/pub-js/identityValid.js"></script>
-		<script type="text/javascript" src="/admin/myself/people-add.js"></script>
-		<title>添加车辆品牌</title>
+		<script type="text/javascript" src="/admin/business/orders-add.js"></script>
+		<link type="text/css" rel="stylesheet" href="/admin/business/orders-add.css"/>
+		<title>添加订单信息</title>
 	</head>
 	<body>
 		<div th:fragment="content" th:remove="tag">
 			<div class="header lighter smaller blue">
-				<h3><i class="icon-plus"></i>&nbsp;添加车辆品牌 </h3>
-				<div th:replace="admin/carBrand/nav :: content" th:remove="tag"></div>
+				<h3><i class="icon-plus"></i>&nbsp;添加订单信息</h3>
+				<div th:replace="admin/orders/nav :: content" th:remove="tag"></div>
 			</div>
 
-			<form method="POST" th:object="${carBrand}" enctype="multipart/form-data" id="dataForm">
-				<div class="form-group form-group-lg">
-					<div class="input-group input-group-lg">
-						<div class="input-group-addon">品牌名称</div>
-						<input type="text" name="name" th:value="${carBrand.name}" class="form-control" id="name" placeholder="请输入品牌名称"/>
+			<form method="POST" th:object="${orders}" enctype="multipart/form-data" id="dataForm">
+				<div class="panel panel-warning">
+					<div class="panel-heading"><b class="fa fa-car"></b> 车辆信息</div>
+					<div class="panel-body">
+						<div class="input-group" style="width:60%;">
+							<input type='text' class='form-control' name='param' placeholder="输入车牌号码、品牌名称或品牌系列名称搜索"/>
+							<span class="input-group-addon search-datas-span" id="search-car-id"><b class="fa fa-search"></b> 搜索在库车辆</span>
+						</div>
 					</div>
+				</div>
+				<div class="panel panel-info">
+					<div class="panel-heading"><b class="glyphicon glyphicon-user"></b> 客户信息</div>
+					<div class="panel-body"></div>
+				</div>
+				<div class="panel panel-primary">
+					<div class="panel-heading"><b class="fa fa-shopping-basket"></b> 订单信息</div>
+					<div class="panel-body"></div>
 				</div>
 
-				<div class="form-group form-group-lg">
-					<div class="input-group input-group-lg">
-						<div class="input-group-addon">品牌图标</div>
-						<input type="file" name="file" class="form-control" id="file" />
-					</div>
-				</div>
 				<input type="hidden" name="token" th:value="${session.token}"/>
 				<button type="submit" class="btn btn-primary">确定提交</button>
 			</form>
-			<script type="text/javascript">
-				jQuery(function($) {
-					$('#dataForm').bootstrapValidator({
-		//		        live: 'disabled',
-						message: '验证不通过',
-						feedbackIcons: {
-							valid: 'glyphicon glyphicon-ok',
-							invalid: 'glyphicon glyphicon-remove',
-							validating: 'glyphicon glyphicon-refresh'
-						},
-						fields: {
-							name: {
-								validators: {
-									notEmpty: {
-										message: '请输入品牌名称'
-									}
-								}
-							}
-						}
-					});
-				});
-			</script>
 		</div>
 	</body>
 </html>

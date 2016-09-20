@@ -47,34 +47,26 @@ $(function() {
         }
     });
 
-    /*$("#upload-identity").fileinput({
-        uploadUrl: '#',
-        language: 'zh',
-        dropZoneTitle: "此处上传<b class='remind-red'>身份证</b>图片",
-        maxFilesNum: 1,
-        allowedFileExtensions : ['jpg', 'png','gif']
-    });
-    $("#upload-drive").fileinput({
-        uploadUrl: '#',
-        language: 'zh',
-        dropZoneTitle: "此处上传<b class='remind-red'>驾驶证</b>图片",
-        maxFilesNum: 1,
-        allowedFileExtensions : ['jpg', 'png','gif']
-    });*/
-
 });
 
-function myupload(title) {
-    var dialog = startCamera(title, function() {
+function myupload(title, obj) {
+    var fileName = $(obj).attr("oldName");
+    var myCameraDialog = startCamera(title, function() {
         var base64 = getBase64();
 
         //alert(base64);
-        $.post("/web/uploadByBase64", {imgStr:base64, path : "/people/"}, function(res) {
+        $.post("/web/uploadByBase64", {imgStr:base64, path : "/people/", fileName : fileName}, function(res) {
 //            alert(res.resCode+"===="+res.resMsg);
-            if(res.resCode==1) {
-                $(dialog).modal("hide");
-
-            } else {alert("上传失败："+res.resMsg);}
+            if(res.resCode==0) {
+                alert("上传失败："+res.resMsg);
+            } else {
+                var imgPath = res.resMsg;
+                $(myCameraDialog).modal("hide");
+                $(obj).attr("oldName", imgPath);
+                var showObj = $(obj).siblings("div.upload-info-div");
+                $(showObj).html('<a href="'+imgPath+'" title="点击查看大图" target="_blank" class="upload-img-href"><img src="'+imgPath+'"/></a>');
+                $(obj).siblings("input.need-input-val").val(imgPath);
+            }
         }, "json");
     });
 }

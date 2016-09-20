@@ -30,7 +30,11 @@ public class FileUploadController {
     public @ResponseBody String uploadByBase64(HttpServletRequest request, String imgStr, String path, String fileName) {
         if(imgStr==null || "".equalsIgnoreCase(imgStr)) {return JsonTools.buildJsonNormalStr(0, "无数据");}
         path = path==null||"".equalsIgnoreCase(path)?"":path;
-        fileName = fileName==null || "".equalsIgnoreCase(fileName)? UUID.randomUUID().toString()+".jpg":fileName;
+        //如果文件存在先删除
+        if(fileName!=null && !"".equalsIgnoreCase(fileName)) {
+            File file = new File(configTools.getUploadPath("") + fileName);
+            if(file.exists()) { file.delete(); }
+        }
         BASE64Decoder decoder = new BASE64Decoder();
         try {
             //Base64解码
@@ -42,7 +46,7 @@ public class FileUploadController {
                 }
             }
             //生成jpeg图片
-            File outFile = new File(configTools.getUploadPath(path) + "/" + fileName);
+            File outFile = new File(configTools.getUploadPath(path) + "/" + UUID.randomUUID().toString()+".jpg");
             OutputStream out = new FileOutputStream(outFile);
             out.write(b);
             out.flush();

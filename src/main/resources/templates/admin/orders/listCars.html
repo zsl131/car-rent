@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/adminModel">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>车辆列表</title>
+    <script type="text/javascript">
+        $(function() {
+        });
+    </script>
+</head>
+<body>
+
+    <div th:fragment="content" th:remove="tag">
+        <div class="header lighter smaller blue">
+            <h3><span class="glyphicon glyphicon-th-list"></span>&nbsp;车辆列表<small>（<b th:text="${carList.size()}"></b>）</small></h3>
+            <div th:replace="admin/orders/nav :: content" th:remove="tag"></div>
+        </div>
+        <!-- <div class="table-header">
+            Results for "Latest Registered Domains"
+        </div> -->
+        <div class="row">
+            <div class="table-responsive">
+                <div th:if="${carList.size() le 0}" th:remove="tag">
+                    <b>没有找到与【<span th:text="${#httpServletRequest.getParameter('params')}" th:remove="tag"></span>】相关的车辆信息</b>
+                </div>
+                <div th:if="${carList.size() ge 1}" th:remove="tag">
+                    <p>可选在库车辆如下：</p>
+                    <div th:each="car : ${carList}" th:remove="tag">
+                        <a th:href="@{/admin/orders/add(carId=${car.id})}" class="btn btn-info" th:text="${car.brandName}+''+${car.carSerial}+'['+${car.carNo}+']'"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

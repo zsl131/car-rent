@@ -9,6 +9,7 @@ import com.ztw.basic.tools.ParamFilterTools;
 import com.ztw.car.iservice.ICarInfoService;
 import com.ztw.car.iservice.ICarService;
 import com.ztw.car.iservice.IOrdersService;
+import com.ztw.car.model.Car;
 import com.ztw.car.model.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by zsl-pc on 2016/9/18.
@@ -36,6 +38,15 @@ public class OrdersController {
 
     @Autowired
     private ICarInfoService carInfoService;
+
+    /** 通过条件获取车辆信息 */
+    @RequestMapping(value = "listCars", method = RequestMethod.GET)
+    @AdminAuth(name = "查询车辆信息", orderNum = 1, icon="icon-list", type = "2")
+    public String listCars(Model model, String params) {
+        List<Car> list = carService.listCars(params);
+        model.addAttribute("carList", list);
+        return "admin/orders/listCars";
+    }
 
     @AdminAuth(name = "订单列表", orderNum = 1, icon="icon-list")
     @RequestMapping(value = "list", method = RequestMethod.GET)
