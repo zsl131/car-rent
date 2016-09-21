@@ -7,11 +7,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
+    <link type="text/css" rel="stylesheet" href="/js-lib/jquery-labelauty.css"/>
+    <script type="text/javascript" src="/js-lib/jquery-labelauty.js"></script>
     <title>车辆列表</title>
-    <script type="text/javascript">
-        $(function() {
-        });
-    </script>
 </head>
 <body>
 
@@ -24,16 +22,21 @@
             Results for "Latest Registered Domains"
         </div> -->
         <div class="row">
-            <div class="table-responsive">
+            <div class="table-responsive" id="result-datas">
                 <div th:if="${carList.size() le 0}" th:remove="tag">
-                    <b>没有找到与【<span th:text="${#httpServletRequest.getParameter('params')}" th:remove="tag"></span>】相关的车辆信息</b>
+                    <p style="font-size:14px; padding:4px 0px;">没有找到与【<span th:text="${#httpServletRequest.getParameter('params')}" th:remove="tag"></span>】相关的车辆信息</p>
                 </div>
                 <div th:if="${carList.size() ge 1}" th:remove="tag">
-                    <p>可选在库车辆如下：</p>
+                    <p style="font-size:14px; padding:4px 0px;">搜索到<b class="remind-red" th:text="'【'+${carList.size()}+'】'">0</b>辆与<span class="remind-red" th:text="'【'+${#httpServletRequest.getParameter('params')}+'】'"></span>相关的可选在库车辆：</p>
                     <div th:each="car : ${carList}" th:remove="tag">
-                        <a th:href="@{/admin/orders/add(carId=${car.id})}" class="btn btn-info" th:text="${car.brandName}+''+${car.carSerial}+'['+${car.carNo}+']'"></a>
+                        <input type="radio" class="car-id-radio" onclick="setCarId(this)" name="tempCarId" th:value="${car.id}" th:attr="data-labelauty=${car.brandName}+''+${car.carSerial}+'['+${car.carNo}+']',infoId=${car.infoId}"/>
                     </div>
                 </div>
+                <script type="text/javascript">
+                    $(function() {
+                        $(':input').labelauty();
+                    });
+                </script>
             </div>
         </div>
     </div>

@@ -101,6 +101,14 @@ public class PeopleController {
         return "redirect:/admin/people/list";
     }
 
+    @RequestMapping(value = "show", method = RequestMethod.GET)
+    @AdminAuth(name="查询用户", orderNum=6, type="2")
+    public String show(Model model, String identity) {
+        People p = peopleService.findByIdentity(identity);
+        model.addAttribute("people", p);
+        return "admin/people/show";
+    }
+
     @AdminAuth(name="删除用户", orderNum=4, type="2")
     @RequestMapping(value="delete/{id}", method=RequestMethod.POST)
     public @ResponseBody String delete(@PathVariable Integer id) {

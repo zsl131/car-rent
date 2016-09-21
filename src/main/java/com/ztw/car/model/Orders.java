@@ -18,6 +18,10 @@ public class Orders {
     /** 订单类型，0：电话订单（即由管理员下单）；1：客户订单 */
     private String type;
 
+    /** 客户Id */
+    @Column(name = "costumer_id")
+    private Integer costumerId;
+
     /** 客户姓名 */
     @Column(name = "costumer_name")
     private String costumerName;
@@ -89,6 +93,26 @@ public class Orders {
     @Column(name = "need_back_day")
     private String needBackDay;
 
+    /** 应该归还日期Long */
+    @Column(name = "need_back_long")
+    private Long needBackLong;
+
+    /** 下单日期 */
+    @Column(name = "create_date_long")
+    private Long createDateLong;
+
+    /** 归还日期Long */
+    @Column(name = "back_date_long")
+    private Long backDateLong;
+
+    /** 应该归还日期Date */
+    @Column(name = "need_back_date")
+    private Date needBackDate;
+
+    /** 实际归还日期Date */
+    @Column(name = "back_date")
+    private Date backDate;
+
     /** 应支付金额 */
     @Column(name = "need_money")
     private Float needMoney;
@@ -100,12 +124,16 @@ public class Orders {
     @Column(name = "create_date")
     private Date createDate;
 
-    /** 订单状态，0：未提车；1：已提车；2：已归还；3：已取消； */
+    /** 订单状态，0：未提车；1：已提车；2：已归还；3：已取消；10：已完结（已退压金） */
     private String status;
 
     /** 是否逾期，0：正常；1：已逾期 */
     @Column(name = "is_overdue")
     private Integer isOverdue;
+
+    /** 压金金额 */
+    @Column(name = "deposit_money")
+    private Float depositMoney;
 
     /** 客户备注 */
     @Column(name = "costumer_remind")
@@ -125,6 +153,98 @@ public class Orders {
     /** 违章扣分数 */
     @Column(name = "lllegal_score")
     private Integer lllegalScore;
+
+    /** 租赁协议图片 */
+    @Column(name = "agreement_pic")
+    private String agreementPic;
+
+    /** 收款收据图片 */
+    @Column(name = "receipt_pic")
+    private String receiptPic;
+
+    public Date getBackDate() {
+        return backDate;
+    }
+
+    public Date getNeedBackDate() {
+        return needBackDate;
+    }
+
+    public Long getBackDateLong() {
+        return backDateLong;
+    }
+
+    public Integer getCostumerId() {
+        return costumerId;
+    }
+
+    public void setCostumerId(Integer costumerId) {
+        this.costumerId = costumerId;
+    }
+
+    public Long getNeedBackLong() {
+        return needBackLong;
+    }
+
+    public void setNeedBackLong(Long needBackLong) {
+        this.needBackLong = needBackLong;
+    }
+
+    public Long getCreateDateLong() {
+        return createDateLong;
+    }
+
+    public void setBackDate(Date backDate) {
+        this.backDate = backDate;
+    }
+
+    public void setBackDateLong(Long backDateLong) {
+        this.backDateLong = backDateLong;
+    }
+
+    public void setCreateDateLong(Long createDateLong) {
+        this.createDateLong = createDateLong;
+    }
+
+    public void setNeedBackDate(Date needBackDate) {
+        this.needBackDate = needBackDate;
+    }
+
+    public Float getDepositMoney() {
+        return depositMoney;
+    }
+
+    public void setDepositMoney(Float depositMoney) {
+        this.depositMoney = depositMoney;
+    }
+
+    /** 压金图片 */
+    @Column(name = "deposit_pic")
+    private String depositPic;
+
+    public String getAgreementPic() {
+        return agreementPic;
+    }
+
+    public String getDepositPic() {
+        return depositPic;
+    }
+
+    public String getReceiptPic() {
+        return receiptPic;
+    }
+
+    public void setAgreementPic(String agreementPic) {
+        this.agreementPic = agreementPic;
+    }
+
+    public void setDepositPic(String depositPic) {
+        this.depositPic = depositPic;
+    }
+
+    public void setReceiptPic(String receiptPic) {
+        this.receiptPic = receiptPic;
+    }
 
     public Integer getId() {
         return id;

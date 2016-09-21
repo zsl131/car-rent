@@ -20,6 +20,6 @@ public interface ICarService extends JpaRepository<Car, Integer>, JpaSpecificati
 
     public Car findByFrameNo(String frameNo);
 
-    @Query("FROM Car c WHERE c.brandName LIKE CONCAT('%',?1,'%') OR c.carNo LIKE CONCAT('%',?1,'%') OR c.carSerial LIKE CONCAT('%',?1,'%')")
+    @Query("FROM Car c WHERE c.status='1' AND (c.brandName LIKE CONCAT('%',?1,'%') OR c.carNo LIKE CONCAT('%',?1,'%') OR c.carSerial LIKE CONCAT('%',?1,'%'))")
     public List<Car> listCars(String param);
 }

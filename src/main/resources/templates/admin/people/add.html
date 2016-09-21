@@ -10,6 +10,7 @@
 		<script type="text/javascript" src="/pub-js/identityValid.js"></script>
 		<script type="text/javascript" src="/admin/myself/people-add.js"></script>
 		<script type="text/javascript" src="/pub-js/camera.js"></script>
+		<script type="text/javascript" src="/pub-js/reader-idr210.js"></script>
 
 		<script type="text/javascript">
 
@@ -23,7 +24,10 @@
 				<h3><i class="icon-plus"></i>&nbsp;添加客户 </h3>
 				<div th:replace="admin/people/nav :: content" th:remove="tag"></div>
 			</div>
-
+			<div style="padding-bottom:10px;">
+				<object classid="clsid:5EB842AE-5C49-4FD8-8CE9-77D4AF9FD4FF" id="IdrControl1" width="0" height="0" ></object>
+				<button class="btn btn-danger" id="read-identity"><i class="fa fa-credit-card"></i> 使用身份证阅读器自动读取身份信息</button>
+			</div>
 			<form method="POST" th:object="${people}" id="dataForm">
 				<div class="form-group form-group-lg">
 					<div class="input-group input-group-lg">
@@ -68,7 +72,7 @@
 							上传身份证<b class="remind-red">正面</b>照片
 						</div>
 						<input type="hidden" class="need-input-val" name="idenPic"/>
-						<button type="button" class="btn btn-info" onclick="myupload('上传身份证正面', this)">上传身份证（正面）</button>
+						<button type="button" class="btn btn-info" id="id-photo" onclick="myupload('上传身份证正面', this)">上传身份证（正面）</button>
 					</div>
 
 					<div class="col-md-4 text-center">

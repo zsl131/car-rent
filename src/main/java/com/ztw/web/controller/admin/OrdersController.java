@@ -3,6 +3,7 @@ package com.ztw.web.controller.admin;
 import com.ztw.basic.auth.annotations.AdminAuth;
 import com.ztw.basic.auth.annotations.Token;
 import com.ztw.basic.auth.tools.TokenTools;
+import com.ztw.basic.exception.SystemException;
 import com.ztw.basic.tools.MyBeanUtils;
 import com.ztw.basic.tools.PageableTools;
 import com.ztw.basic.tools.ParamFilterTools;
@@ -10,7 +11,12 @@ import com.ztw.car.iservice.ICarInfoService;
 import com.ztw.car.iservice.ICarService;
 import com.ztw.car.iservice.IOrdersService;
 import com.ztw.car.model.Car;
+import com.ztw.car.model.CarBrand;
+import com.ztw.car.model.CarInfo;
 import com.ztw.car.model.Orders;
+import com.ztw.car.tools.DateTools;
+import com.ztw.people.iservice.IPeopleService;
+import com.ztw.people.model.People;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -18,8 +24,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +46,23 @@ public class OrdersController {
 
     @Autowired
     private ICarInfoService carInfoService;
+
+    @Autowired
+    private IPeopleService peopleService;
+
+    @RequestMapping(value = "queryPeople", method = RequestMethod.POST)
+    @AdminAuth(name = "查询客户信息", orderNum = 7, icon="icon-list", type = "2")
+    public @ResponseBody
+    People queryPeople(String identity) {
+        return peopleService.findByIdentity(identity);
+    }
+
+    @RequestMapping(value = "queryCarInfo", method = RequestMethod.POST)
+    @AdminAuth(name = "查询单张车辆信息", orderNum = 8, icon="icon-list", type = "2")
+    public @ResponseBody
+    CarInfo queryCarInfo(Integer id) {
+        return carInfoService.findById(id);
+    }
 
     /** 通过条件获取车辆信息 */
     @RequestMapping(value = "listCars", method = RequestMethod.GET)
@@ -69,8 +94,56 @@ public class OrdersController {
     /** 添加POST */
     @Token(flag=Token.CHECK)
     @RequestMapping(value="add", method=RequestMethod.POST)
-    public String add(Model model, Orders orders, Integer infoId, HttpServletRequest request) {
+    public String add(Model model, Orders orders, HttpServletRequest request) {
         if(TokenTools.isNoRepeat(request)) {
+            Car car = carService.findById(orders.getCarId());
+            if(!"1".equalsIgnoreCase(car.getStatus())) {throw new SystemException("车辆【"+car.getCarNo()+"】当前状态不是在库的可租车辆");}
+            CarInfo carInfo = carInfoService.findById(car.getInfoId());
+
+            People people = peopleService.findByIdentity(orders.getCostumerIdentity());
+            //如果客户不存在则先添加
+            if(people==null) {
+                people = new People();
+                people.setStatus("1");
+                people.setAddress(orders.getCostumerAddress());
+                people.setAge(orders.getCostumerAge());
+                people.setCreateDate(new Date());
+                people.setIdentity(orders.getCostumerIdentity());
+                people.setName(orders.getCostumerName());
+                people.setPhone(orders.getCostumerPhone());
+                people.setSex(orders.getCostumerSex());
+
+                String idenPic = request.getParameter("idenPic");
+                String idenBackPic = request.getParameter("idenBackPic");
+                String drivePic = request.getParameter("drivePic");
+                people.setIdenPic(idenPic); people.setIdenBackPic(idenBackPic);
+                people.setDrivePic(drivePic);
+                peopleService.save(people);
+            }
+
+            orders.setCostumerId(people.getId());
+
+            orders.setBrandName(carInfo.getBrandName());
+            orders.setBrandId(carInfo.getBrandId());
+            orders.setCarNo(car.getCarNo());
+            orders.setCarSerial(car.getCarSerial());
+            orders.setCarType(carInfo.getTypeName());
+            orders.setTypeId(carInfo.getTypeId());
+            orders.setCreateDate(new Date());
+            orders.setCreateDateLong(System.currentTimeMillis());
+            orders.setInfoId(car.getInfoId());
+            orders.setIsOverdue(0); //未逾期
+            orders.setLllegalCount(0);
+            orders.setLllegalMoney(0f);
+            orders.setLllegalScore(0);
+            orders.setType("0"); //管理员下单
+            orders.setNeedBackDate(DateTools.plusDay(orders.getDays()));
+            orders.setNeedBackDay(DateTools.plusDay(orders.getDays(), ""));
+            orders.setNeedBackLong(DateTools.plusDayByLong(orders.getDays()));
+
+            car.setStatus("2"); //修改车辆为已出租
+            carService.save(car);
+
             ordersService.save(orders);
         }
         return "redirect:/admin/orders/list";
