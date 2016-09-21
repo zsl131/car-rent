@@ -1,5 +1,9 @@
 package com.ztw.legal.model;
 
+import com.ztw.legal.dto.LegalDto;
+import com.ztw.legal.dto.SearchInfo;
+import com.ztw.legal.dto.TenantInfo;
+
 import javax.persistence.*;
 
 /**
@@ -38,6 +42,11 @@ public class Legal {
      * 车牌号码
      */
     private String cphm;
+
+    /**
+     * 车牌种类
+     */
+    private String cpzl;
 
     /**
      * 处罚类型
@@ -80,6 +89,11 @@ public class Legal {
      * 扣分
      */
     private Integer score;
+
+    /**
+     * 违法时间，Long类型
+     */
+    private Long legalong;
 
     public Integer getId() {
         return id;
@@ -192,4 +206,57 @@ public class Legal {
     public void setScore(Integer score) {
         this.score = score;
     }
+
+    public String getCpzl() {
+        return cpzl;
+    }
+
+    public void setCpzl(String cpzl) {
+        this.cpzl = cpzl;
+    }
+
+    public Long getLegalong() {
+        return legalong;
+    }
+
+    public void setLegalong(Long legalong) {
+        this.legalong = legalong;
+    }
+
+    /**
+     * 空构造方法
+     */
+    public Legal() {
+        // 空构造方法
+    }
+
+    /**
+     * 构造租户基本信息
+     * @param tenantInfo
+     */
+    public Legal(TenantInfo tenantInfo, SearchInfo searchInfo) {
+        setTenantName(tenantInfo.getTenantName());
+        setTenantSfz(tenantInfo.getTenantSfz());
+        setPhone(tenantInfo.getPhone());
+        setRentId(tenantInfo.getRentId());
+        setCphm(searchInfo.getHphm());
+        setCpzl(searchInfo.getHpzl());
+    }
+
+    /**
+     *  设置违章信息
+     * @param legalDto
+     */
+    public void setLegalDto(LegalDto legalDto) {
+        setType(legalDto.getType());
+        setOrgName(legalDto.getOrgName());
+        setLegalNo(legalDto.getLegalNo());
+        setTime(legalDto.getTime());
+        setBehavior(legalDto.getBehavior());
+        setAddress(legalDto.getAddress());
+        setMoney(legalDto.getMoney());
+        setScore(legalDto.getScore());
+        setLegalong(legalDto.getLegalong());
+    }
+
 }

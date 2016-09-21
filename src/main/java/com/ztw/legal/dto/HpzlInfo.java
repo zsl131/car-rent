@@ -1,7 +1,8 @@
-package com.ztw.legal.model;
+package com.ztw.legal.dto;
 
 /**
  * 车牌号码种类
+ * 测试用
  * Created by 马旭 on 2016/9/19.
  */
 public enum HpzlInfo {

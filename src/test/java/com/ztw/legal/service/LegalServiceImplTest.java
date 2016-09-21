@@ -1,7 +1,9 @@
 package com.ztw.legal.service;
 
-import com.ztw.legal.model.HpzlInfo;
-import com.ztw.legal.model.SearchInfo;
+import com.ztw.deposit.service.IDepositService;
+import com.ztw.legal.dto.HpzlInfo;
+import com.ztw.legal.dto.SearchInfo;
+import com.ztw.legal.dto.TenantInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +22,19 @@ public class LegalServiceImplTest {
     @Autowired
     private LegalServiceImpl legalServiceImpl;
 
+    @Autowired
+    private IDepositService depositService;
+
     @Test
     public void test() {
-        SearchInfo searchInfo = new SearchInfo();
-        searchInfo.setHpzl(HpzlInfo.小型汽车.getCode());
-        searchInfo.setHphm("云CEX999");
-        searchInfo.setJssj("2016-09-19 00:00:00");
-        searchInfo.setKssj("2015-01-01 00:00:00");
-        searchInfo.setWzsf("云南");
-        legalServiceImpl.searchAndSave(searchInfo, "马旭", "532101198802134814", "18087011221", 1);
+        SearchInfo searchInfo = new SearchInfo(HpzlInfo.小型汽车.getCode(), "云CEX999", "2015-01-01 00:00:00", "2016-09-19 00:00:00", "云南");
+        TenantInfo tenantInfo = new TenantInfo("马旭", "532101198802134814", "18087011221", 1);
+        legalServiceImpl.searchAndSave(searchInfo, tenantInfo);
+    }
+
+    @Test
+    public void testDeposit() {
+        depositService.updateByRentId(1, 200.0);
     }
 
 }

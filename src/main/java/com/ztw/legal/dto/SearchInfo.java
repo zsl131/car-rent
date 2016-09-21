@@ -1,7 +1,7 @@
-package com.ztw.legal.model;
+package com.ztw.legal.dto;
 
 /**
- * search information
+ * legal search information
  * @author 马旭
  */
 public class SearchInfo {
@@ -71,4 +71,26 @@ public class SearchInfo {
         this.wzsf = wzsf;
     }
 
+    /**
+     * 违章查询必要信息构造方法
+     * @param hpzl 号牌种类
+     * @param hphm 号牌号码
+     * @param kssj 查询开始时间
+     * @param jssj 查询结束时间
+     * @param wzsf 违章省份
+     */
+    public SearchInfo(String hpzl, String hphm, String kssj, String jssj, String wzsf) {
+        setHpzl(hpzl);
+        setHphm(hphm);
+        setKssj(kssj);
+        setJssj(jssj);
+        setWzsf(wzsf);
+    }
+
+    /**
+     * 空构造方法
+     */
+    public SearchInfo() {
+        // 空构造方法
+    }
 }
