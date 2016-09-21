@@ -1,4 +1,4 @@
-package com.ztw.legal.model;
+package com.ztw.legal.dto;
 
 /**
  * 违法DTO对象

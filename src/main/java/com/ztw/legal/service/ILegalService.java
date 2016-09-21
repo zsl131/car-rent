@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Created by 马旭 on 2016/9/19.
@@ -18,5 +19,8 @@ public interface ILegalService extends JpaRepository<Legal, Integer>{
 
     @Query("From Legal leg Where leg.cphm=?1")
     Page<Legal> pageByCphm(String cphm, Pageable pageable);
+
+    @Query("From Legal leg Where leg.cphm = :cphm and leg.cpzl = :cpzl and leg.legalong = :legalong")
+    public Legal findOne(@Param("cphm") String cphm, @Param("cpzl") String cpzl, @Param("legalong") Long legalong);
 
 }

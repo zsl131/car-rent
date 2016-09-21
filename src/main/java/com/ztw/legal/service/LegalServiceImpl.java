@@ -2,15 +2,17 @@ package com.ztw.legal.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.ztw.deposit.model.Deposit;
+import com.ztw.deposit.service.IDepositService;
+import com.ztw.legal.dto.TenantInfo;
 import com.ztw.legal.model.Legal;
-import com.ztw.legal.model.LegalDto;
-import com.ztw.legal.model.SearchInfo;
+import com.ztw.legal.dto.LegalDto;
+import com.ztw.legal.dto.SearchInfo;
 import com.ztw.platform.ws.IPlatformOldWebService;
 import com.ztw.platform.ws.PlatformOldWebService;
+import org.hibernate.type.DoubleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.text.SimpleDateFormat;
 
 /**
  * 交通违章查询业务层
@@ -23,43 +25,57 @@ public class LegalServiceImpl {
     private static final IPlatformOldWebService pws = new PlatformOldWebService().getPlatformOldWebServicePort();
     private static final String sourceCode = "ND737SJWN6W1L40WOT3K7958880013";
     private static final String urlCode = "N01";
-    private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     @Autowired
     private ILegalService legalService;
 
+    @Autowired
+    private IDepositService depositService;
+
     /**
      * 违章查询
      * @param searchInfo 查询需要的信息
-     * @param tenantName 租户姓名
-     * @param tenantSfz 租户身份证
-     * @param phone 租户联系电话
-     * @param rentId 订单唯一标识
+     * @param tenantInfo 租户基本信息，包括订单号
      */
-    public void searchAndSave(SearchInfo searchInfo, String tenantName, String tenantSfz, String phone, Integer rentId) {
-        Legal legal = new Legal();
-        legal.setTenantName(tenantName);
-        legal.setTenantSfz(tenantSfz);
-        legal.setPhone(phone);
-        legal.setRentId(rentId);
-        legal.setCphm(searchInfo.getHphm());
+    public void searchAndSave(SearchInfo searchInfo, TenantInfo tenantInfo) {
+
+        // 设定违章的基本信息
+        Legal legal = new Legal(tenantInfo, searchInfo);
 
         String json = JSON.toJSONString(searchInfo);
         String result = pws.uploadObject(sourceCode, urlCode, json);
         JSONArray jsonArray = JSONArray.parseArray(result);
-        System.out.println(result);
+
         LegalDto legalDto;
         for(int i = 0; i < jsonArray.size(); i++) {
             legalDto = JSON.toJavaObject(jsonArray.getJSONObject(i), LegalDto.class);
-            legal.setType(legalDto.getType());
-            legal.setOrgName(legalDto.getOrgName());
-            legal.setLegalNo(legalDto.getLegalNo());
-            legal.setTime(legalDto.getTime());
-            legal.setBehavior(legalDto.getBehavior());
-            legal.setAddress(legalDto.getAddress());
-            legal.setMoney(legalDto.getMoney());
-            legal.setScore(legalDto.getScore());
-            legalService.save(legal);
+
+            // 用车牌号码，车牌种类， 违章时间（Long）标识一条唯一的违章记录，避免重复写入
+            Legal legalExist = legalService.findOne(legal.getCphm(), legal.getCpzl(), legalDto.getLegalong());
+
+            if(legalExist == null) {
+                // 添加违章记录
+                legal.setLegalDto(legalDto);
+                legalService.save(legal);
+
+                // 更新保证金违章罚款
+                Deposit existDeposit = depositService.findByRentId(legal.getRentId());
+                Double forfeitMoney = 0.0;
+
+                if(existDeposit.getForfeitMoney() == null || existDeposit.getForfeitMoney() <= 0) {
+                    // do nothing
+                } else {
+                    forfeitMoney = forfeitMoney + existDeposit.getForfeitMoney();
+                }
+
+                if(legal.getMoney() == null || legal.getMoney() <= 0) {
+                    // do nothing
+                } else {
+                    forfeitMoney = forfeitMoney + legal.getMoney();
+                }
+
+                depositService.updateByRentId(legal.getRentId(), forfeitMoney);
+            }
         }
     }
 }
