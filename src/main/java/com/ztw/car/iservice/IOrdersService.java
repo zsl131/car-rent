@@ -24,4 +24,7 @@ public interface IOrdersService extends JpaRepository<Orders, Integer>, JpaSpeci
 
     @Query("SELECT COUNT(id) FROM Orders o WHERE o.status=?1")
     public Long queryCount(String status);
+
+    @Query("SELECT COUNT(id) FROM Orders o WHERE o.isOverdue=?1")
+    public Long queryCountByOverdue(Integer overdue);
 }

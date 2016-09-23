@@ -16,6 +16,16 @@
                     <span class="input-group-addon">车牌</span>
                     <input type='text' style="width:120px;" class='filter_element form-control' opt="like" name='filter_carNo'/>
                 </div>
+                <div class="input-group">
+                    <span class="input-group-addon">状态</span>
+                    <select name="filter_status" opt="eq" class='filter_element form-control'>
+                        <option value="">=全部=</option>
+                        <option value="1">在库</option>
+                        <option value="2">已租</option>
+                        <option value="3">维修</option>
+                        <option value="10">报废</option>
+                    </select>
+                </div>
 
                 <span><button type="button" class="btn btn-primary btn-sm" id="beginFilter">查询</button></span>
             </div>
