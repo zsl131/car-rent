@@ -35,6 +35,10 @@ function showDialog(msg, title) {
 	
 	$(html).appendTo("body");
 	$(("#"+idStr)).modal({keyboard:true, show:true});
+	$(("#"+idStr)).on('hidden.bs.modal', function (e) {
+        $(("#"+idStr)).remove();
+    });
+    return $(("#"+idStr));
 }
 
 /** bootstrap 提示框 */
@@ -58,5 +62,8 @@ function confirmDialog(msg, title, okfn) {
 	$(html).appendTo("body");
 	$(("#"+idStr)).modal({keyboard:true, show:true});
 	$(("#"+idStr)).find(".dialog-ok-btn").click(okfn);
+	$(("#"+idStr)).on('hidden.bs.modal', function (e) {
+        $(("#"+idStr)).remove();
+    });
 	return $(("#"+idStr));
 }

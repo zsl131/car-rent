@@ -73,6 +73,22 @@ public class OrdersController {
         return "admin/orders/listCars";
     }
 
+    @AdminAuth(name = "修改订单状态", orderNum = 8, type = "2")
+    @RequestMapping(value = "updateStatus/{id}/{status}", method = RequestMethod.POST)
+    public @ResponseBody String updateStatus(@PathVariable Integer id, @PathVariable String status, String msg) {
+        try {
+            if(!"0".equalsIgnoreCase(status) && !"1".equalsIgnoreCase(status)) {
+                Orders orders = ordersService.findById(id);
+                carService.updateStatusByOrders(orders.getCarId(), "1"); //当状态为已归还、已取消、已完结都将车辆设置为在库可出租状态
+            }
+            ordersService.updateStatus(id, status, msg);
+            return "1";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "0";
+        }
+    }
+
     @AdminAuth(name = "订单列表", orderNum = 1, icon="icon-list")
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(Model model, Integer page, HttpServletRequest request) {
@@ -85,6 +101,7 @@ public class OrdersController {
     @AdminAuth(name = "添加订单", orderNum = 2, icon="icon-plus", type = "2")
     @RequestMapping(value="add", method=RequestMethod.GET)
     public String add(Model model, HttpServletRequest request) {
+
         Orders o = new Orders();
         o.setStatus("0");
         model.addAttribute("orders", o);
@@ -136,6 +153,7 @@ public class OrdersController {
             orders.setLllegalCount(0);
             orders.setLllegalMoney(0f);
             orders.setLllegalScore(0);
+            orders.setCurPrice(carInfo.getRjj());
             orders.setType("0"); //管理员下单
             orders.setNeedBackDate(DateTools.plusDay(orders.getDays()));
             orders.setNeedBackDay(DateTools.plusDay(orders.getDays(), ""));
@@ -154,6 +172,7 @@ public class OrdersController {
     @RequestMapping(value="update/{id}", method=RequestMethod.GET)
     public String update(Model model, @PathVariable Integer id, HttpServletRequest request) {
         Orders orders = ordersService.findById(id);
+        model.addAttribute("people", peopleService.findByIdentity(orders.getCostumerIdentity())); //获取客户信息
         model.addAttribute("orders", orders);
         return "admin/orders/update";
     }
@@ -163,7 +182,7 @@ public class OrdersController {
     public String update(Model model, @PathVariable Integer id, Orders orders, HttpServletRequest request) {
         if(TokenTools.isNoRepeat(request)) {
             Orders o = ordersService.findById(id);
-            MyBeanUtils.copyProperties(orders, o, new String[]{"id"});
+            MyBeanUtils.copyProperties(orders, o, new String[]{"id", "costumerIdentity"});
 
             ordersService.save(o);
         }

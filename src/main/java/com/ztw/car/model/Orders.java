@@ -82,6 +82,10 @@ public class Orders {
     @Column(name = "car_type")
     private String carType;
 
+    /** 当时单价，元/天 */
+    @Column(name = "cur_price")
+    private Float curPrice;
+
     /** 租赁天数 */
     private Integer days;
 
@@ -162,6 +166,18 @@ public class Orders {
     @Column(name = "receipt_pic")
     private String receiptPic;
 
+    /** 信息，如：取消原因等 */
+    @Lob
+    private String msg;
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
     public Date getBackDate() {
         return backDate;
     }
@@ -180,6 +196,14 @@ public class Orders {
 
     public void setCostumerId(Integer costumerId) {
         this.costumerId = costumerId;
+    }
+
+    public Float getCurPrice() {
+        return curPrice;
+    }
+
+    public void setCurPrice(Float curPrice) {
+        this.curPrice = curPrice;
     }
 
     public Long getNeedBackLong() {
