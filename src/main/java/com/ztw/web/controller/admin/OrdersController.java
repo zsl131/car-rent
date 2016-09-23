@@ -15,6 +15,8 @@ import com.ztw.car.model.CarBrand;
 import com.ztw.car.model.CarInfo;
 import com.ztw.car.model.Orders;
 import com.ztw.car.tools.DateTools;
+import com.ztw.deposit.model.Deposit;
+import com.ztw.deposit.service.IDepositService;
 import com.ztw.people.iservice.IPeopleService;
 import com.ztw.people.model.People;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,9 @@ public class OrdersController {
 
     @Autowired
     private IPeopleService peopleService;
+
+    @Autowired
+    private IDepositService depositService;
 
     @RequestMapping(value = "queryPeople", method = RequestMethod.POST)
     @AdminAuth(name = "查询客户信息", orderNum = 7, icon="icon-list", type = "2")
@@ -163,6 +168,17 @@ public class OrdersController {
             carService.save(car);
 
             ordersService.save(orders);
+
+            //添加保证金
+            Deposit dep = new Deposit();
+            dep.setStatus("1");
+            dep.setPhone(orders.getCostumerPhone());
+            dep.setForfeitComments(""); dep.setForfeitMoney(0d);
+            dep.setLegalMoney(0d); dep.setMoney(Double.valueOf(orders.getDepositMoney()));
+            dep.setRentId(orders.getId()); dep.setReturnMoney(0d);
+            dep.setStartTime(new Date()); dep.setTenantName(orders.getCostumerName());
+            dep.setTenantSfz(orders.getCostumerIdentity());
+            depositService.save(dep);
         }
         return "redirect:/admin/orders/list";
     }
@@ -220,12 +236,25 @@ public class OrdersController {
             o.setLllegalCount(0);
             o.setLllegalMoney(0f);
             o.setLllegalScore(0);
+            o.setStatus(orders.getStatus());
             o.setCurPrice(carInfo.getRjj());
             o.setNeedBackDate(DateTools.plusDay(orders.getDays()));
             o.setNeedBackDay(DateTools.plusDay(orders.getDays(), ""));
             o.setNeedBackLong(DateTools.plusDayByLong(orders.getDays()));
 
             ordersService.save(o);
+
+            Deposit dep = depositService.findByRentId(o.getId());
+            if(dep!=null) {
+                dep.setStatus("1");
+                dep.setPhone(orders.getCostumerPhone());
+                dep.setForfeitComments(""); dep.setForfeitMoney(0d);
+                dep.setLegalMoney(0d); dep.setMoney(Double.valueOf(orders.getDepositMoney()));
+                dep.setRentId(orders.getId()); dep.setReturnMoney(0d);
+                dep.setStartTime(new Date()); dep.setTenantName(orders.getCostumerName());
+                dep.setTenantSfz(orders.getCostumerIdentity());
+                depositService.save(dep);
+            }
         }
         return "redirect:/admin/orders/list";
     }
