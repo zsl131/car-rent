@@ -88,7 +88,7 @@
 				<div class="col-md-4 text-center">
 					<div class="upload-info-div">
 						<div th:if="${people.drivePic eq NULL or people.drivePic eq ''}" th:remove="tag">
-							上传身份证<b class="remind-red">驾驶证</b>照片
+							上传<b class="remind-red">驾驶证</b>照片
 						</div>
 						<div th:unless="${people.drivePic eq NULL or people.drivePic eq ''}" th:remove="tag">
 							<a th:href="${people.drivePic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${people.drivePic}"/></a>

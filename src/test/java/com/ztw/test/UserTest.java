@@ -47,6 +47,17 @@ public class UserTest {
     private ICarService carService;
 
     @Test
+    public void testQueryCount() {
+        Long count = carService.queryCount();
+        System.out.println("车辆数量==="+count);
+    }
+
+    @Test
+    public void testUpdateCar() {
+        carService.updateStatus(2, "1");
+    }
+
+    @Test
     public void testListCars() {
         List<Car> carList = carService.listCars("0000");
         for(Car c : carList) {

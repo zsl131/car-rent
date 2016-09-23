@@ -4,6 +4,11 @@ import com.ztw.basic.auth.dto.AuthToken;
 import com.ztw.basic.auth.iservice.IUserService;
 import com.ztw.basic.auth.model.User;
 import com.ztw.basic.auth.tools.SecurityUtil;
+import com.ztw.car.iservice.ICarBrandService;
+import com.ztw.car.iservice.ICarService;
+import com.ztw.car.iservice.ICarTypeService;
+import com.ztw.car.iservice.IOrdersService;
+import com.ztw.people.iservice.IPeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +27,29 @@ public class AdminController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private ICarService carService;
+
+    @Autowired
+    private ICarTypeService carTypeService;
+
+    @Autowired
+    private ICarBrandService carBrandService;
+
+    @Autowired
+    private IPeopleService peopleService;
+
+    @Autowired
+    private IOrdersService ordersService;
+
     /** 后台首页 */
     @RequestMapping(value={"", "/"}, method= RequestMethod.GET)
     public String index(Model model, HttpServletRequest request) {
+
+        model.addAttribute("peopleCount", peopleService.queryCount()); //用户数量
+        model.addAttribute("carCount", carService.queryCount()); //车辆数量
+        model.addAttribute("carBrandCount", carBrandService.queryCount()); //车辆品牌数量
+        model.addAttribute("carTypeCount", carTypeService.queryCount()); //车辆种类数量
         return "admin/index";
     }
 

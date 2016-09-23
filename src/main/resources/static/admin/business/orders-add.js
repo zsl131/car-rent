@@ -47,7 +47,38 @@ $(function() {
                         $("input[name='drivePic']").siblings("div.upload-info-div").html('<a href="'+drivePic+'" title="点击查看大图" target="_blank" class="upload-img-href"><img src="'+drivePic+'"/></a>');
                         $("input[name='drivePic']").val(drivePic);
                     }
-                } else {alert("没有客户信息");}
+                } else {
+                    var name = IdrControl1.GetName(); //姓名
+                    var nation = IdrControl1.GetFolk(); //民族
+        //            var sex = IdrControl1.GetSex(); //性别,男、女
+                    var sex = IdrControl1.GetSexN(); //性别，1、2
+                    var code = IdrControl1.GetCode(); //身份证号
+                    var address = IdrControl1.GetAddress(); //地址
+                    $(nameObj).val(name); $(addressObj).val(address);
+                    $(identityObj).val(code);
+                    $(sexObj).val(sex);
+                    var valid = identityCodeValid(code);
+                    if(valid) {
+                        var age = idCardInfo(code, "3"); //获取年龄
+                        $(ageObj).val(age);
+                    }
+
+                    var photo = IdrControl1.GetCardPhotobuf(); //身份证正反面
+                    var obj =  $("input[name='idenPic']");
+                    var fileName = $(obj).attr("oldName");
+                    $.post("/web/uploadByBase64", {imgStr:photo, path : "/people/", fileName : fileName}, function(res) {
+                        if(res.resCode==0) {
+                            alert("上传失败："+res.resMsg);
+                        } else {
+                            var imgPath = res.resMsg;
+
+                            $(obj).attr("oldName", imgPath);
+                            var showObj = $(obj).siblings("div.upload-info-div");
+                            $(showObj).html('<a href="'+imgPath+'" title="点击查看大图" target="_blank" class="upload-img-href"><img src="'+imgPath+'"/></a>');
+                            $("input[name='idenPic']").val(imgPath);
+                        }
+                    }, "json");
+                }
             });
         }
     });

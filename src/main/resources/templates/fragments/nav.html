@@ -29,7 +29,7 @@
 
                                     <ul class="submenu">
                                         <div th:each="m : ${pm.children}" th:remove="tag">
-                                        <li th:id="'menu_'+${m.id}" th:class="'menu-level-'+${menuVs.count}">
+                                        <li th:id="'menu_'+${m.id}" th:class="'menu-level-'+${menuVs.count}" th:attr="thisHref=${m.href}, ppmId=${ppm.pm.id}, pmId=${pm.pm.id}, mId=${m.id}">
                                             <a th:href="'javascript:gotoHref(\''+${m.href}+'\', \''+${ppm.pm.id}+'\', \''+${pm.pm.id}+'\', \''+${m.id}+'\')'" >
                                                 <i th:class="${m.icon}"></i><span th:text="${m.name}+' '" th:remove="tag"></span>
                                             </a>
@@ -49,13 +49,23 @@
             <script type="text/javascript">
                 $(function() {
                     //alert("sdfsdf");
-                    var ppmId = $("#curPpmId").val();
-                    var pmId = $("#curPmId").val();
-                    var mid = $("#curMId").val();
+                    var pathname = window.location.pathname;
+                    var thisHref = $('li[thisHref="'+pathname+'"]');
+                    var ppmId = $(thisHref).attr("ppmId");
+                    var pmId = $(thisHref).attr("pmId");
+                    var mid = $(thisHref).attr("mId");
+                    //alert($(thisHref).html());
+                    //alert(ppmId+"=="+pmId+"=="+mid);
+
+                    if(ppmId==null || pmId==null || mid==null) {
+                        ppmId = $("#curPpmId").val();
+                        pmId = $("#curPmId").val();
+                        mid = $("#curMId").val();
+                    }
                     //alert(ppmId+"=="+pmId+"=="+mid);
                     if(ppmId==null || pmId==null || mid==null) {
                         //alert("+=-=-");
-                        $(".menu-level-1").addClass("active");
+                        $(".menu-level-1").addClass("active open");
                     } else {
                         $(("#menu_"+ppmId)).addClass("active open");
                         $(("#menu_"+pmId)).addClass("active open");

@@ -7,6 +7,7 @@ import com.ztw.basic.exception.SystemException;
 import com.ztw.basic.tools.ConfigTools;
 import com.ztw.basic.tools.MyBeanUtils;
 import com.ztw.basic.tools.PageableTools;
+import com.ztw.basic.tools.ParamFilterTools;
 import com.ztw.people.iservice.IPeopleService;
 import com.ztw.people.model.People;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class PeopleController {
     @AdminAuth(name = "客户列表", orderNum = 1, icon="icon-list")
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(Model model, Integer page, HttpServletRequest request) {
-        Page<People> datas = peopleService.pageAll(PageableTools.basicPage(page));
+        Page<People> datas = peopleService.findAll(new ParamFilterTools<People>().buildSpecification(model, request), PageableTools.basicPage(page));
         model.addAttribute("datas", datas);
         return "admin/people/list";
     }
