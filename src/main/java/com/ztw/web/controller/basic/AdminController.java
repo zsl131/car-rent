@@ -46,10 +46,16 @@ public class AdminController {
     @RequestMapping(value={"", "/"}, method= RequestMethod.GET)
     public String index(Model model, HttpServletRequest request) {
 
+        model.addAttribute("ordersCount", ordersService.queryCount()); //订单总数
+        model.addAttribute("ordersOverdueCount", ordersService.queryCountByOverdue(1)); //已逾期订单数
+        model.addAttribute("carNobackCount", carService.queryCount("2")); //已租车辆数
+        model.addAttribute("carRepairCount", carService.queryCount("3")); //维修中的车辆数
+
         model.addAttribute("peopleCount", peopleService.queryCount()); //用户数量
         model.addAttribute("carCount", carService.queryCount()); //车辆数量
         model.addAttribute("carBrandCount", carBrandService.queryCount()); //车辆品牌数量
         model.addAttribute("carTypeCount", carTypeService.queryCount()); //车辆种类数量
+
         return "admin/index";
     }
 

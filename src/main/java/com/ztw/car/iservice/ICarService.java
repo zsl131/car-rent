@@ -37,4 +37,7 @@ public interface ICarService extends JpaRepository<Car, Integer>, JpaSpecificati
 
     @Query("SELECT COUNT(id) FROM Car ")
     public Long queryCount();
+
+    @Query("SELECT COUNT(id) FROM Car c WHERE c.status=?1")
+    public Long queryCount(String status);
 }

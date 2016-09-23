@@ -38,6 +38,62 @@
             <div class="col-md-12">
                 <div class="row-fluid">
                     <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
+                        <div class="dashboard-stat dark-red">
+                            <div class="visual"><i class="fa fa-shopping-cart"></i></div>
+                            <div class="details">
+                                <div class="number" th:text="${ordersCount}">-</div>
+                                <div class="desc">订单总数</div>
+                            </div>
+                            <a class="more" href="/admin/orders/list">
+                                查看详情 <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
+                        <div class="dashboard-stat dark-yellow">
+                            <div class="visual"><i class="fa fa-shopping-cart"></i></div>
+                            <div class="details">
+                                <div class="number" th:text="${ordersOverdueCount}">-</div>
+                                <div class="desc">已逾期订单数</div>
+                            </div>
+                            <a class="more" href="/admin/orders/list?filter_isOverdue=eq-1">
+                                查看详情 <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
+                        <div class="dashboard-stat dark-green">
+                            <div class="visual"><i class="fa fa-shopping-cart"></i></div>
+                            <div class="details">
+                                <div class="number" th:text="${carNobackCount}">-</div>
+                                <div class="desc">未归还车辆数</div>
+                            </div>
+                            <a class="more" href="/admin/car/list?filter_status=eq-2">
+                                查看详情 <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
+                        <div class="dashboard-stat dark-pink">
+                            <div class="visual"><i class="fa fa-shopping-cart"></i></div>
+                            <div class="details">
+                                <div class="number" th:text="${carRepairCount}">-</div>
+                                <div class="desc">在维修车辆数</div>
+                            </div>
+                            <a class="more" href="/admin/car/list?filter_status=eq-3">
+                                查看详情 <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="row-fluid">
+                    <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
                         <div class="dashboard-stat blue">
                             <div class="visual"><i class="fa fa-user"></i></div>
                             <div class="details">
