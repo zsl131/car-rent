@@ -108,7 +108,7 @@
 		<div class="panel panel-info">
 			<div class="panel-heading"><b class="fa fa-car"></b><b> 车辆信息</b> 第二步、输入车牌号码或车辆品牌名称或车辆品牌系列名称搜索可出租的在库车辆。</div>
 			<div class="panel-body">
-				<input name="carId" type="hidden" class="need-check" placeholder="请选择出租车辆"/>
+				<input name="carId" type="hidden" th:value="${orders.carId}" class="need-check" placeholder="请选择出租车辆"/>
 				<div class="input-group input-group-lg">
 					<input type='text' class='form-control' name='param' placeholder="输入车牌号码、品牌名称或品牌系列名称搜索"/>
 					<span class="input-group-addon search-datas-span" id="search-car-id"><b class="fa fa-search"></b> 搜索在库车辆</span>

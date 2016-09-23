@@ -8,6 +8,7 @@ import com.ztw.car.iservice.ICarBrandService;
 import com.ztw.car.iservice.ICarService;
 import com.ztw.car.iservice.ICarTypeService;
 import com.ztw.car.iservice.IOrdersService;
+import com.ztw.legal.service.ILegalService;
 import com.ztw.people.iservice.IPeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,9 @@ public class AdminController {
     @Autowired
     private IOrdersService ordersService;
 
+    @Autowired
+    private ILegalService legalService;
+
     /** 后台首页 */
     @RequestMapping(value={"", "/"}, method= RequestMethod.GET)
     public String index(Model model, HttpServletRequest request) {
@@ -55,6 +59,9 @@ public class AdminController {
         model.addAttribute("carCount", carService.queryCount()); //车辆数量
         model.addAttribute("carBrandCount", carBrandService.queryCount()); //车辆品牌数量
         model.addAttribute("carTypeCount", carTypeService.queryCount()); //车辆种类数量
+
+        model.addAttribute("legalCount", legalService.queryCount()); //所有违章条数
+        model.addAttribute("legalNoProcessCount", legalService.queryCount("0")); //未处理的违章条数
 
         return "admin/index";
     }

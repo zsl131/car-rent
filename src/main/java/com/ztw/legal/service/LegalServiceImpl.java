@@ -56,13 +56,14 @@ public class LegalServiceImpl {
             if(legalExist == null) {
                 // 添加违章记录
                 legal.setLegalDto(legalDto);
+                legal.setStatus("0"); //默认设置为未处理
                 legalService.save(legal);
 
                 // 更新保证金违章罚款
                 Deposit existDeposit = depositService.findByRentId(legal.getRentId());
                 Double legalMoney = 0.0;
 
-                if(existDeposit.getLegalMoney() == null || existDeposit.getLegalMoney() <= 0) {
+                if(existDeposit!=null && (existDeposit.getLegalMoney() == null || existDeposit.getLegalMoney() <= 0)) {
                     // do nothing
                 } else {
                     legalMoney = legalMoney + existDeposit.getLegalMoney();

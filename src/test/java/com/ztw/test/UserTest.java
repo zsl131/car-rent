@@ -1,6 +1,5 @@
 package com.ztw.test;
 
-import com.ztw.RootApplication;
 import com.ztw.basic.auth.iservice.IUserService;
 import com.ztw.basic.auth.model.User;
 import com.ztw.basic.auth.service.MenuServiceImpl;
@@ -12,26 +11,25 @@ import com.ztw.car.model.CarBrand;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by zsl-pc on 2016/9/9.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@SpringApplicationConfiguration(RootApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ActiveProfiles("zsl")
 public class UserTest {
 
     @Autowired

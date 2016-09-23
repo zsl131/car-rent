@@ -95,6 +95,17 @@ public class Legal {
      */
     private Long legalong;
 
+    /** 状态，0：未处理，1：已处理 */
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Integer getId() {
         return id;
     }

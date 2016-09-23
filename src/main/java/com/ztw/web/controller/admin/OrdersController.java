@@ -181,8 +181,49 @@ public class OrdersController {
     @RequestMapping(value="update/{id}", method=RequestMethod.POST)
     public String update(Model model, @PathVariable Integer id, Orders orders, HttpServletRequest request) {
         if(TokenTools.isNoRepeat(request)) {
+            Car car = carService.findById(orders.getCarId());
+            if(!"1".equalsIgnoreCase(car.getStatus()) && !car.getId().equals(orders.getCarId())) {throw new SystemException("车辆【"+car.getCarNo()+"】当前状态不是在库的可租车辆");}
+            CarInfo carInfo = carInfoService.findById(car.getInfoId());
             Orders o = ordersService.findById(id);
-            MyBeanUtils.copyProperties(orders, o, new String[]{"id", "costumerIdentity"});
+//            MyBeanUtils.copyProperties(orders, o, new String[]{"id", "costumerIdentity"});
+            People people = peopleService.findByIdentity(orders.getCostumerIdentity());
+            //如果客户不存在则先添加
+            if(people==null) {
+                people = new People();
+                people.setStatus("1");
+                people.setAddress(orders.getCostumerAddress());
+                people.setAge(orders.getCostumerAge());
+                people.setCreateDate(new Date());
+                people.setIdentity(orders.getCostumerIdentity());
+                people.setName(orders.getCostumerName());
+                people.setPhone(orders.getCostumerPhone());
+                people.setSex(orders.getCostumerSex());
+
+                String idenPic = request.getParameter("idenPic");
+                String idenBackPic = request.getParameter("idenBackPic");
+                String drivePic = request.getParameter("drivePic");
+                people.setIdenPic(idenPic); people.setIdenBackPic(idenBackPic);
+                people.setDrivePic(drivePic);
+                peopleService.save(people);
+            }
+
+            o.setCostumerId(people.getId());
+
+            o.setBrandName(carInfo.getBrandName());
+            o.setBrandId(carInfo.getBrandId());
+            o.setCarNo(car.getCarNo());
+            o.setCarSerial(car.getCarSerial());
+            o.setCarType(carInfo.getTypeName());
+            o.setTypeId(carInfo.getTypeId());
+            o.setInfoId(car.getInfoId());
+            o.setIsOverdue(0); //未逾期
+            o.setLllegalCount(0);
+            o.setLllegalMoney(0f);
+            o.setLllegalScore(0);
+            o.setCurPrice(carInfo.getRjj());
+            o.setNeedBackDate(DateTools.plusDay(orders.getDays()));
+            o.setNeedBackDay(DateTools.plusDay(orders.getDays(), ""));
+            o.setNeedBackLong(DateTools.plusDayByLong(orders.getDays()));
 
             ordersService.save(o);
         }
