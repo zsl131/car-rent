@@ -57,28 +57,33 @@ public class DepositController {
      * @param forfeitMoney
      * @return
      */
+    @AdminAuth(name="其他扣除金额", orderNum = 3, type = "2")
     @RequestMapping(value = "/updateFM", method = RequestMethod.POST)
-    public @ResponseBody String updateForfeitM(@RequestParam(value = "name") String forfeitMoney, @RequestParam(value = "pk") Integer id, HttpServletRequest request) {
-        System.out.println("Update display name");
-        System.out.println(forfeitMoney);
-        return "";
-//        Double dMoney;
-//        try {
-//            dMoney = Double.parseDouble(forfeitMoney);
-//        } catch (NumberFormatException e) {
-//            return "0";
-//        }
-//
-//        Deposit existDeposit = depositService.findById(id);
-//        Double existForfeitMoney = existDeposit.getForfeitMoney();
-//        Double returnMoney = existDeposit.getReturnMoney() + existForfeitMoney - dMoney;
-//
-//        try {
-//            depositService.updateFM(id, dMoney, returnMoney);
-//            return "1";
-//        } catch (Exception e) {
-//            return "0";
-//        }
+    public @ResponseBody String updateForfeitM(@RequestParam(value = "value") String forfeitMoney, @RequestParam(value = "pk") Integer id) {
+        Double dMoney;
+        try {
+            if(forfeitMoney.equals("")) {
+                dMoney = 0.0;
+            } else {
+                dMoney = Double.parseDouble(forfeitMoney);
+            }
+        } catch (NumberFormatException e) {
+            return "0";
+        }
+
+        Deposit existDeposit = depositService.findById(id);
+        Double existForfeitMoney = existDeposit.getForfeitMoney();
+        if(existForfeitMoney == null) {
+            existForfeitMoney = 0.0;
+        }
+        Double returnMoney = existDeposit.getReturnMoney() + existForfeitMoney - dMoney;
+
+        try {
+            depositService.updateFM(id, dMoney, returnMoney);
+            return "1";
+        } catch (Exception e) {
+            return "0";
+        }
     }
 
     /**
@@ -87,8 +92,9 @@ public class DepositController {
      * @param forfeitComments
      * @return
      */
-    @RequestMapping(value = "/updateFC/{id}", method = RequestMethod.POST)
-    public @ResponseBody String updateForfeitC(@PathVariable Integer id, String forfeitComments) {
+    @AdminAuth(name="其他扣除金额备注", orderNum = 4, type = "2")
+    @RequestMapping(value = "/updateFC", method = RequestMethod.POST)
+    public @ResponseBody String updateForfeitC(@RequestParam(value = "pk") Integer id, @RequestParam(value = "value") String forfeitComments) {
         try {
             depositService.updateFC(id, forfeitComments);
             return "1";

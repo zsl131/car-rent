@@ -17,10 +17,7 @@
 
             $('.forfeitMoney').editable({
                 type: 'text',
-//                url: '/admin/deposit/updateFM',
                 url: '/admin/deposit/updateFM',
-                name: "forfeitMoney",
-                pk: 1,
                 emptytext: "0",
                 title: '请输入扣除款金额',
                 validate: function (value) { //字段验证
@@ -28,16 +25,27 @@
                         return '请输入有效数字';
                     }
                 },
-
                 success: function(result) {
-                    alert(result);
+                    if(result == "1") {
+                        window.location.reload();
+                    } else {
+                        return "没有操作权限或其他原因，修改失败";
+                    }
                 }
             });
 
             $('.forfeitComments').editable({
                 type: 'textarea',
-                name: 'forfeitComments',
-                title: '请输入扣除款备注'
+                url: '/admin/deposit/updateFC',
+                emptytext: " ",
+                title: '请输入扣除款备注',
+                success: function(result) {
+                    if(result == "1") {
+                        window.location.reload();
+                    } else {
+                        return "没有操作权限或其他原因，修改失败";
+                    }
+                }
             });
         });
     </script>
@@ -84,13 +92,13 @@
                         <td th:text="${obj.rentId}"></td>
                         <td th:text="${obj.money} + 元"></td>
                         <td>
-                            <span th:text="${obj.legalMoney == null ? 0 : obj.legalMoney}"></span>元
+                            <span th:text="${obj.legalMoney == null ? 0.0 : obj.legalMoney}"></span>元
                         </td>
                         <td>
-                            <a class="forfeitMoney" th:text="${obj.forfeitMoney}"></a>元
+                            <span class="forfeitMoney" th:text="${obj.forfeitMoney}" th:attr="data-pk=${obj.id}"></span>元
                         </td>
                         <td>
-                            <span class="forfeitComments" th:text="${obj.forfeitComments}"></span>
+                            <span class="forfeitComments" th:text="${obj.forfeitComments}" th:attr="data-pk=${obj.id}"></span>
                         </td>
                         <td>
                             <span th:text="${obj.returnMoney}"></span>元
