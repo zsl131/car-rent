@@ -60,21 +60,22 @@ public class LegalServiceImpl {
 
                 // 更新保证金违章罚款
                 Deposit existDeposit = depositService.findByRentId(legal.getRentId());
-                Double forfeitMoney = 0.0;
+                Double legalMoney = 0.0;
 
-                if(existDeposit.getForfeitMoney() == null || existDeposit.getForfeitMoney() <= 0) {
+                if(existDeposit.getLegalMoney() == null || existDeposit.getLegalMoney() <= 0) {
                     // do nothing
                 } else {
-                    forfeitMoney = forfeitMoney + existDeposit.getForfeitMoney();
+                    legalMoney = legalMoney + existDeposit.getLegalMoney();
                 }
 
                 if(legal.getMoney() == null || legal.getMoney() <= 0) {
                     // do nothing
                 } else {
-                    forfeitMoney = forfeitMoney + legal.getMoney();
+                    legalMoney = legalMoney + legal.getMoney();
                 }
 
-                depositService.updateByRentId(legal.getRentId(), forfeitMoney);
+                Double returnMoney = existDeposit.getMoney() - legalMoney;
+                depositService.updateByRentId(legal.getRentId(), legalMoney, returnMoney);
             }
         }
     }

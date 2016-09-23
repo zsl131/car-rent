@@ -26,7 +26,21 @@ public interface IDepositService extends JpaRepository<Deposit, Integer> {
 
     @Transactional
     @Modifying
-    @Query("update Deposit dep Set dep.forfeitMoney = ?2 Where dep.rentId = ?1")
-    public int updateByRentId(Integer rentId, Double forfeitMoney);
+    @Query("update Deposit dep Set dep.legalMoney = ?2, dep.returnMoney = ?3 Where dep.rentId = ?1")
+    public int updateByRentId(Integer rentId, Double legalMoney, Double returnMoney);
 
+    @Modifying
+    @Transactional
+    @Query("update Deposit dep set dep.status = '2' where dep.id = ?1")
+    public void updateStatus(Integer id);
+
+    @Transactional
+    @Modifying
+    @Query("update Deposit dep Set dep.forfeitMoney = ?2, dep.returnMoney = ?3 Where dep.rentId = ?1")
+    public int updateFM(Integer rentId, Double forfeitMoney, Double returnMoney);
+
+    @Transactional
+    @Modifying
+    @Query("update Deposit dep Set dep.forfeitComments = ?2 Where dep.rentId = ?1")
+    public int updateFC(Integer rentId, String forfeitComments);
 }

@@ -32,9 +32,4 @@ public class LegalServiceImplTest {
         legalServiceImpl.searchAndSave(searchInfo, tenantInfo);
     }
 
-    @Test
-    public void testDeposit() {
-        depositService.updateByRentId(1, 200.0);
-    }
-
 }

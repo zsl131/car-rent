@@ -41,9 +41,19 @@ public class Deposit {
     private Double money;
 
     /**
-     * 记录在租车期间的违章罚款
+     * 违章罚款
+     */
+    private Double legalMoney;
+
+    /**
+     * 其他扣除款项
      */
     private Double forfeitMoney;
+
+    /**
+     * 其他扣除款项备注
+     */
+    private String forfeitComments;
 
     /**
      * 记录实际退还的保证金
@@ -167,5 +177,21 @@ public class Deposit {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Double getLegalMoney() {
+        return legalMoney;
+    }
+
+    public void setLegalMoney(Double legalMoney) {
+        this.legalMoney = legalMoney;
+    }
+
+    public String getForfeitComments() {
+        return forfeitComments;
+    }
+
+    public void setForfeitComments(String forfeitComments) {
+        this.forfeitComments = forfeitComments;
     }
 }
