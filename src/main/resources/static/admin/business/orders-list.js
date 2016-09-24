@@ -1,6 +1,9 @@
 $(function() {
     $(".update-status-cls").click(function() {
         var objId = $(this).attr("objId");
+        var legalCount = $(this).attr("legalCount"); //违章条数
+        var legalMoney = $(this).attr("legalMoney"); //违章罚款
+        var legalScore = $(this).attr("legalScore"); //违章扣分
 //        alert(objId);
         var html =  '<p class="remind-red">状态说明：</p>'+
                     '<p class="remind-gray">·已归还：车辆已经归还到仓库；</p>'+
@@ -17,9 +20,25 @@ $(function() {
                         '</div>' +
                     '</div>' +
 
+                    '<div class="form-group form-group-lg">' +
+                    '<div class="input-group input-group-lg">' +
+                        '<div class="input-group-addon">违章信息</div>' +
+                        '<span class="form-control">共'+legalCount+'条违章，扣'+legalScore+'分，罚款'+legalMoney+'元</span>' +
+                    '</div>'+
+                    '</div>'+
+
+                    '<div class="form-group form-group-lg">' +
+                    '<div class="input-group input-group-lg">' +
+                        '<div class="input-group-addon">扣除压金</div>' +
+                        '<input class="form-control" name="money" placeholder="请输入需要扣除的压金金额" onkeyup="this.value=this.value.replace(/\\D/g,\'\')"/>' +
+                    '</div>'+
+                    '</div>'+
+
+                    '<div class="form-group form-group-lg">' +
                     '<div class="input-group input-group-lg">' +
                     '<div class="input-group-addon">备注信息</div>' +
                     '<textarea style="width:100%" rows="5" placeholder="请输入设置状态的原因"></textarea>' +
+                    '</div>'+
                     '</div>';
         var statusDialog = confirmDialog(html, "修改订单状态", function() {
             var status = $(statusDialog).find("input[name='ordersStatus']:checked").val();

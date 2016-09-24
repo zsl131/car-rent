@@ -2,7 +2,9 @@ package com.ztw.legal.tools;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.ztw.car.iservice.IOrdersService;
 import com.ztw.car.model.Car;
+import com.ztw.car.model.Orders;
 import com.ztw.legal.dto.DateTimeDto;
 import com.ztw.legal.dto.LegalDto;
 import com.ztw.legal.dto.SearchInfo;
@@ -34,6 +36,9 @@ public class QueryLegalTools {
     @Autowired
     private ILegalService legalService;
 
+    @Autowired
+    private IOrdersService ordersService;
+
     /**
      * 查询违章信息
      * @param carType 车辆号牌种类
@@ -63,7 +68,33 @@ public class QueryLegalTools {
                 // 添加违章记录
                 legal.setLegalDto(legalDto);
                 legal.setStatus("0"); //默认设置为未处理
+
+                Orders orders = ordersService.queryOne(legal.getLegalong());
+                if(orders!=null) {
+                    legal.setTenantSfz(orders.getCostumerIdentity());
+                    legal.setTenantName(orders.getCostumerName());
+                    legal.setPhone(orders.getCostumerPhone());
+                    legal.setRentId(orders.getId());
+
+                    //修改订单中的违章数据
+                    ordersService.updateLegal(Float.valueOf(String.valueOf(legal.getMoney())), legal.getScore(), orders.getId());
+                }
+
                 legalService.save(legal);
+
+            } else if(legalExist.getRentId()==null || legalExist.getRentId() <=  0) { //如果之前获取出来的数据未找到订单数据
+                Orders orders = ordersService.queryOne(legalExist.getLegalong());
+                if(orders!=null) {
+                    legalExist.setTenantSfz(orders.getCostumerIdentity());
+                    legalExist.setTenantName(orders.getCostumerName());
+                    legalExist.setPhone(orders.getCostumerPhone());
+                    legalExist.setRentId(orders.getId());
+
+                    //修改订单中的违章数据
+                    ordersService.updateLegal(Float.valueOf(String.valueOf(legalExist.getMoney())), legalExist.getScore(), orders.getId());
+                }
+
+                legalService.save(legalExist);
             }
         }
 

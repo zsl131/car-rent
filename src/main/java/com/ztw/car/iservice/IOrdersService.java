@@ -27,4 +27,12 @@ public interface IOrdersService extends JpaRepository<Orders, Integer>, JpaSpeci
 
     @Query("SELECT COUNT(id) FROM Orders o WHERE o.isOverdue=?1")
     public Long queryCountByOverdue(Integer overdue);
+
+    @Query("FROM Orders o WHERE (o.createDateLong >= ?1 AND o.backDateLong IS NOT NULL AND o.backDateLong <= ?1) OR (o.createDateLong >= ?1 AND o.status='1')")
+    public Orders queryOne(Long locationLong);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Orders o SET o.lllegalCount=o.lllegalCount+1, o.lllegalMoney=o.lllegalMoney+?1, o.lllegalScore=o.lllegalScore+?2 WHERE o.id=?3")
+    public void updateLegal(Float money, Integer score, Integer objId);
 }
