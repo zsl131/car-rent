@@ -4,6 +4,7 @@ $(function() {
         var legalCount = $(this).attr("legalCount"); //违章条数
         var legalMoney = $(this).attr("legalMoney"); //违章罚款
         var legalScore = $(this).attr("legalScore"); //违章扣分
+        var depMoney = $(this).attr("depMoney"); //压金金额
 //        alert(objId);
         var html =  '<p class="remind-red">状态说明：</p>'+
                     '<p class="remind-gray">·已归还：车辆已经归还到仓库；</p>'+
@@ -23,14 +24,15 @@ $(function() {
                     '<div class="form-group form-group-lg">' +
                     '<div class="input-group input-group-lg">' +
                         '<div class="input-group-addon">违章信息</div>' +
-                        '<span class="form-control">共'+legalCount+'条违章，扣'+legalScore+'分，罚款'+legalMoney+'元</span>' +
+                        '<span class="form-control">共<b class="red">'+legalCount+'</b>条违章，扣<b class="red">'+legalScore+'</b>分，罚款<b class="red">'+legalMoney+'</b>元</span>' +
                     '</div>'+
                     '</div>'+
 
                     '<div class="form-group form-group-lg">' +
                     '<div class="input-group input-group-lg">' +
-                        '<div class="input-group-addon">扣除压金</div>' +
-                        '<input class="form-control" name="money" placeholder="请输入需要扣除的压金金额" onkeyup="this.value=this.value.replace(/\\D/g,\'\')"/>' +
+                        '<div class="input-group-addon">压金</div>' +
+                        '<div class="input-group-addon">'+depMoney+'元</div>' +
+                        '<input class="form-control" readonly="readonly" name="money" placeholder="只有设置为“已完结”才需要输入" onkeyup="this.value=this.value.replace(/\\D/g,\'\')"/>' +
                     '</div>'+
                     '</div>'+
 
@@ -49,11 +51,28 @@ $(function() {
                 //alert(status+"===="+msg);
                 if(status=='3' && (msg==null || $.trim(msg)=='')) {showDialog("请输入取消订单的原因");}
                 else {
-                    $.post("/admin/orders/updateStatus/"+objId+"/"+status, {msg : msg}, function(res) {
+                    var totalMoney = $(statusDialog).find("input[name='money']").val();
+                    if(!totalMoney) {totalMoney = 0;}
+                    $.post("/admin/orders/updateStatus/"+objId+"/"+status, {msg : msg, money:totalMoney}, function(res) {
                         if(res=='1') {window.location.reload();}
                         else {showDialog("设置订单状态失败");}
                     }, "json");
                 }
+            }
+        });
+
+        $(statusDialog).find('input[type="radio"]').click(function() {
+            var val = parseInt($(this).val());
+            var moneyObj = $(statusDialog).find("input[name='money']");
+            if(val==10) {
+                $(moneyObj).removeAttr("readonly");
+                $(moneyObj).attr("placeholder", "输入需扣压金（违章罚金除外），默认为0");
+                if(legalMoney>0) {
+                    $(moneyObj).val(legalMoney);
+                }
+            } else {
+                $(moneyObj).attr("readonly", "readonly");
+                $(moneyObj).attr("placeholder", "只有设置为“已完结”才需要输入");
             }
         });
     });

@@ -33,6 +33,7 @@
                     <th>类型</th>
                     <th>客户</th>
                     <th>车辆</th>
+                    <th>订单时间</th>
                     <th>租期</th>
                     <th>归还日</th>
                     <th>租金</th>
@@ -51,6 +52,9 @@
                         </td>
                         <td th:text="${obj.costumerName}+'/'+${obj.costumerPhone}"></td>
                         <td th:text="${obj.brandName}+''+${obj.carSerial}+'/'+${obj.carNo}">车辆</td>
+                        <td th:text="${#dates.format(obj.createDate, 'yyyy-MM-dd HH:mm:ss')}">
+
+                        </td>
                         <td th:text="${obj.days}+'天'">租期</td>
                         <td>
                             <p th:text="${obj.needBackDay}"></p>
@@ -83,8 +87,12 @@
                                     <i class="icon-pencil bigger-130"></i>
                                 </a>
                                 <div th:if="${obj.status eq '1'}">
-                                    <a href="javascript:void(0)" class="green auth update-status-cls" th:attr="objId=${obj.id},legalCount=${obj.lllegalCount}, legalMoney=${obj.lllegalMoney}, legalScore=${obj.lllegalScore}" sn="OrdersController.updateStatus"><i class="icon-pencil bigger-130"></i></a>
+                                    <a href="javascript:void(0)" class="green auth update-status-cls" th:attr="objId=${obj.id},legalCount=${obj.lllegalCount}, legalMoney=${obj.lllegalMoney}, legalScore=${obj.lllegalScore},depMoney=${obj.depositMoney}" sn="OrdersController.updateStatus"><i class="icon-pencil bigger-130"></i></a>
                                 </div>
+
+                                <a class="green auth" title="订单详情" sn="OrdersController.show" th:href="'/admin/orders/show/'+${obj.id}">
+                                    <i class="fa fa-eye bigger-130"></i>
+                                </a>
                             </div>
                         </td>
                     </tr>

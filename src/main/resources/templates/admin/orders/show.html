@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="fragments/adminModel">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script type="text/javascript" src="/admin/business/orders-show.js"></script>
+
+		<title>订单详情</title>
+	</head>
+	<body>
+		<div th:fragment="content" th:remove="tag">
+			<div class="header lighter smaller blue">
+				<h3><i class="fa fa-eye"></i>&nbsp;订单详情</h3>
+				<div th:replace="admin/orders/nav :: content" th:remove="tag"></div>
+			</div>
+            <div class="panel panel-info">
+                <div class="panel-heading">订单基本信息</div>
+                <div class="panel-body">
+                    <div class="form-group form-group-lg">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">下单日期</div>
+                            <input class="form-control" th:value="${#dates.format(orders.createDate, 'yyyy-MM-dd HH:mm:ss')}" disabled="disabled"/>
+
+                            <div class="input-group-addon">租期</div>
+                            <input class="form-control" th:value="${orders.days} + ' 天'" disabled="disabled"/>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-lg">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">应当归还日</div>
+                            <input class="form-control" th:value="${orders.needBackDay}" disabled="disabled"/>
+
+                            <div class="input-group-addon">实际归还日</div>
+                            <input class="form-control red" th:value="${orders.backDate eq NULL ? '未归还': #dates.format(orders.backDate, 'yyyy-MM-dd HH:mm:ss')}" />
+                        </div>
+                    </div>
+                    <div class="form-group form-group-lg">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">车辆信息</div>
+                            <input class="form-control" th:value="${orders.brandName}+${orders.carSerial}" disabled="disabled"/>
+
+                            <div class="input-group-addon">车牌号码</div>
+                            <input class="form-control red" th:value="${orders.carNo}" disabled="disabled"/>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-lg" >
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">租金单价</div>
+                            <input class="form-control" th:value="${orders.curPrice}+' 元 / 天'" disabled="disabled"/>
+
+                            <div class="input-group-addon">合计租金</div>
+                            <input class="form-control red" th:value="${orders.money} + ' 元'" disabled="disabled"/>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-lg">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">租期状态</div>
+                            <div th:switch="${orders.isOverdue}" th:remove="tag">
+                                <span th:case="0" class="form-control blue glyphicon glyphicon-ok-circle">正常</span>
+                                <span th:case="1" class="form-control red glyphicon glyphicon-remove-circle">逾期</span>
+                            </div>
+
+                            <div class="input-group-addon">订单状态</div>
+                            <div th:switch="${orders.status}" th:remove="tag">
+                                <span th:case="0" class="form-control red glyphicon glyphicon-star-empty">未提车</span>
+                                <span th:case="1" class="form-control blue glyphicon glyphicon-ok-circle">已提车</span>
+                                <span th:case="2" class="form-control blue glyphicon glyphicon-ok">已归还</span>
+                                <span th:case="3" class="form-control red glyphicon glyphicon-minus" th:title="'取消原因：'+${orders.msg}">已取消</span>
+                                <span th:case="10" class="form-control green glyphicon glyphicon-star">已完结</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">客户信息</div>
+                <div class="panel-body" th:if="${people ne NULL}">
+                    <div class="form-group form-group-lg">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">客户姓名</div>
+                            <input class="form-control" th:value="${people.name}+' / ' + ${people.sex=='1' ? '男':'女'}" disabled="disabled"/>
+
+                            <div class="input-group-addon">身份证号</div>
+                            <input class="form-control" th:value="${people.identity}" disabled="disabled"/>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-lg">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">手机号码</div>
+                            <input class="form-control" th:value="${people.phone}" disabled="disabled"/>
+
+                            <div class="input-group-addon">家庭地址</div>
+                            <input class="form-control" th:value="${people.address}" disabled="disabled"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body" th:if="${people eq NULL}">
+                    <div class="form-group form-group-lg">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">客户姓名</div>
+                            <input class="form-control" th:value="${orders.costumerName}+' / ' + ${orders.costumerSex=='1' ? '男':'女'}" disabled="disabled"/>
+
+                            <div class="input-group-addon">身份证号</div>
+                            <input class="form-control" th:value="${orders.costumerIdentity}" disabled="disabled"/>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-lg">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">手机号码</div>
+                            <input class="form-control" th:value="${orders.costumerPhone}" disabled="disabled"/>
+
+                            <div class="input-group-addon">家庭地址</div>
+                            <input class="form-control" th:value="${orders.costumerAddress}" disabled="disabled"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">压金信息</div>
+                <div class="panel-body" th:if="${deposit ne NULL}">
+
+                    <div class="form-group form-group-lg">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">压金总额</div>
+                            <input class="form-control" th:value="${deposit.money}" disabled="disabled"/>
+
+                            <div class="input-group-addon">压金状态</div>
+                            <input class="form-control" th:value="${deposit.status=='1'?'未退还':'已退还'}" disabled="disabled"/>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-lg">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">违章罚金</div>
+                            <input class="form-control" th:value="${deposit.legalMoney}" disabled="disabled"/>
+
+                            <div class="input-group-addon">其他扣款</div>
+                            <input class="form-control" th:value="${deposit.forfeitMoney}" disabled="disabled"/>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-lg">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">退款日期</div>
+                            <input class="form-control" th:value="${deposit.endTime eq NULL ? '未退款': #dates.format(deposit.endTime, 'yyyy-MM-dd HH:mm:ss')}" disabled="disabled"/>
+
+                            <div class="input-group-addon">备注信息</div>
+                            <input class="form-control" th:value="${deposit.forfeitComments}" disabled="disabled"/>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-body" th:if="${deposit eq NULL}">
+                    <div class="text-center red">未检索到该订单的压金信息</div>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">违章信息</div>
+                <div class="panel-body" th:if="${legalList.size() gt 0}">
+                    <div class="form-group form-group-lg">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon">违章条数</div>
+                            <input class="form-control" th:value="${orders.lllegalCount}" disabled="disabled"/>
+
+                            <div class="input-group-addon">违章总扣分</div>
+                            <input class="form-control" th:value="${orders.lllegalMoney}" disabled="disabled"/>
+
+                            <div class="input-group-addon">违章总罚款</div>
+                            <input class="form-control" th:value="${orders.lllegalScore}" disabled="disabled"/>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>状态</th>
+                                <th>车牌</th>
+                                <th>违法行为</th>
+                                <th>违法地址</th>
+                                <th>处理单位</th>
+                                <th>扣分</th>
+                                <th>罚款</th>
+                                <th>违法时间</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="obj : ${legalList}">
+                                <td>
+                                    <div th:switch="${obj.status}" th:remove="tag">
+                                        <span th:case="0" class="red glyphicon glyphicon-remove">未处理</span>
+                                        <span th:case="1" class="blue glyphicon glyphicon-ok">已处理</span>
+                                    </div>
+                                </td>
+                                <td th:text="${obj.cphm}">车牌</td>
+                                <td th:text="${obj.behavior}">行为</td>
+                                <td th:text="${obj.address}">地址</td>
+                                <td th:text="${obj.orgName}">单位</td>
+                                <td th:text="'罚 '+${obj.money} + ' 元'">罚金</td>
+                                <td th:text="'扣 ' +${obj.score}+' 分'">扣分</td>
+                                <td th:text="${obj.time}">时间</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="panel-body" th:if="${legalList.size() le 0}">
+                    <div class="text-center red">此订单未找到任何违章信息</div>
+                </div>
+            </div>
+            <button type="button" onclick="javascript:history.back(-1)" class="btn btn-default">返回上级</button>
+        </div>
+	</body>
+</html>

@@ -26,7 +26,7 @@ public interface ILegalService extends JpaRepository<Legal, Integer>, JpaSpecifi
     Page<Legal> pageByCphm(String cphm, Pageable pageable);
 
     @Query("From Legal leg Where leg.rentId = ?1")
-    public List<Legal> getLegalByRentId(String rentId);
+    public List<Legal> getLegalByRentId(Integer rentId);
 
     @Query("From Legal leg Where leg.cphm = :cphm and leg.cpzl = :cpzl and leg.legalong = :legalong")
     public Legal findOne(@Param("cphm") String cphm, @Param("cpzl") String cpzl, @Param("legalong") Long legalong);

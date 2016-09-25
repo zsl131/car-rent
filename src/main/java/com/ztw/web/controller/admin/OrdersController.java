@@ -17,6 +17,7 @@ import com.ztw.car.model.Orders;
 import com.ztw.car.tools.DateTools;
 import com.ztw.deposit.model.Deposit;
 import com.ztw.deposit.service.IDepositService;
+import com.ztw.legal.service.ILegalService;
 import com.ztw.people.iservice.IPeopleService;
 import com.ztw.people.model.People;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,9 @@ public class OrdersController {
     @Autowired
     private IDepositService depositService;
 
+    @Autowired
+    private ILegalService legalService;
+
     @RequestMapping(value = "queryPeople", method = RequestMethod.POST)
     @AdminAuth(name = "查询客户信息", orderNum = 7, icon="icon-list", type = "2")
     public @ResponseBody
@@ -80,13 +84,27 @@ public class OrdersController {
 
     @AdminAuth(name = "修改订单状态", orderNum = 8, type = "2")
     @RequestMapping(value = "updateStatus/{id}/{status}", method = RequestMethod.POST)
-    public @ResponseBody String updateStatus(@PathVariable Integer id, @PathVariable String status, String msg) {
+    public @ResponseBody String updateStatus(@PathVariable Integer id, @PathVariable String status, Float money, String msg) {
         try {
+            if(money==null || money<0) {money = 0f;} //如果金额为空或小于0，都将其设置为0
             if(!"0".equalsIgnoreCase(status) && !"1".equalsIgnoreCase(status)) {
                 Orders orders = ordersService.findById(id);
                 carService.updateStatusByOrders(orders.getCarId(), "1"); //当状态为已归还、已取消、已完结都将车辆设置为在库可出租状态
+
+                if("10".equals(status)) { //如果是完结状态，需要设置压金对象
+                    Deposit dep = depositService.findByRentId(id);
+                    if(dep!=null) {
+                        dep.setForfeitMoney(Double.valueOf(money));
+                        dep.setForfeitComments(msg);
+                        dep.setStatus("2");
+                        dep.setReturnTime(new Date());
+                        dep.setReturnMoney(dep.getMoney() - dep.getForfeitMoney() - dep.getLegalMoney()); //实际退还为：总金额-扣除款-违章款
+                        depositService.save(dep);
+                    }
+                }
             }
-            ordersService.updateStatus(id, status, msg);
+            Date date = new Date();
+            ordersService.updateStatus(id, status, msg, date, DateTools.date2Str(date), date.getTime());
             return "1";
         } catch (Exception e) {
             e.printStackTrace();
@@ -262,7 +280,12 @@ public class OrdersController {
     @AdminAuth(name="查看订单详情", orderNum=5, type="2")
     @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
     public String show(Model model, @PathVariable Integer id) {
-        model.addAttribute("orders", ordersService.findById(id));
+        Orders orders = ordersService.findById(id);
+        model.addAttribute("orders", orders); //订单信息
+        model.addAttribute("carInfo", carInfoService.findById(orders.getInfoId())); //车辆信息
+        model.addAttribute("deposit", depositService.findByRentId(id));  //压金信息
+        model.addAttribute("legalList", legalService.getLegalByRentId(id)); //违章信息
+        model.addAttribute("people", peopleService.findById(orders.getCostumerId())); //客户信息
         return "admin/orders/show";
     }
 }

@@ -33,4 +33,29 @@ public class DateTools {
         Date date = plusDay(days);
         return date.getTime();
     }
+
+    /**
+     * 判断是否逾期
+     * @param startDate 开始日期
+     * @param amount 出租天数
+     * @return
+     */
+    public static boolean isOverdue(Date startDate, Integer amount) {
+        Calendar needCal = Calendar.getInstance();
+        needCal.setTime(startDate);
+        needCal.add(Calendar.DAY_OF_MONTH, amount);
+
+        Calendar nowCal = Calendar.getInstance();
+
+        return !needCal.getTime().after(nowCal.getTime());
+    }
+
+    public static String date2Str(Date date, String pattern) {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
+    }
+
+    public static String date2Str(Date date) {
+        return date2Str(date, "yyyy-MM-dd");
+    }
 }

@@ -1,13 +1,13 @@
 package com.ztw.timers;
 
-import com.ztw.basic.auth.iservice.IUserService;
-import com.ztw.basic.auth.model.User;
+import com.ztw.car.iservice.IOrdersService;
+import com.ztw.car.model.Orders;
+import com.ztw.car.tools.DateTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,20 +18,24 @@ import java.util.List;
 public class SystemTasks {
 
     @Autowired
-    private IUserService userService;
+    private IOrdersService ordersService;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
-    @Scheduled(fixedRate = 5000)
-    public void testTime() {
-//        System.out.println("现在时间："+sdf.format(new Date()));
-    }
-
-    @Scheduled(fixedRate = 8000)
-    public void testUser() {
-        /*List<User> list = userService.findAll();
-        for(User u : list) {
-            System.out.println(u.getNickname()+"===="+u.getUsername());
-        }*/
+    /**
+     * 处理订单是否逾期的定时器
+     * 每天凌晨12：30分执行
+     */
+//    @Scheduled(cron = "0 30 0 * * ?")
+    @Scheduled(cron = "0 46 9 * * ?")
+    public void processOrdersOverdue() {
+        List<Orders> ordersList = ordersService.findByCon();
+        for(Orders orders : ordersList) {
+            boolean isOverdue = DateTools.isOverdue(orders.getCreateDate(), orders.getDays()); //是否逾期
+            if(isOverdue) {
+                ordersService.updateOverdue(1, orders.getId());
+                //TODO 需要以短信或其他方式通知管理员和驾驶员订单已过期。
+            }
+        }
     }
 }
