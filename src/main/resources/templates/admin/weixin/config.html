@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="fragments/adminModel">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>微信配置管理</title>
+		<script type="text/javascript">
+			$(document).ready(
+				function () {
+					$("#getAccessToken").click(function () {
+						$.post("/admin/weixin/getAccessToken",{},function (e) {
+							if(e="success"){
+								window.location.href="/admin/weixin/config";
+							};
+						});
+					});
+				}
+			)
+		</script>
+	</head>
+	<body>
+		<div th:fragment="content" th:remove="tag">
+			<div class="header lighter smaller blue">
+				<h3><span class="glyphicon glyphicon-th-list"></span><i class="icon-setting"></i>&nbsp;网站配置管理<small>&nbsp;</small></h3>
+			</div>
+
+			<form method="POST" th:object="${weixinConfig}">
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+					  <div class="input-group-addon">appID：</div>
+					  <input name="appID" type="text" class="form-control" th:value="${weiXinConfig.appID}" placeholder="请输入appID" />
+					</div>
+				</div>
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">appsecret：</div>
+						<input name="appsecret" type="text" class="form-control" th:value="${weiXinConfig.appsecret}" placeholder="请输入appsecret" />
+					</div>
+				</div>
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">Token：</div>
+						<input name="Token" type="text" class="form-control" th:value="${weiXinConfig.Token}" placeholder="请输入Token" />
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary submit-update-btn">保存设置</button>
+				<th:block th:if="${flag==true}">
+					<button id="getAccessToken"  class="btn btn-primary">启动token定时器</button>
+				</th:block>
+			</form>
+		</div>
+	</body>
+</html>
