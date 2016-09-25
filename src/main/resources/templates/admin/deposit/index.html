@@ -103,7 +103,10 @@
                         <td>
                             <span th:text="${obj.returnMoney}"></span>元
                         </td>
-                        <td th:text="${obj.status == '1' ? '未退还' : '已退还'}"></td>
+                        <td>
+                            <span th:text="${obj.status == '1' ? '未退还' : '已退还'}"
+                                  th:attr="class=${obj.status == '1' ? 'label label-success arrowed-in' : 'label label-inverse arrowed-in'}"></span>
+                        </td>
                         <td>
                             <div class="action-buttons">
                                 <span th:if="${obj.status ne '2'}">
