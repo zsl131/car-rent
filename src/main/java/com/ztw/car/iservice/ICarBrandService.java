@@ -25,4 +25,7 @@ public interface ICarBrandService extends JpaRepository<CarBrand, Integer>, JpaS
 
     @Query("SELECT MAX(orderNo) FROM CarBrand ")
     public Integer findMaxOrderNo();
+
+    @Query("SELECT COUNT(id) FROM CarBrand")
+    public Long queryCount() ;
 }

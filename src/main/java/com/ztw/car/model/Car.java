@@ -25,6 +25,10 @@ public class Car {
     @Column(name = "car_no")
     private String carNo;
 
+    /** 车辆系列名称 */
+    @Column(name = "car_serial")
+    private String carSerial;
+
     /** 号牌种类 */
     @Column(name = "car_type")
     private String carType;
@@ -39,6 +43,14 @@ public class Car {
 
     /** 状态，1：在库；2：已租；3：维修；10：报废 */
     private String status;
+
+    public String getCarSerial() {
+        return carSerial;
+    }
+
+    public void setCarSerial(String carSerial) {
+        this.carSerial = carSerial;
+    }
 
     public void setBrandName(String brandName) {
         this.brandName = brandName;

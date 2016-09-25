@@ -1,6 +1,7 @@
 package com.ztw.people.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * 客户管理
@@ -34,6 +35,54 @@ public class People {
 
     /** 状态，1：正常；-1：黑名单 */
     private String status;
+
+    /** 采集日期 */
+    @Column(name = "create_date")
+    private Date createDate;
+
+    /** 身份证照片路径 */
+    @Column(name = "iden_pic")
+    private String idenPic;
+
+    /** 身份证反面照片路径 */
+    @Column(name = "iden_back_pic")
+    private String idenBackPic;
+
+    /** 驾驶证照片路径 */
+    @Column(name = "drive_pic")
+    private String drivePic;
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getIdenBackPic() {
+        return idenBackPic;
+    }
+
+    public void setIdenBackPic(String idenBackPic) {
+        this.idenBackPic = idenBackPic;
+    }
+
+    public String getDrivePic() {
+        return drivePic;
+    }
+
+    public String getIdenPic() {
+        return idenPic;
+    }
+
+    public void setDrivePic(String drivePic) {
+        this.drivePic = drivePic;
+    }
+
+    public void setIdenPic(String idenPic) {
+        this.idenPic = idenPic;
+    }
 
     public String getStatus() {
         return status;

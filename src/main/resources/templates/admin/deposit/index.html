@@ -7,6 +7,50 @@
     <meta charset="utf-8"/>
     <title>保证金管理</title>
     <link rel="stylesheet" href="/admin/css/style.css"/>
+    <!-- table edit -->
+    <link href="/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <script src="/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            $(".delete-obj-href").deleteFun();
+
+            $('.forfeitMoney').editable({
+                type: 'text',
+                url: '/admin/deposit/updateFM',
+                emptytext: "0",
+                title: '请输入扣除款金额',
+                validate: function (value) { //字段验证
+                    if (isNaN(value)) {
+                        return '请输入有效数字';
+                    }
+                },
+                success: function(result) {
+                    if(result == "1") {
+                        window.location.reload();
+                    } else {
+                        return "没有操作权限或其他原因，修改失败";
+                    }
+                }
+            });
+
+            $('.forfeitComments').editable({
+                type: 'textarea',
+                url: '/admin/deposit/updateFC',
+                emptytext: " ",
+                title: '请输入扣除款备注',
+                success: function(result) {
+                    if(result == "1") {
+                        window.location.reload();
+                    } else {
+                        return "没有操作权限或其他原因，修改失败";
+                    }
+                }
+            });
+        });
+    </script>
+
+
 </head>
 <body>
     <div th:fragment="content" th:remove="tag">
@@ -30,6 +74,13 @@
                         <th>姓名</th>
                         <th>身份证号</th>
                         <th>联系电话</th>
+                        <th>租车订单</th>
+                        <th>保证金</th>
+                        <th>违章罚款</th>
+                        <th>其他扣除款</th>
+                        <th>其他扣除款备注</th>
+                        <th>应退保证金</th>
+                        <th>状态</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -38,17 +89,40 @@
                         <td th:text="${obj.tenantName}"></td>
                         <td th:text="${obj.tenantSfz}"></td>
                         <td th:text="${obj.phone}"></td>
-                        <td>-</td>
+                        <td th:text="${obj.rentId}"></td>
+                        <td th:text="${obj.money} + 元"></td>
+                        <td>
+                            <span th:text="${obj.legalMoney == null ? 0.0 : obj.legalMoney}"></span>元
+                        </td>
+                        <td>
+                            <span class="forfeitMoney" th:text="${obj.forfeitMoney}" th:attr="data-pk=${obj.id}"></span>元
+                        </td>
+                        <td>
+                            <span class="forfeitComments" th:text="${obj.forfeitComments}" th:attr="data-pk=${obj.id}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${obj.returnMoney}"></span>元
+                        </td>
+                        <td>
+                            <span th:text="${obj.status == '1' ? '未退还' : '已退还'}"
+                                  th:attr="class=${obj.status == '1' ? 'label label-success arrowed-in' : 'label label-inverse arrowed-in'}"></span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <span th:if="${obj.status ne '2'}">
+                                    <a class="delete-obj-href green auth" sn="DepositController.updateStatus"
+                                       th:title="'此操作不可逆,确定退还订单【'+${obj.rentId}+'】的保证金吗？'"
+                                       th:href="'/admin/deposit/updateSt/'+${obj.id}">
+                                        <i class="icon-pencil bigger-130"></i>退还
+                                    </a>
+                                </span>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="4"><div th:include="fragments/page :: pager" th:remove="tag"></div></td>
-                    </tr>
-                </tfoot>
             </table>
+            <div th:include="fragments/page :: pager" th:remove="tag"></div>
         </div>
-
     </div>
 </body>
 </html>

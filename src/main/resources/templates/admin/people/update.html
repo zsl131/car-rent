@@ -5,14 +5,18 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorator="fragments/adminModel">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
+
+	<script type="text/javascript" src="/pub-js/identityValid.js"></script>
+	<script type="text/javascript" src="/admin/myself/people-add.js"></script>
+	<script type="text/javascript" src="/pub-js/camera.js"></script>
 <title>修改客户</title>
 </head>
 <body>
 	<div th:fragment="content" th:remove="tag">
 		<div class="header lighter smaller blue">
-			<h3><i class="icon-plus"></i>&nbsp;修改客户 </h3>
+			<h3><i class="icon-pencil"></i>&nbsp;修改客户 </h3>
 			<div th:replace="admin/people/nav :: content" th:remove="tag"></div>
 		</div>
 
@@ -27,7 +31,7 @@
 			<div class="form-group form-group-lg">
 				<div class="input-group input-group-lg">
 					<div class="input-group-addon">身份证号</div>
-					<input type="text" name="identity" th:value="${people.identity}" class="form-control" id="identity" placeholder="请输入身份证号"/>
+					<input type="text" name="identity" readonly="readonly" th:value="${people.identity}" class="form-control" id="identity" placeholder="请输入身份证号"/>
 				</div>
 			</div>
 
@@ -53,45 +57,53 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="row">
+				<div class="col-md-4 text-center">
+					<div class="upload-info-div">
+						<div th:if="${people.idenPic eq NULL or people.idenPic eq ''}" th:remove="tag">
+							上传身份证<b class="remind-red">正面</b>照片
+						</div>
+						<div th:unless="${people.idenPic eq NULL or people.idenPic eq ''}" th:remove="tag">
+							<a th:href="${people.idenPic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${people.idenPic}"/></a>
+						</div>
+					</div>
+					<input type="hidden" class="need-input-val" th:value="${people.idenPic}" name="idenPic"/>
+					<button type="button" class="btn btn-info" onclick="myupload('上传身份证正面', this)">上传身份证（正面）</button>
+				</div>
+
+				<div class="col-md-4 text-center">
+					<div class="upload-info-div">
+						<div th:if="${people.idenBackPic eq NULL or people.idenBackPic eq ''}" th:remove="tag">
+							上传身份证<b class="remind-red">反面</b>照片
+						</div>
+						<div th:unless="${people.idenBackPic eq NULL or people.idenBackPic eq ''}" th:remove="tag">
+							<a th:href="${people.idenBackPic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${people.idenBackPic}"/></a>
+						</div>
+					</div>
+					<input type="hidden" class="need-input-val" th:value="${people.idenBackPic}" name="idenBackPic"/>
+					<button type="button" class="btn btn-info" onclick="myupload('上传身份证反面', this)">上传身份证（反面）</button>
+				</div>
+
+				<div class="col-md-4 text-center">
+					<div class="upload-info-div">
+						<div th:if="${people.drivePic eq NULL or people.drivePic eq ''}" th:remove="tag">
+							上传<b class="remind-red">驾驶证</b>照片
+						</div>
+						<div th:unless="${people.drivePic eq NULL or people.drivePic eq ''}" th:remove="tag">
+							<a th:href="${people.drivePic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${people.drivePic}"/></a>
+						</div>
+					</div>
+					<input type="hidden" class="need-input-val" th:value="${people.drivePic}" name="drivePic"/>
+					<button type="button" class="btn btn-info" onclick="myupload('上传驾驶证', this)">上传驾驶证</button>
+				</div>
+			</div>
+
+			<input type="hidden" name="sex" th:value="${people.sex}"/>
+			<input type="hidden" name="age" th:value="${people.age}"/>
 			<input type="hidden" name="token" th:value="${session.token}"/>
 			<button type="submit" class="btn btn-primary">确定提交</button>
 		</form>
-		<script type="text/javascript">
-				jQuery(function($) {
-					$('#dataForm').bootstrapValidator({
-		//		        live: 'disabled',
-						message: '验证不通过',
-						feedbackIcons: {
-							valid: 'glyphicon glyphicon-ok',
-							invalid: 'glyphicon glyphicon-remove',
-							validating: 'glyphicon glyphicon-refresh'
-						},
-						fields: {
-							name: {
-								validators: {
-									notEmpty: {
-										message: '请输入客户姓名'
-									}
-								}
-							},
-							identity: {
-								validators: {
-									notEmpty: {
-										message: '请输入身份证号'
-									}
-								}
-							},
-							phone: {
-								validators: {
-									notEmpty: {
-										message: '请输入手机号码'
-									}
-								}
-							}
-						}
-					});
-				});
-			</script>
 	</div>
 </body>
 </html>

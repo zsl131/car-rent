@@ -41,6 +41,7 @@
 							<div th:each="tl : ${brandList}" th:remove="tag">
 								<input type="radio" class="my-radio-style" name="brandId" th:value="${tl.id}" th:attr="data-labelauty=${tl.name}"/>
 							</div>
+							<a href="/admin/carBrand/add" class="icon-plus">新增</a>
 						</div>
 						<input type="text" name="ppxl" th:value="${carInfo.ppxl}" class="form-control" placeholder="请输入品牌系列，如：品牌选择大众时，则可输入：迈腾、朗逸、捷达……"/>
 					</div>

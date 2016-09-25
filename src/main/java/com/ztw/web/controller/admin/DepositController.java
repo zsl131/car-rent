@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 保证金管理controller
@@ -40,6 +38,69 @@ public class DepositController {
         model.addAttribute("datas", datas);
         model.addAttribute("tenantSfz", tenantSfz);
         return "admin/deposit/index";
+    }
+
+    @AdminAuth(name="返还保证金", orderNum=2, icon="icon-pencil", type="2")
+    @RequestMapping(value = "/updateSt/{id}", method = RequestMethod.POST)
+    public @ResponseBody String updateStatus(@PathVariable Integer id) {
+        try {
+            depositService.updateStatus(id);
+            return "1";
+        } catch (Exception e) {
+            return "0";
+        }
+    }
+
+    /**
+     * 修改其他扣除金额
+     * @param id
+     * @param forfeitMoney
+     * @return
+     */
+    @AdminAuth(name="其他扣除金额", orderNum = 3, type = "2")
+    @RequestMapping(value = "/updateFM", method = RequestMethod.POST)
+    public @ResponseBody String updateForfeitM(@RequestParam(value = "value") String forfeitMoney, @RequestParam(value = "pk") Integer id) {
+        Double dMoney;
+        try {
+            if(forfeitMoney.equals("")) {
+                dMoney = 0.0;
+            } else {
+                dMoney = Double.parseDouble(forfeitMoney);
+            }
+        } catch (NumberFormatException e) {
+            return "0";
+        }
+
+        Deposit existDeposit = depositService.findById(id);
+        Double existForfeitMoney = existDeposit.getForfeitMoney();
+        if(existForfeitMoney == null) {
+            existForfeitMoney = 0.0;
+        }
+        Double returnMoney = existDeposit.getReturnMoney() + existForfeitMoney - dMoney;
+
+        try {
+            depositService.updateFM(id, dMoney, returnMoney);
+            return "1";
+        } catch (Exception e) {
+            return "0";
+        }
+    }
+
+    /**
+     * 修改其他扣除金额备注
+     * @param id
+     * @param forfeitComments
+     * @return
+     */
+    @AdminAuth(name="其他扣除金额备注", orderNum = 4, type = "2")
+    @RequestMapping(value = "/updateFC", method = RequestMethod.POST)
+    public @ResponseBody String updateForfeitC(@RequestParam(value = "pk") Integer id, @RequestParam(value = "value") String forfeitComments) {
+        try {
+            depositService.updateFC(id, forfeitComments);
+            return "1";
+        } catch (Exception e) {
+            return "0";
+        }
     }
 
 }

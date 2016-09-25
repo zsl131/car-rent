@@ -45,6 +45,7 @@
 					<div class="input-group-addon">车辆品牌</div>
 					<div class="form-control form-inline">
 						<p th:text="${carInfo.brandName}+${carInfo.ppxl}" th:remove="tag"></p>
+						<b class="red" th:text="${carInfo.rjj} + ' 元/天 '"></b>
 					</div>
 				</div>
 			</div>
@@ -165,7 +166,7 @@
 				</div>
 			</div>
 
-			<button type="button" onclick="history.back(-1)" class="btn btn-primary">返回上级</button>
+			<button type="button" onclick="history.back(-1)" class="btn btn-default">返回上级</button>
 		</div>
 	</body>
 </html>

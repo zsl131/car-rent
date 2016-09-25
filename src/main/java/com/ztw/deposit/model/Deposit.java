@@ -38,17 +38,27 @@ public class Deposit {
     /**
      * 保证金数额，单位：元
      */
-    private Integer money;
+    private Double money;
 
     /**
-     * 记录在租车期间的违章罚款
+     * 违章罚款
      */
-    private Integer forfeitMoney;
+    private Double legalMoney;
+
+    /**
+     * 其他扣除款项
+     */
+    private Double forfeitMoney;
+
+    /**
+     * 其他扣除款项备注
+     */
+    private String forfeitComments;
 
     /**
      * 记录实际退还的保证金
      */
-    private Integer returnMoney;
+    private Double returnMoney;
 
     /**
      * 保证金交纳开始日，也就是取车的日期
@@ -113,27 +123,27 @@ public class Deposit {
         this.rentId = rentId;
     }
 
-    public Integer getMoney() {
+    public Double getMoney() {
         return money;
     }
 
-    public void setMoney(Integer money) {
+    public void setMoney(Double money) {
         this.money = money;
     }
 
-    public Integer getForfeitMoney() {
+    public Double getForfeitMoney() {
         return forfeitMoney;
     }
 
-    public void setForfeitMoney(Integer forfeitMoney) {
+    public void setForfeitMoney(Double forfeitMoney) {
         this.forfeitMoney = forfeitMoney;
     }
 
-    public Integer getReturnMoney() {
+    public Double getReturnMoney() {
         return returnMoney;
     }
 
-    public void setReturnMoney(Integer returnMoney) {
+    public void setReturnMoney(Double returnMoney) {
         this.returnMoney = returnMoney;
     }
 
@@ -167,5 +177,21 @@ public class Deposit {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Double getLegalMoney() {
+        return legalMoney;
+    }
+
+    public void setLegalMoney(Double legalMoney) {
+        this.legalMoney = legalMoney;
+    }
+
+    public String getForfeitComments() {
+        return forfeitComments;
+    }
+
+    public void setForfeitComments(String forfeitComments) {
+        this.forfeitComments = forfeitComments;
     }
 }

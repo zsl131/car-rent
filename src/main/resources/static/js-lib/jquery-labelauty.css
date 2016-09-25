@@ -21,8 +21,8 @@ input.labelauty { display: none !important; }
 input.labelauty + label
 {
 	display: inline;
-	font-size: 11px;
-	padding: 7px 5px;
+	font-size: 14px;
+	padding: 10px 6px;
 	background-color: #efefef;
 	color: #b3b3b3;
 	cursor: pointer;
@@ -30,7 +30,6 @@ input.labelauty + label
 	border-radius: 3px 3px 3px 3px;
 	-moz-border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
-
 
 	transition: background-color 0.25s;
 	-moz-transition: background-color 0.25s;

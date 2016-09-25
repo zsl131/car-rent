@@ -19,7 +19,7 @@
 <body>
 	<div th:fragment="content" th:remove="tag">
 		<div class="header lighter smaller blue">
-			<h3><i class="icon-plus"></i>&nbsp;修改车辆</h3>
+			<h3><i class="icon-pencil"></i>&nbsp;修改车辆</h3>
 			<div th:replace="admin/car/nav :: content" th:remove="tag"></div>
 		</div>
 
@@ -58,14 +58,15 @@
 					<div class="form-control">
 						<input type="radio" name="status" value="1" th:checked="${car.status == '1'}?'checked'" data-labelauty="在库"/>
 						<input type="radio" name="status" value="2" th:checked="${car.status == '2'}?'checked'" data-labelauty="已租"/>
-						<input type="radio" name="status" value="3" th:checked="${car.status == '3'}?'checked'" data-labelauty="维修"/>
-						<input type="radio" name="status" value="10" th:checked="${car.status == '10'}?'checked'" data-labelauty="报废"/>
+						<input th:if="${car.status eq '1'}" type="radio" name="status" value="3" th:checked="${car.status == '3'}?'checked'" data-labelauty="维修"/>
+						<input th:if="${car.status eq '1'}" type="radio" name="status" value="10" th:checked="${car.status == '10'}?'checked'" data-labelauty="报废"/>
 					</div>
 				</div>
 			</div>
 
 			<input type="hidden" name="token" th:value="${session.token}"/>
 			<button type="submit" class="btn btn-primary">确定提交</button>
+			<button type="button" class="btn btn-default" onclick="javascript:history.back(-1)">返回上级</button>
 		</form>
 		<script type="text/javascript" src="/admin/valid/car-valid.js"></script>
 	</div>

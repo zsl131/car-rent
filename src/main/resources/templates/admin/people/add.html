@@ -9,15 +9,25 @@
 		<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
 		<script type="text/javascript" src="/pub-js/identityValid.js"></script>
 		<script type="text/javascript" src="/admin/myself/people-add.js"></script>
+		<script type="text/javascript" src="/pub-js/camera.js"></script>
+		<script type="text/javascript" src="/pub-js/reader-idr210.js"></script>
+
+		<script type="text/javascript">
+
+		</script>
 		<title>添加客户</title>
 	</head>
 	<body>
 		<div th:fragment="content" th:remove="tag">
+
 			<div class="header lighter smaller blue">
 				<h3><i class="icon-plus"></i>&nbsp;添加客户 </h3>
 				<div th:replace="admin/people/nav :: content" th:remove="tag"></div>
 			</div>
-
+			<div style="padding-bottom:10px;">
+				<object classid="clsid:5EB842AE-5C49-4FD8-8CE9-77D4AF9FD4FF" id="IdrControl1" width="0" height="0" ></object>
+				<button class="btn btn-danger" id="read-identity"><i class="fa fa-credit-card"></i> 使用身份证阅读器自动读取身份信息</button>
+			</div>
 			<form method="POST" th:object="${people}" id="dataForm">
 				<div class="form-group form-group-lg">
 					<div class="input-group input-group-lg">
@@ -55,47 +65,39 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-md-4 text-center">
+						<div class="upload-info-div">
+							上传身份证<b class="remind-red">正面</b>照片
+						</div>
+						<input type="hidden" class="need-input-val" name="idenPic"/>
+						<button type="button" class="btn btn-info" id="id-photo" onclick="myupload('上传身份证正面', this)">上传身份证（正面）</button>
+					</div>
+
+					<div class="col-md-4 text-center">
+						<div class="upload-info-div">
+							上传身份证<b class="remind-red">反面</b>照片
+						</div>
+						<input type="hidden" class="need-input-val" name="idenBackPic"/>
+						<button type="button" class="btn btn-info" onclick="myupload('上传身份证反面', this)">上传身份证（反面）</button>
+					</div>
+
+					<div class="col-md-4 text-center">
+						<div class="upload-info-div">
+							上传<b class="remind-red">驾驶证</b>照片
+						</div>
+						<input type="hidden" class="need-input-val" name="drivePic"/>
+						<button type="button" class="btn btn-info" onclick="myupload('上传驾驶证', this)">上传驾驶证</button>
+					</div>
+				</div>
+
 				<input id="sex" name="sex" type="hidden" th:value="${people.sex}"/>
 				<input id="age" name="age" type="hidden" th:value="${people.age}"/>
 				<input type="hidden" name="token" th:value="${session.token}"/>
 				<button type="submit" class="btn btn-primary">确定提交</button>
 			</form>
-			<script type="text/javascript">
-				jQuery(function($) {
-					$('#dataForm').bootstrapValidator({
-		//		        live: 'disabled',
-						message: '验证不通过',
-						feedbackIcons: {
-							valid: 'glyphicon glyphicon-ok',
-							invalid: 'glyphicon glyphicon-remove',
-							validating: 'glyphicon glyphicon-refresh'
-						},
-						fields: {
-							name: {
-								validators: {
-									notEmpty: {
-										message: '请输入客户姓名'
-									}
-								}
-							},
-							identity: {
-								validators: {
-									notEmpty: {
-										message: '请输入身份证号'
-									}
-								}
-							},
-							phone: {
-								validators: {
-									notEmpty: {
-										message: '请输入手机号码'
-									}
-								}
-							}
-						}
-					});
-				});
-			</script>
+
 		</div>
 	</body>
 </html>
