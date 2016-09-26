@@ -131,7 +131,7 @@ public class WeiXinController {
         String result = WeiXinMenuTool.createWeiXinMenuJson(
                 BeanFactoryContext.getAccessToken(), WeixinUtil.createWeiXinMenu(weiXinMenuService));
         Message meg = JSON.parseObject(result,Message.class);
-        if(meg.getErrcode().equals("ok")){
+        if(meg.getErrmsg().equals("ok")){
             return "success";
         }else{
             return "错误代码："+meg.getErrcode();

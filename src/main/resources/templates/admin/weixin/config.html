@@ -13,7 +13,7 @@
 					$("#getAccessToken").click(function () {
 						$.post("/admin/weixin/getAccessToken",{},function (e) {
 							if(e="success"){
-								window.location.href="/admin/weixin/config";
+								window.location.reload();
 							};
 						});
 					});
