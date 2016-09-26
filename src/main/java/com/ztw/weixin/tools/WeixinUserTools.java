@@ -28,7 +28,7 @@ public class WeixinUserTools {
         if(user!=null) {return user;}
         if(openid==null || "".equals(openid)) {return null;}
         user = weixinService.findByOpenId(openid);
-        if(user==null) {user = new WeixinUser(); user.setBindingDate(new Date());}
+        if(user==null) {user = new WeixinUser(); user.setIsAdmin(0); user.setBindingDate(new Date());}
         user.setBindingStatus(1);
         user.setOpenId(openid);
 

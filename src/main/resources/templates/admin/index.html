@@ -150,6 +150,32 @@
             <div class="col-md-12">
                 <div class="row-fluid">
                     <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
+                        <div class="dashboard-stat color3">
+                            <div class="visual"><i class="fa fa-users"></i></div>
+                            <div class="details">
+                                <div class="number" th:text="${wxUserCount}">-</div>
+                                <div class="desc">微信用户数量</div>
+                            </div>
+                            <a class="more" href="/admin/weixin/list">
+                                查看详情 <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
+                        <div class="dashboard-stat color2">
+                            <div class="visual"><i class="fa fa-comments"></i></div>
+                            <div class="details">
+                                <div class="number" th:text="${wxMessageCount}">-</div>
+                                <div class="desc">微信消息数量</div>
+                            </div>
+                            <a class="more" href="/admin/weixinMessage/list">
+                                查看详情 <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
                         <div class="dashboard-stat dark-blue">
                             <div class="visual"><i class="fa fa-bell"></i></div>
                             <div class="details">

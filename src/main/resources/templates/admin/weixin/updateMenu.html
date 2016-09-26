@@ -9,7 +9,7 @@
 	<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
 	<link type="text/css" rel="stylesheet" href="/js-lib/jquery-labelauty.css"/>
 	<script type="text/javascript" src="/js-lib/jquery-labelauty.js"></script>
-	<title>添加微信菜单</title>
+	<title>修改微信菜单</title>
 	<script type="text/javascript">
 		$(function() {
 			$(':input').labelauty();
@@ -19,8 +19,8 @@
 <body>
 <div th:fragment="content" th:remove="tag">
 	<div class="header lighter smaller blue">
-		<h3><i class="icon-plus"></i>&nbsp;添加微信菜单 </h3>
-		<!--<div th:replace="admin/weixn/menuNav :: content" th:remove="tag"></div>-->
+		<h3><i class="icon-plus"></i>&nbsp;修改微信菜单 </h3>
+		<div th:replace="admin/weixin/menuNav :: content" th:remove="tag"></div>
 	</div>
 
 	<form method="POST" th:object="${weiXinMenu}" id="dataForm">
@@ -48,6 +48,7 @@
 		</div>
 		<input type="hidden" name="token" th:value="${session.token}"/>
 		<button type="submit" class="btn btn-primary">确定提交</button>
+		<button type="button" onclick="javascript:history.back(-1)" class="btn btn-default">返回上级</button>
 	</form>
 	<script type="text/javascript">
 		jQuery(function($) {
@@ -60,7 +61,7 @@
 					validating: 'glyphicon glyphicon-refresh'
 				},
 				fields: {
-					menu: {
+					name: {
 						validators: {
 							notEmpty: {
 								message: '请输入菜单名称'

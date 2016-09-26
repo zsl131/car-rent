@@ -19,8 +19,8 @@
 	<body>
 		<div th:fragment="content" th:remove="tag">
 			<div class="header lighter smaller blue">
-				<h3><i class="icon-plus"></i>&nbsp;添加微信菜单 </h3>
-				<!--<div th:replace="admin/weixn/menuNav :: content" th:remove="tag"></div>-->
+				<h3><i class="icon-plus"></i>&nbsp;添加微信菜单&nbsp;至&nbsp;<small th:text="${pmenu eq null ? '根菜单':pmenu.name}"></small></h3>
+				<div th:replace="admin/weixin/menuNav :: content" th:remove="tag"></div>
 			</div>
 
 			<form method="POST" th:object="${weiXinMenu}" id="dataForm">
@@ -41,13 +41,14 @@
 					<div class="input-group input-group-lg">
 						<div class="input-group-addon">按钮类型</div>
 						<div class="form-control">
-							<input type="radio" name="type" value="click"  th:checked="${weiXinMenu.type == 'click'}?'checked'" data-labelauty="click"/><label for="type_1"></label>
-							<input type="radio" name="type" value="view" th:checked="${weiXinMenu.type == 'view'}?'checked'" data-labelauty="view"/><label for="type_2"></label>
+							<input type="radio" name="type" value="click"  th:checked="${weiXinMenu.type == 'click'}?'checked'" data-labelauty="click"/>
+							<input type="radio" name="type" value="view" th:checked="${weiXinMenu.type == 'view'}?'checked'" data-labelauty="view"/>
 						</div>
 					</div>
 				</div>
 				<input type="hidden" name="token" th:value="${session.token}"/>
 				<button type="submit" class="btn btn-primary">确定提交</button>
+				<button type="button" onclick="javascript:history.back(-1)" class="btn btn-default">返回上级</button>
 			</form>
 			<script type="text/javascript">
 				jQuery(function($) {
@@ -60,7 +61,7 @@
 							validating: 'glyphicon glyphicon-refresh'
 						},
 						fields: {
-							menu: {
+							name: {
 								validators: {
 									notEmpty: {
 										message: '请输入菜单名称'

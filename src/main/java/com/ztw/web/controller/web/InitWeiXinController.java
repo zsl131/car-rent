@@ -7,9 +7,7 @@ import com.ztw.weixin.iservice.IWeixinUserService;
 import com.ztw.weixin.model.WeixinUser;
 import com.ztw.weixin.model.WeiXinConfig;
 import com.ztw.weixin.model.WeixinMessage;
-import com.ztw.weixin.tools.EventTools;
-import com.ztw.weixin.tools.RepeatTools;
-import com.ztw.weixin.tools.WeixinUserTools;
+import com.ztw.weixin.tools.*;
 import com.ztw.weixin.util.SecurityKit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +22,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by admin on 2016/9/21.
@@ -36,7 +35,7 @@ public class InitWeiXinController {
     private IWeiXinConfigService weiXinConfigService;
 
     @Autowired
-    private IWeixinUserService weixinService;
+    private IWeixinUserService weixinUserService;
 
     @Autowired
     private IWeixinMessageService weixinMessageService;
@@ -100,11 +99,13 @@ public class InitWeiXinController {
                     message.setType(msgType.getTextContent());
 
 //                    contentStr = message.getContent();
-                    WeixinUser wxUser = WeixinUserTools.addOrUpdateUser(request, weixinService, fromOpenid); //更新用户信息
+                    WeixinUser wxUser = WeixinUserTools.addOrUpdateUser(request, weixinUserService, fromOpenid); //更新用户信息
                     if(wxUser!=null) {
                         message.setNickname(wxUser.getNickName());
                     }
                     weixinMessageService.save(message);
+                    List<String> adminOpenid = weixinUserService.findAdmin();
+                    WeixinXmlUtil.eventRemind(adminOpenid, "微信平台有新消息", "微信消息提示", "消息内容："+content.getTextContent(), null);
                 }
 
                 if("event".equalsIgnoreCase(msgTypeStr)) { //如果是事件类型
@@ -112,16 +113,23 @@ public class InitWeiXinController {
 
                         //WeixinCookieTools.setFlag2Cookie(response);
                     } else if("subscribe".equalsIgnoreCase(event.getTextContent())) { //关注
-                        weixinService.updateStatus(fromOpenid, 1);
-                        WeixinUserTools.addOrUpdateUser(request, weixinService, fromOpenid); //添加或修改微信用户
+                        weixinUserService.updateStatus(fromOpenid, 1);
+                        WeixinUserTools.addOrUpdateUser(request, weixinUserService, fromOpenid); //添加或修改微信用户
+                        docSend = WeixinXmlUtil.createTextXml(fromOpenid, builderName, WeixinConstant.getInstance().getWeiXinConfig().getHello());
+//                        docSend = WeixinXmlUtil.createUrlXml(fromOpenid, builderName, "这里是标题部份", "http://www.baidu.com", "关注时的内容");
                     } else if("unsubscribe".equalsIgnoreCase(event.getTextContent())) { //取消关注
-                        weixinService.updateStatus(fromOpenid, 2);
+                        weixinUserService.updateStatus(fromOpenid, 2);
                     } else if("LOCATION".equalsIgnoreCase(event.getTextContent())) { //如果是获取用户地理位置
                     }
                 }
             }
+            out.println(docSend);
+            out.flush();
+            out.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            out.print(docSend);
+            out.flush();
+            out.close();
         }
     }
 }

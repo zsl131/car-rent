@@ -90,6 +90,18 @@ public class WeixinUser {
      */
     private Date createDate;
 
+    /** 是否为管理员,0:否，1：是 */
+    @Column(name = "is_admin")
+    private Integer isAdmin;
+
+    public Integer getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Integer isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
     public Integer getId() {
         return id;
     }

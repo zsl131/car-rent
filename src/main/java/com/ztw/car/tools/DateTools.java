@@ -58,4 +58,8 @@ public class DateTools {
     public static String date2Str(Date date) {
         return date2Str(date, "yyyy-MM-dd");
     }
+
+    public static String formatDate(Date date) {
+        return date2Str(date, "yyyy-MM-dd HH:mm:ss") ;
+    }
 }

@@ -4,9 +4,10 @@
     <body>
         <div th:fragment="content">
             <div class="ace-settings-container" id="ace-settings-container">
-                <ul class="pagination">
+                <ul class="pagination" th:with="pid=${#httpServletRequest.getParameter('pid')}">
                     <li><a class="auth" sn="WeiXinController.menuList" href="/admin/weixin/menuList"><span class="glyphicon glyphicon-th-list"></span>微信菜单列表</a></li>
-                    <li><a class="auth" id="createWeiXinMenu" sn="WeiXinController.createWeiXinMenu" href="javascript:void(0)"><span class="glyphicon glyphicon-th-list"></span>创建微信菜单</a></li>
+                    <li><a class="auth" sn="WeiXinController.menuList" th:href="'/admin/weixin/addMenu?pid='+${pid == null ? '' : pid}"><span class="icon-plus"></span>添加微信菜单</a></li>
+                    <li><a class="auth delete-obj-href" title="确定生成微信菜单吗？提交后可能需要几分钟才能生效！" sn="WeiXinController.createWeiXinMenu" href="/admin/weixin/createMenu"><span class="glyphicon glyphicon-th-list"></span>创建微信菜单</a></li>
                 </ul>
             </div>
         </div>

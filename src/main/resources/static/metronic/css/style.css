@@ -131,6 +131,20 @@ Dashboard stats
 .dashboard-stat.green .more { 
   background-color: #10a062;
 } 
+.dashboard-stat.color2 {
+  background-color: #b55705;
+}
+
+.dashboard-stat.color2 .more {
+  background-color: #8e4404;
+}
+.dashboard-stat.color3 {
+  background-color: #409696;
+}
+
+.dashboard-stat.color3 .more {
+  background-color: #2d6969;
+}
 
 .dashboard-stat.red {
   background-color: #e7191b;

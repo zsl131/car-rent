@@ -2,6 +2,9 @@ package com.ztw.basic.interceptor;
 
 import com.ztw.basic.iservice.IAppConfigService;
 import com.ztw.basic.model.AppConfig;
+import com.ztw.weixin.iservice.IWeiXinConfigService;
+import com.ztw.weixin.model.WeiXinConfig;
+import com.ztw.weixin.tools.WeixinConstant;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +21,9 @@ public class SystemInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private IAppConfigService appConfigService;
 
+    @Autowired
+    private IWeiXinConfigService weiXinConfigService;
+
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
@@ -31,6 +37,20 @@ public class SystemInterceptor extends HandlerInterceptorAdapter {
         if(appConfig==null) {
             appConfig = appConfigService.loadOne();
             session.setAttribute("appConfig", appConfig);
+        }
+
+        //在生成菜单时需要用到该配置文件，所以要在这里初始化
+        WeiXinConfig weiXinConfig = (WeiXinConfig) session.getAttribute("weiXinConfig");
+        if(weiXinConfig==null) {
+            weiXinConfig = WeixinConstant.getInstance().getWeiXinConfig();
+        }
+        if(weiXinConfig==null) {
+            BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+            weiXinConfigService = (IWeiXinConfigService) factory.getBean("weiXinConfigService");
+
+            weiXinConfig = weiXinConfigService.findOne(1);
+            session.setAttribute("weiXinConfig", weiXinConfig);
+            WeixinConstant.getInstance().setWeiXinConfig(weiXinConfig);
         }
         return super.preHandle(request, response, handler);
     }

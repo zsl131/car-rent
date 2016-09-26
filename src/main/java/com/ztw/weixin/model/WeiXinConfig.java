@@ -22,6 +22,30 @@ public class WeiXinConfig{
     @Column(name = "aes_key")
     private String aesKey;
 
+    /** 事件模板Id */
+    @Column(name = "event_temp_id")
+    private String eventTempId;
+
+
+    /** 用户关注时的消息提示 */
+    private String hello;
+
+    public String getHello() {
+        return hello;
+    }
+
+    public void setHello(String hello) {
+        this.hello = hello;
+    }
+
+    public String getEventTempId() {
+        return eventTempId;
+    }
+
+    public void setEventTempId(String eventTempId) {
+        this.eventTempId = eventTempId;
+    }
+
     public String getAesKey() {
         return aesKey;
     }

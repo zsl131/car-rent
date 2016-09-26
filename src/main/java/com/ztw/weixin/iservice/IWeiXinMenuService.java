@@ -19,4 +19,10 @@ public interface IWeiXinMenuService extends JpaRepository<WeiXinMenu,Integer>, J
 
     @Query("from WeiXinMenu wm where wm.pid=?1")
     public List<WeiXinMenu> findSonMenuByPid(Integer pid);
+
+    @Query("SELECT MAX(m.orderNo) FROM WeiXinMenu m WHERE m.pid IS NULL")
+    public Integer queryMaxOrderNo();
+
+    @Query("SELECT MAX(m.orderNo) FROM WeiXinMenu m WHERE m.pid=?1")
+    public Integer queryMaxOrderNo(Integer pid);
 }
