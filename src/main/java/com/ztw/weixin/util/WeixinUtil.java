@@ -40,9 +40,6 @@ public class WeixinUtil {
         return token;
     }
 
-
-
-
     public static String createWeiXinMenu(IWeiXinMenuService weiXinMenuService){
         WeiXinMenuDto wmd = new WeiXinMenuDto();
         List<Button> buttons = new ArrayList<>();
@@ -74,8 +71,4 @@ public class WeixinUtil {
         String jsonObj = JSON.toJSONString(wmd);
         return  jsonObj;
     }
-    
-
-
-
 }

@@ -33,7 +33,7 @@ Dashboard stats
   text-align: right;
   font-size: 34px;
   letter-spacing: -1px;
-  font-weight: 300;
+  font-weight: 350;
   color: #fff;
   margin-bottom: 10px;
 }
@@ -109,6 +109,20 @@ Dashboard stats
 .dashboard-stat.dark-pink .more {
   background-color: #8C2462;
 }
+.dashboard-stat.dark-blue {
+  background-color: #2861b7;
+}
+
+.dashboard-stat.dark-blue .more {
+  background-color: #1e4784;
+}
+.dashboard-stat.red2 {
+  background-color: #ef4f1f;
+}
+
+.dashboard-stat.red2 .more {
+  background-color: #c3441e;
+}
 
 .dashboard-stat.green {
   background-color: #28b779;
@@ -127,7 +141,7 @@ Dashboard stats
 } 
 
 .dashboard-stat.yellow {
-  background-color: #ffb848;
+  background-color: #e49f31;
 }
 
 .dashboard-stat.yellow .more { 

@@ -38,6 +38,7 @@ public class AppConfigController {
     @RequestMapping(value="index", method=RequestMethod.POST)
     public String index(Model model, AppConfig appConfig, HttpServletRequest request) {
         appConfigServiceImpl.addOrUpdate(appConfig);
+        request.getSession().setAttribute("appConfig", appConfig); //修改后需要修改一次Session中的值
         return "redirect:/admin/appConfig/index";
     }
 }

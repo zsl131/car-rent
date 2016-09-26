@@ -4,14 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.ztw.basic.auth.annotations.AdminAuth;
 import com.ztw.basic.auth.annotations.Token;
 import com.ztw.basic.auth.tools.TokenTools;
-import com.ztw.basic.tools.PageableTools;
-import com.ztw.basic.tools.ParamFilterTools;
+import com.ztw.basic.tools.*;
 import com.ztw.weixin.iservice.IWeiXinConfigService;
 import com.ztw.weixin.iservice.IWeiXinMenuService;
-import com.ztw.weixin.iservice.IWeixinService;
-import com.ztw.weixin.model.WeiXin;
+import com.ztw.weixin.iservice.IWeixinUserService;
+import com.ztw.weixin.model.WeixinUser;
 import com.ztw.weixin.model.WeiXinConfig;
 import com.ztw.weixin.model.WeiXinMenu;
+import com.ztw.weixin.tools.AccessTokenTools;
+import com.ztw.weixin.tools.WeixinConstant;
 import com.ztw.weixin.util.BeanFactoryContext;
 import com.ztw.weixin.util.RefreshAccessToken;
 import com.ztw.weixin.util.WeiXinMenuTool;
@@ -20,6 +21,7 @@ import com.ztw.weixin.vo.Message;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by admin on 2016/9/18.
@@ -37,7 +40,7 @@ import java.util.Date;
 public class WeiXinController {
 
     @Autowired
-    private IWeixinService weixinService;
+    private IWeixinUserService weixinService;
 
     @Autowired
     private IWeiXinConfigService weiXinConfigService;
@@ -46,10 +49,10 @@ public class WeiXinController {
     private IWeiXinMenuService weiXinMenuService;
 
 
-    @AdminAuth(name = "微信列表",orderNum = 2,icon = "icon-list")
+    @AdminAuth(name = "微信用户列表",orderNum = 2,icon = "icon-list")
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String list(Model model, HttpServletRequest request,Integer page){
-        Page<WeiXin> datas = weixinService.findAll(new ParamFilterTools<WeiXin>().buildSpecification(model,request), PageableTools.basicPage(page));
+        Page<WeixinUser> datas = weixinService.findAll(new ParamFilterTools<WeixinUser>().buildSpecification(model,request), PageableTools.basicPage(page));
         model.addAttribute("datas",datas);
         return "/admin/weixin/list";
     }
@@ -72,30 +75,32 @@ public class WeiXinController {
         if(BeanFactoryContext.getAccessToken()==null) flag =true;
         weiXinConfig.setId(1);
         weiXinConfigService.save(weiXinConfig);
+        WeixinConstant.getInstance().setWeiXinConfig(weiXinConfig); //修改后将数据放到内存中
         model.addAttribute("flag",flag);
         return "/admin/weixin/config";
     }
 
-
-    @AdminAuth(name = "获取Token",orderNum = 8,type = "2")
+   /* @AdminAuth(name = "获取Token",orderNum = 8,type = "2")
     @RequestMapping(value = "getAccessToken",method = RequestMethod.POST)
     public @ResponseBody String getAccessToken(Model model){
         String accessToken = BeanFactoryContext.getAccessToken();
         //启动定时类获取token
         if(accessToken==null||"".equals(accessToken))new RefreshAccessToken(7200,weiXinConfigService);
         return "success";
-    }
+    }*/
 
-
-    @AdminAuth(name = "微信菜单列表",orderNum = 4,icon = "icon-list")
+    @AdminAuth(name = "微信菜单列表",orderNum = 4,icon = "fa fa-cog")
     @RequestMapping(value = "menuList",method = RequestMethod.GET)
     public String menuList(Model model,Integer page,Integer pid,HttpServletRequest request){
-        Page<WeiXinMenu> datas = null;
+//        Page<WeiXinMenu> datas = null;
+        List<WeiXinMenu> datas = null;
+        Specifications<WeiXinMenu> params = null;
         if(pid==null||"".equals(pid)){
-            datas = weiXinMenuService.findAllPidIsNull(PageableTools.basicPage(page));
+            params = Specifications.where(new BaseSpecification<>( new SearchCriteria("pid", "isnull", "")));
         }else{
-            datas = weiXinMenuService.findByPid(pid,PageableTools.basicPage(page));
+            params = Specifications.where(new BaseSpecification<>( new SearchCriteria("pid", "eq", pid)));
         }
+        datas = weiXinMenuService.findAll(params, SortTools.basicSort("asc", "orderNo"));
         model.addAttribute("datas",datas);
         return "/admin/weixin/menuList";
     }
@@ -108,8 +113,6 @@ public class WeiXinController {
         model.addAttribute("pid",pid);
         return "/admin/weixin/addMenu";
     }
-
-
 
     @RequestMapping(value = "addMenu",method = RequestMethod.POST)
     @Token(flag = Token.CHECK)
@@ -129,7 +132,7 @@ public class WeiXinController {
     @RequestMapping(value = "createMenu",method = RequestMethod.POST)
     public @ResponseBody String createWeiXinMenu(Model model,HttpServletRequest request){
         String result = WeiXinMenuTool.createWeiXinMenuJson(
-                BeanFactoryContext.getAccessToken(), WeixinUtil.createWeiXinMenu(weiXinMenuService));
+                AccessTokenTools.getInstance().getAccessToken(), WeixinUtil.createWeiXinMenu(weiXinMenuService));
         Message meg = JSON.parseObject(result,Message.class);
         if(meg.getErrcode().equals("ok")){
             return "success";
@@ -151,5 +154,4 @@ public class WeiXinController {
 
         return "";
     }
-
 }

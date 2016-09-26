@@ -13,6 +13,7 @@ public class MyWebAppConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SystemInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new WeixinInterceptor()).addPathPatterns("/weixin/**", "/wx/**");
         registry.addInterceptor(new TokenInterceptor()).addPathPatterns("/**");
         registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/admin/**");
         super.addInterceptors(registry);

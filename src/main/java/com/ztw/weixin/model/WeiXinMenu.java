@@ -41,6 +41,9 @@ public class WeiXinMenu {
 
     private Date createDate;
 
+    @Column(name = "order_no")
+    private Integer orderNo;
+
     public String getKeyStr() {
         return keyStr;
     }
@@ -55,6 +58,14 @@ public class WeiXinMenu {
 
     public void setMedia_id(String media_id) {
         this.media_id = media_id;
+    }
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 
     public String getType() {

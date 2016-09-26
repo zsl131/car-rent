@@ -3,9 +3,8 @@ package com.ztw.test;
 
 import com.mashape.unirest.http.Unirest;
 import com.ztw.weixin.iservice.IWeiXinMenuService;
-import com.ztw.weixin.iservice.IWeixinService;
-import com.ztw.weixin.model.WeiXin;
-import com.ztw.weixin.util.RefreshAccessToken;
+import com.ztw.weixin.iservice.IWeixinUserService;
+import com.ztw.weixin.model.WeixinUser;
 import com.ztw.weixin.util.WeixinUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Date;
 
@@ -26,30 +24,30 @@ import java.util.Date;
 public class WeixinTest {
 
     @Autowired
-    private IWeixinService weixinService;
+    private IWeixinUserService weixinService;
 
     @Autowired
     private IWeiXinMenuService weiXinMenuService;
 
     @Test
     public void add(){
-        WeiXin weiXin = new WeiXin();
-        weiXin.setAge(18);
-        weiXin.setCreateDate(new Date());
-        weiXin.setAttentionDate(new Date());
-        weiXin.setBindingDate(new Date());
-        weiXin.setCity("昭通");
-        weiXin.setBindingStatus(1);
-        weiXin.setHeadImg("59b1f1a2-bf57-4113-80d3-6e6227e42aab.jpg");
-        weiXin.setNickName("ztt");
-        weiXin.setOpenId("59b1f1a2-bf57-4113-80d3-6e6227e42aabsdads");
-        weiXin.setPassword("59b1f1a2bf57-411380d3-6e6227e42aab");
-        weiXin.setPhone("15925099125");
-        weiXin.setPlace("云南省昭通是市昭阳区");
-        weiXin.setSex(1);
-        weiXin.setRealName("力士");
-        weiXin.setUserName("root");
-        weixinService.save(weiXin);
+        WeixinUser weixinUser = new WeixinUser();
+        weixinUser.setAge(18);
+        weixinUser.setCreateDate(new Date());
+        weixinUser.setAttentionDate(new Date());
+        weixinUser.setBindingDate(new Date());
+        weixinUser.setCity("昭通");
+        weixinUser.setBindingStatus(1);
+        weixinUser.setHeadImg("59b1f1a2-bf57-4113-80d3-6e6227e42aab.jpg");
+        weixinUser.setNickName("ztt");
+        weixinUser.setOpenId("59b1f1a2-bf57-4113-80d3-6e6227e42aabsdads");
+        weixinUser.setPassword("59b1f1a2bf57-411380d3-6e6227e42aab");
+        weixinUser.setPhone("15925099125");
+        weixinUser.setPlace("云南省昭通是市昭阳区");
+        weixinUser.setSex(1);
+        weixinUser.setRealName("力士");
+        weixinUser.setUserName("root");
+        weixinService.save(weixinUser);
     }
 
     @Test

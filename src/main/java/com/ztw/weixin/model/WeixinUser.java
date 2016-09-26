@@ -10,8 +10,8 @@ import java.util.Date;
  * Created by admin on 2016/9/18.
  */
 @Entity
-@Table(name = "t_weixin")
-public class WeiXin {
+@Table(name = "t_weixin_user")
+public class WeixinUser {
     /*
      具体字段有：
      openid,头像，昵称，所在城市，地址、性别，年龄，手机，用户名，真实姓名，密码，绑定状态,关注时间,绑定时间,创建时间
