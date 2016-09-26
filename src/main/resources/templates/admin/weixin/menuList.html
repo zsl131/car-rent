@@ -36,6 +36,7 @@
                     <tr>
                         <th>菜单名称</th>
                         <th>url</th>
+                        <th>按钮方式</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -43,6 +44,7 @@
                         <tr th:each="obj : ${datas}">
                             <td><a th:text="${obj.name}" th:href="@{/admin/weixin/menuList?pid=}+${obj.id}">菜单名称</a></td>
                             <td th:text="${obj.url}">url</td>
+                            <td th:text="${obj.type}">url</td>
                             <td>
                                 <div class="action-buttons">
                                     <a class="green auth" th:if="${obj.pid==null}" title="添加子菜单" sn="WeiXinController.addWeiXinMenu" th:href="'/admin/weixin/addMenu?pid='+${obj.id}">

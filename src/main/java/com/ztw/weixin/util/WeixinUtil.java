@@ -1,19 +1,15 @@
 package com.ztw.weixin.util;
 
 import com.alibaba.fastjson.JSON;
-import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.ztw.weixin.iservice.IWeiXinConfigService;
 import com.ztw.weixin.iservice.IWeiXinMenuService;
-import com.ztw.weixin.model.WeiXin;
 import com.ztw.weixin.model.WeiXinConfig;
 import com.ztw.weixin.model.WeiXinMenu;
 import com.ztw.weixin.vo.Button;
 import com.ztw.weixin.vo.Sub_button;
 import com.ztw.weixin.vo.WeiXinMenuDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,31 +44,32 @@ public class WeixinUtil {
 
 
     public static String createWeiXinMenu(IWeiXinMenuService weiXinMenuService){
-        List<WeiXinMenu> menuList = weiXinMenuService.findAllPidIsNull();
-        List<Button> wxdButton = new ArrayList<Button>();
-        WeiXinMenuDto wxd = new WeiXinMenuDto();
-        for(WeiXinMenu wm : menuList){
-            Button b = new Button();
-            List<Sub_button> sub_buttons =new ArrayList<Sub_button>();
-            b.setType(wm.getType());
-            b.setUrl(wm.getUrl());
-            b.setName(wm.getName());
-            List<WeiXinMenu> sonList = weiXinMenuService.findSonMenuByPid(wm.getId());
-            System.out.println("++++++++++++++++++++++++ : "+wm.getPid()+"--------------------:"+sonList.size());
-            if(sonList.size()>0){
-                for(WeiXinMenu swm : sonList){
-                    Sub_button sb = new Sub_button();
-                    sb.setName(swm.getName());
-                    sb.setType(swm.getType());
-                    sb.setUrl(swm.getUrl());
-                    sub_buttons.add(sb);
+        WeiXinMenuDto wmd = new WeiXinMenuDto();
+        List<WeiXinMenu> parentMenu = weiXinMenuService.findAllPidIsNull();
+        for(WeiXinMenu wm: parentMenu){
+            List<WeiXinMenu> sonMenu = weiXinMenuService.findSonMenuByPid(wm.getId());
+            if(sonMenu.size()>0){
+                List<Sub_button> sub_buttons = new ArrayList<>();
+                for(WeiXinMenu wxm : sonMenu){
+                    Sub_button sub_button = new Sub_button();
+                    sub_button.setUrl(wxm.getUrl());
+                    sub_button.setType(wxm.getType());
+                    sub_button.setName(wxm.getName());
+                    sub_buttons.add(sub_button);
                 }
-                b.setSub_button(sub_buttons);
+                wmd.setName(wm.getName());
+                wmd.setSub_button(sub_buttons);
+            }else{
+                List<Button> buttons = new ArrayList<>();
+                Button button = new Button();
+                button.setType(wm.getType());
+                button.setName(wm.getName());
+                button.setUrl(wm.getUrl());
+                buttons.add(button);
+                wmd.setButton(buttons);
             }
-            wxdButton.add(b);
         }
-        wxd.setButton(wxdButton);
-        String jsonObj = JSON.toJSONString(wxd);
+        String jsonObj = JSON.toJSONString(wmd);
         return  jsonObj;
     }
     

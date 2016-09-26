@@ -13,6 +13,7 @@ public class Button {
     private List<Sub_button> sub_button;
 
 
+
     public String getType() {
         return type;
     }
@@ -29,7 +30,6 @@ public class Button {
         this.name = name;
     }
 
-
     public String getUrl() {
         return url;
     }
@@ -38,11 +38,4 @@ public class Button {
         this.url = url;
     }
 
-    public List<Sub_button> getSub_button() {
-        return sub_button;
-    }
-
-    public void setSub_button(List<Sub_button> sub_button) {
-        this.sub_button = sub_button;
-    }
 }

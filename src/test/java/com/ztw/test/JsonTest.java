@@ -28,7 +28,6 @@ public class JsonTest {
         button.setUrl("https://www.baidu.com");
         buttons.add(button);
         sub_button.add(sub_buttonObj);
-        button.setSub_button(sub_button);
         weiXinMenuDto.setButton(buttons);
         String jsonObj = JSON.toJSONString(weiXinMenuDto);
         System.out.println(jsonObj);

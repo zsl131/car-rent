@@ -59,7 +59,6 @@ public class WeiXinController {
     public String weixinConfig(Model model,HttpServletRequest request){
         boolean flag = false;
         if(BeanFactoryContext.getAccessToken()==null) flag =true;
-        System.out.println("========================================="+BeanFactoryContext.getAccessToken());
         WeiXinConfig weiXinConfig = weiXinConfigService.findOne(1);
         if(weiXinConfig==null) weiXinConfig = new WeiXinConfig();
         model.addAttribute("weiXinConfig",weiXinConfig);

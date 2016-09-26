@@ -7,7 +7,14 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
+		<link type="text/css" rel="stylesheet" href="/js-lib/jquery-labelauty.css"/>
+		<script type="text/javascript" src="/js-lib/jquery-labelauty.js"></script>
 		<title>添加微信菜单</title>
+		<script type="text/javascript">
+			$(function() {
+				$(':input').labelauty();
+			});
+		</script>
 	</head>
 	<body>
 		<div th:fragment="content" th:remove="tag">
@@ -34,8 +41,8 @@
 					<div class="input-group input-group-lg">
 						<div class="input-group-addon">按钮类型</div>
 						<div class="form-control">
-							<input type="radio" name="type" value="click"  th:checked="${weiXinMenu.type == 'click'}?'checked'"/><label for="type_1">click</label>
-							<input type="radio" name="type" value="view" th:checked="${{weiXinMenu.type == 'view'}?'checked'"/><label for="type_2">view</label>
+							<input type="radio" name="type" value="click"  th:checked="${weiXinMenu.type == 'click'}?'checked'" data-labelauty="click"/><label for="type_1"></label>
+							<input type="radio" name="type" value="view" th:checked="${weiXinMenu.type == 'view'}?'checked'" data-labelauty="view"/><label for="type_2"></label>
 						</div>
 					</div>
 				</div>
