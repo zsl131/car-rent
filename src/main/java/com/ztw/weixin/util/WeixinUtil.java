@@ -45,11 +45,13 @@ public class WeixinUtil {
 
     public static String createWeiXinMenu(IWeiXinMenuService weiXinMenuService){
         WeiXinMenuDto wmd = new WeiXinMenuDto();
+        List<Button> buttons = new ArrayList<>();
         List<WeiXinMenu> parentMenu = weiXinMenuService.findAllPidIsNull();
         for(WeiXinMenu wm: parentMenu){
             List<WeiXinMenu> sonMenu = weiXinMenuService.findSonMenuByPid(wm.getId());
             if(sonMenu.size()>0){
                 List<Sub_button> sub_buttons = new ArrayList<>();
+                Button button = new Button();
                 for(WeiXinMenu wxm : sonMenu){
                     Sub_button sub_button = new Sub_button();
                     sub_button.setUrl(wxm.getUrl());
@@ -57,18 +59,18 @@ public class WeixinUtil {
                     sub_button.setName(wxm.getName());
                     sub_buttons.add(sub_button);
                 }
-                wmd.setName(wm.getName());
-                wmd.setSub_button(sub_buttons);
+                button.setName(wm.getName());
+                button.setSub_button(sub_buttons);
+                buttons.add(button);
             }else{
-                List<Button> buttons = new ArrayList<>();
                 Button button = new Button();
                 button.setType(wm.getType());
                 button.setName(wm.getName());
                 button.setUrl(wm.getUrl());
                 buttons.add(button);
-                wmd.setButton(buttons);
             }
         }
+        wmd.setButton(buttons);
         String jsonObj = JSON.toJSONString(wmd);
         return  jsonObj;
     }

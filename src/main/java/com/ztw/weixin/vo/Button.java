@@ -12,7 +12,13 @@ public class Button {
     private String url;
     private List<Sub_button> sub_button;
 
+    public List<Sub_button> getSub_button() {
+        return sub_button;
+    }
 
+    public void setSub_button(List<Sub_button> sub_button) {
+        this.sub_button = sub_button;
+    }
 
     public String getType() {
         return type;
