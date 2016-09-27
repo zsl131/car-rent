@@ -1,0 +1,34 @@
+.model-head {
+    background:#1b2b3b; height:50px; border-top:2px #eeb81a solid; padding-left:0px; padding-right:7px;
+}
+
+.model-head .text-left i  {
+    color:#FFF; font-size:45px;
+}
+
+.model-head .text-center {
+    color:#eeb81a; font-weight:bold; font-size:20px; line-height:48px;
+}
+
+.model-head .text-right i {
+    color:#FFF; font-size:40px; line-height:50px;
+}
+
+
+
+
+
+
+.wx-model-bottom {
+    background:#369; color:#FFF; height:40px; float:left;
+}
+
+.wx-model-bottom div {padding:0px; text-align:center; line-height:40px;border-left:1px #afafaf solid;}
+
+.wx-model-bottom div:first-child {
+    border-left:none;
+}
+
+.wx-model-bottom a {
+    width:100%; float:left; text-align:center; color:#FFF;
+}

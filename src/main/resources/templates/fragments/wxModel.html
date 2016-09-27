@@ -1,0 +1,49 @@
+<!DOCTYPE html >
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="wxmodel">
+
+<head th:fragment="head">
+    <title>汽车租赁</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <script type="text/javascript" src="/js-lib/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/bootstrap3/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/bootstrap3/css/bootstrap.min.css"/>
+
+    <!-- Font Awesome-->
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" />
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+
+    <link rel="stylesheet" style="text/css" href="/wx/wxModel.css"/>
+    <script type="text/javascript" src="/wx/wxModel.js"></script>
+
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+    <div class="container-fluid model-head">
+        <div class="col-xs-2 text-left"><i class="fa fa-angle-left"></i></div>
+        <div class="col-xs-8 text-center" id="head-name">汽车租赁</div>
+        <div class="col-xs-2 text-right"><i class="fa fa-home"></i></div>
+    </div>
+    <div class="container-fluid" style="padding-bottom:40px;">
+        <!-- 这里引用子页面的body内容 -->
+        <div th:include="this :: content" ></div>
+    </div>
+    <nav class="navbar-fixed-bottom wx-model-bottom" role="navigation">
+        <div class="container-fluid">
+            <div class="col-xs-4"><a href="">首页</a></div>
+            <div class="col-xs-4"><a href="">首页</a></div>
+            <div class="col-xs-4"><a href="">首页</a></div>
+        </div>
+    </nav>
+</body>
+</html>

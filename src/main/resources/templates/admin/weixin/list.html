@@ -30,8 +30,6 @@
                     <tr>
                         <th style="width:100px;">头像</th>
                         <th>昵称</th>
-                        <th>用户名</th>
-                        <th>年龄</th>
                         <th>城市</th>
                         <th>性别</th>
                         <th>状态</th>
@@ -42,8 +40,6 @@
                     <tbody>
                         <tr th:each="obj : ${datas}">
                             <td th:align="center"><a th:href="${obj.headImg}" target="_blank"><img th:src="@{${obj.headImg}}" th:width="100" /></a></td>
-                            <td th:text="${obj.nickName}">昵称</td>
-                            <td th:text="${obj.userName}">用户名</td>
                             <td th:text="${obj.age}">真实姓名</td>
                             <td th:text="${obj.city}">城市</td>
                             <td th:switch="${obj.sex}">
