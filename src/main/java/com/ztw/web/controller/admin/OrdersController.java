@@ -89,7 +89,9 @@ public class OrdersController {
             if(money==null || money<0) {money = 0f;} //如果金额为空或小于0，都将其设置为0
             if(!"0".equalsIgnoreCase(status) && !"1".equalsIgnoreCase(status)) {
                 Orders orders = ordersService.findById(id);
-                carService.updateStatusByOrders(orders.getCarId(), "1"); //当状态为已归还、已取消、已完结都将车辆设置为在库可出租状态
+                if(orders.getCarId()!=null) {
+                    carService.updateStatusByOrders(orders.getCarId(), "1"); //当状态为已归还、已取消、已完结都将车辆设置为在库可出租状态
+                }
 
                 if("10".equals(status)) { //如果是完结状态，需要设置压金对象
                     Deposit dep = depositService.findByRentId(id);

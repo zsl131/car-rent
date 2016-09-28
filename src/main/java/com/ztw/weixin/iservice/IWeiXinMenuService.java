@@ -14,10 +14,10 @@ import java.util.List;
  */
 public interface IWeiXinMenuService extends JpaRepository<WeiXinMenu,Integer>, JpaSpecificationExecutor<WeiXinMenu> {
 
-    @Query("from WeiXinMenu wm where wm.pid is null")
+    @Query("from WeiXinMenu wm where wm.pid is null order by wm.orderNo asc")
     public List<WeiXinMenu> findAllPidIsNull();
 
-    @Query("from WeiXinMenu wm where wm.pid=?1")
+    @Query("from WeiXinMenu wm where wm.pid=?1 order by wm.orderNo asc")
     public List<WeiXinMenu> findSonMenuByPid(Integer pid);
 
     @Query("SELECT MAX(m.orderNo) FROM WeiXinMenu m WHERE m.pid IS NULL")

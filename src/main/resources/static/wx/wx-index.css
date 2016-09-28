@@ -1,0 +1,17 @@
+.single-car-info {
+    margin-top:10px; border-bottom:1px #ddd solid;
+}
+.single-car-info img {
+    width:100%;
+}
+.single-car-info p.title {
+    width:100%; margin-top:0px; font-size:20px; padding:5px; line-height:25px; color:#369;
+}
+
+.single-car-info p.title span {
+    font-size:15px; color:#555;
+}
+
+.single-car-info p.title b {
+    float:right; font-size:18px; color:#ff9600;
+}

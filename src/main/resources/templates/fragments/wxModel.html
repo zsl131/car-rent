@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="/font-awesome/css/font-awesome-ie7.min.css" />
     <![endif]-->
 
+    <script type="text/javascript" src="/admin/myself/public.js"></script>
+
     <link rel="stylesheet" style="text/css" href="/wx/wxModel.css"/>
     <script type="text/javascript" src="/wx/wxModel.js"></script>
 
@@ -30,19 +32,19 @@
 </head>
 <body>
     <div class="container-fluid model-head">
-        <div class="col-xs-2 text-left"><i class="fa fa-angle-left"></i></div>
+        <div class="col-xs-2 text-left" onclick="javascript:history.back(-1)"><i class="fa fa-angle-left"></i></div>
         <div class="col-xs-8 text-center" id="head-name">汽车租赁</div>
-        <div class="col-xs-2 text-right"><i class="fa fa-home"></i></div>
+        <div class="col-xs-2 text-right"><a href="/wx/index"><i class="fa fa-home"></i></a></div>
     </div>
-    <div class="container-fluid" style="padding-bottom:40px;">
+    <div class="container-fluid" style=" padding:0px;padding-bottom:40px;">
         <!-- 这里引用子页面的body内容 -->
         <div th:include="this :: content" ></div>
     </div>
     <nav class="navbar-fixed-bottom wx-model-bottom" role="navigation">
         <div class="container-fluid">
-            <div class="col-xs-4"><a href="">首页</a></div>
-            <div class="col-xs-4"><a href="">首页</a></div>
-            <div class="col-xs-4"><a href="">首页</a></div>
+            <div class="col-xs-4"><a href="/wx/index"><i class="fa fa-gavel"></i> 我的订单</a></div>
+            <div class="col-xs-4"><a href="/wx/index"><i class="fa fa-home"></i> 首页</a></div>
+            <div class="col-xs-4"><a href=""><i class="fa fa-fire"></i> 关于我们</a></div>
         </div>
     </nav>
 </body>

@@ -6,25 +6,29 @@
       layout:decorator="fragments/wxModel">
 
     <head>
-        <title>后台首页1</title>
+        <title>汽车租赁</title>
+        <!--<script type="text/javascript" src="/wx/scroll-img/dist/swipeslider.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/wx/scroll-img/css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="/wx/scroll-img/dist/swipeslider.css"/>
+        <script type="text/javascript" src="/wx/wx-index.js"></script>-->
+        <script type="text/javascript" src="/wx/wx-add-order.js"></script>
+        <link rel="stylesheet" type="text/css" href="/wx/wx-index.css"/>
     </head>
     <body>
         <div th:fragment="content">
-            <h1>1==aa=a</h1>
-            <h1>2==aa=a</h1>
-            <h1>3==aa=a</h1>
-            <h1>4==aa=a</h1>
-            <h1>5==aa=a</h1>
-            <h1>6==aa=a</h1>
-            <h1>7==aa=a</h1>
-            <h1>8==aa=a</h1>
-            <h1>9==aa=a</h1>
-            <h1>11==aa=a</h1>
-            <h1>12==aa=a</h1>
-            <h1>13==aa=a</h1>
-            <h1>14==aa=a</h1>
-            <h1>15==aa=a</h1>
-            <h1>16==aa=a</h1>
+            <div th:each="obj : ${datas}" class="container-fluid single-car-info">
+                <img th:src="${obj.carInfo.tpdz1}"/>
+                <p >
+                    <p class="title" th:text="${obj.carInfo.brandName}+${obj.carInfo.ppxl}+'  剩'+${obj.inCount}+'辆'"></p>
+                    <p class="title">
+                        <span th:text="${obj.carInfo.clxs}+' | '+${obj.carInfo.fdjdl} + ${obj.carInfo.czlx}+' | '+${obj.carInfo.zwsl} + '座'"></span>
+                        <b class="text-right" th:text="${obj.carInfo.rjj}+' 元/天'"></b>
+                    </p>
+                    <a href="" class="btn btn-info"><i class="fa fa-eye"></i> 查看详情</a>
+                    <a href="javascript:void(0)" th:attr="carName=${obj.carInfo.brandName}+${obj.carInfo.ppxl},carId=${obj.carInfo.id}" th:if="${obj.inCount gt 0}" class="btn btn-warning add-order-href"><i class="fa fa-gavel"></i> 立即租车</a>
+                    <a href="javascript:void(0)" th:if="${obj.inCount le 0}" class="btn btn-default"><i class="fa fa-minus"></i> 车辆已租光</a>
+                </p>
+            </div>
         </div>
     </body>
 </html>

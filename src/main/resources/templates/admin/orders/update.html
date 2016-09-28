@@ -66,40 +66,40 @@
 				<div class="row">
 					<div class="col-md-4 text-center">
 						<div class="upload-info-div">
-							<div th:if="${people.idenPic eq NULL or people.idenPic eq ''}" th:remove="tag">
+							<div th:if="${people eq null or people.idenPic eq NULL or people.idenPic eq ''}" th:remove="tag">
 								上传身份证<b class="remind-red">正面</b>照片
 							</div>
-							<div th:unless="${people.idenPic eq NULL or people.idenPic eq ''}" th:remove="tag">
+							<div th:unless="${people eq null or people.idenPic eq NULL or people.idenPic eq ''}" th:remove="tag">
 								<a th:href="${people.idenPic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${people.idenPic}"/></a>
 							</div>
 						</div>
-						<input type="hidden" class="need-input-val need-check" name="idenPic" th:value="${people.idenPic}" placeholder="请上传身份证照片"/>
+						<input type="hidden" class="need-input-val need-check" name="idenPic" th:value="${people ne null ? people.idenPic:''}" placeholder="请上传身份证照片"/>
 						<button type="button" class="btn btn-info" id="id-photo" onclick="myupload('上传身份证正面', '/people/', this)">上传身份证（正面）</button>
 					</div>
 
 					<div class="col-md-4 text-center">
 						<div class="upload-info-div">
-							<div th:if="${people.idenBackPic eq NULL or people.idenBackPic eq ''}" th:remove="tag">
+							<div th:if="${people eq null or people.idenBackPic eq NULL or people.idenBackPic eq ''}" th:remove="tag">
 								上传身份证<b class="remind-red">反面</b>照片
 							</div>
-							<div th:unless="${people.idenBackPic eq NULL or people.idenBackPic eq ''}" th:remove="tag">
+							<div th:unless="${people eq null or people.idenBackPic eq NULL or people.idenBackPic eq ''}" th:remove="tag">
 								<a th:href="${people.idenBackPic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${people.idenBackPic}"/></a>
 							</div>
 						</div>
-						<input type="hidden" class="need-input-val" name="idenBackPic" th:value="${people.idenBackPic}"/>
+						<input type="hidden" class="need-input-val" name="idenBackPic" th:value="${people ne null ? people.idenBackPic:''}"/>
 						<button type="button" class="btn btn-info" onclick="myupload('上传身份证反面', '/people/', this)">上传身份证（反面）</button>
 					</div>
 
 					<div class="col-md-4 text-center">
 						<div class="upload-info-div">
-							<div th:if="${people.drivePic eq NULL or people.drivePic eq ''}" th:remove="tag">
+							<div th:if="${people eq null or people.drivePic eq NULL or people.drivePic eq ''}" th:remove="tag">
 								上传<b class="remind-red">驾驶证</b>照片
 							</div>
-							<div th:unless="${people.drivePic eq NULL or people.drivePic eq ''}" th:remove="tag">
+							<div th:unless="${people eq null or people.drivePic eq NULL or people.drivePic eq ''}" th:remove="tag">
 								<a th:href="${people.drivePic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${people.drivePic}"/></a>
 							</div>
 						</div>
-						<input type="hidden" class="need-input-val need-check" name="drivePic" th:value="${people.drivePic}" placeholder="请上传驾驶证照片"/>
+						<input type="hidden" class="need-input-val need-check" name="drivePic" th:value="${people ne null ? people.drivePic:''}" placeholder="请上传驾驶证照片"/>
 						<button type="button" class="btn btn-info" onclick="myupload('上传驾驶证', '/people/', this)">上传驾驶证</button>
 					</div>
 				</div>
