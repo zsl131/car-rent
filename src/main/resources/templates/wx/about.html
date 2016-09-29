@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/wxModel">
+
+    <head>
+        <title>汽车租赁</title>
+        <!--<script type="text/javascript" src="/wx/scroll-img/dist/swipeslider.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/wx/scroll-img/css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="/wx/scroll-img/dist/swipeslider.css"/>
+        <script type="text/javascript" src="/wx/wx-index.js"></script>-->
+        <script type="text/javascript" src="/wx/wx-add-order.js"></script>
+        <link rel="stylesheet" type="text/css" href="/wx/wx-index.css"/>
+    </head>
+    <body>
+        <div th:fragment="content">
+            <div th:each="obj : ${datas}" class="container-fluid single-car-info">
+                <img th:src="${obj.carInfo.tpdz1}"/>
+                <p>
+                    <p class="title" th:text="${obj.carInfo.brandName}+${obj.carInfo.ppxl}+'  剩'+${obj.inCount}+'辆'"></p>
+                    <p class="title">
+                        <span th:text="${obj.carInfo.clxs}+' | '+${obj.carInfo.fdjdl} + ${obj.carInfo.czlx}+' | '+${obj.carInfo.zwsl} + '座'"></span>
+                        <b class="text-right" th:text="${obj.carInfo.rjj}+' 元/天'"></b>
+                    </p>
+                    <a th:href="'/wx/detail/'+${obj.carInfo.id}" class="btn btn-info"><i class="fa fa-eye"></i> 查看详情</a>
+                    <a href="javascript:void(0)" th:attr="carName=${obj.carInfo.brandName}+${obj.carInfo.ppxl},carId=${obj.carInfo.id}" th:if="${obj.inCount gt 0}" class="btn btn-warning add-order-href"><i class="fa fa-gavel"></i> 立即租车</a>
+                    <a href="javascript:void(0)" th:if="${obj.inCount le 0}" class="btn btn-danger"><i class="fa fa-minus"></i> 车辆已租光</a>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
