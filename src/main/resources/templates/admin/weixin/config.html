@@ -57,6 +57,12 @@
 				</div>
 				<div class="form-group form-group-lg">
 					<div class="input-group">
+						<div class="input-group-addon">URL：</div>
+						<input name="url" type="text" class="form-control need-hide" th:value="${weiXinConfig.url}" placeholder="请输入链接地址" />
+					</div>
+				</div>
+				<div class="form-group form-group-lg">
+					<div class="input-group">
 						<div class="input-group-addon">事件模板Id：</div>
 						<input name="eventTempId" type="text" class="form-control need-hide" th:value="${weiXinConfig.eventTempId}" placeholder="请输入事件模板ID" />
 					</div>

@@ -10,6 +10,7 @@ import com.ztw.deposit.model.Deposit;
 import com.ztw.people.iservice.IPeopleService;
 import com.ztw.people.model.People;
 import com.ztw.weixin.iservice.IWeixinUserService;
+import com.ztw.weixin.tools.WeixinUserTools;
 import com.ztw.weixin.tools.WeixinXmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specifications;
@@ -191,7 +192,11 @@ public class AppController {
             orders.setNeedBackDay(DateTools.plusDay(days, ""));
             orders.setNeedBackLong(DateTools.plusDayByLong(days));
         }
-
+        String openid = WeixinUserTools.getOpenid(request);
+        if(openid!=null && !"".equals(openid)) {
+            orders.setOpenid(openid); //设置Openid
+            orders.setType("2"); //微信订单
+        }
 
         ordersService.save(orders);
 

@@ -9,6 +9,7 @@ import com.ztw.basic.tools.PageableTools;
 import com.ztw.basic.tools.ParamFilterTools;
 import com.ztw.weixin.iservice.IWeixinMessageService;
 import com.ztw.weixin.model.WeixinMessage;
+import com.ztw.weixin.tools.WeixinConstant;
 import com.ztw.weixin.tools.WeixinXmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -61,7 +62,7 @@ public class WeixinMessageController {
                 message.setReplyAuthor(at.getUser().getNickname()+"["+at.getUser().getUsername()+"]");
             }
             weixinMessageService.save(message);
-            WeixinXmlUtil.eventRemind("微信消息已回复", message.getOpenid(), "微信消息", "回复内容："+weixinMessage.getReply(), null);
+            WeixinXmlUtil.eventRemind("微信消息已回复", message.getOpenid(), "微信消息", "回复内容："+weixinMessage.getReply(), WeixinConstant.getInstance().getWeiXinConfig().getUrl()+"/wx/msgs");
         }
         return "redirect:/admin/weixinMessage/list";
     }

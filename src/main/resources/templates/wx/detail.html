@@ -6,28 +6,91 @@
       layout:decorator="fragments/wxModel">
 
     <head>
-        <title>汽车租赁</title>
-        <!--<script type="text/javascript" src="/wx/scroll-img/dist/swipeslider.min.js"></script>
+        <title th:text="${car.carInfo.brandName}+${car.carInfo.ppxl}+' 详情'">车辆详情</title>
+        <script type="text/javascript" src="/wx/scroll-img/dist/swipeslider.min.js"></script>
         <link rel="stylesheet" type="text/css" href="/wx/scroll-img/css/style.css"/>
         <link rel="stylesheet" type="text/css" href="/wx/scroll-img/dist/swipeslider.css"/>
-        <script type="text/javascript" src="/wx/wx-index.js"></script>-->
+
+        <script type="text/javascript" src="/wx/wx-index.js"></script>
         <script type="text/javascript" src="/wx/wx-add-order.js"></script>
+        <script type="text/javascript" src="/wx/wx-detail.js"></script>
         <link rel="stylesheet" type="text/css" href="/wx/wx-index.css"/>
+        <link rel="stylesheet" type="text/css" href="/wx/wx-detail.css"/>
     </head>
     <body>
         <div th:fragment="content">
-            <div th:each="obj : ${datas}" class="container-fluid single-car-info">
-                <img th:src="${obj.carInfo.tpdz1}"/>
-                <p >
-                    <p class="title" th:text="${obj.carInfo.brandName}+${obj.carInfo.ppxl}+'  剩'+${obj.inCount}+'辆'"></p>
-                    <p class="title">
-                        <span th:text="${obj.carInfo.clxs}+' | '+${obj.carInfo.fdjdl} + ${obj.carInfo.czlx}+' | '+${obj.carInfo.zwsl} + '座'"></span>
-                        <b class="text-right" th:text="${obj.carInfo.rjj}+' 元/天'"></b>
-                    </p>
-                    <a th:href="'/wx/detail/'+${obj.carInfo.id}" class="btn btn-info"><i class="fa fa-eye"></i> 查看详情</a>
-                    <a href="javascript:void(0)" th:attr="carName=${obj.carInfo.brandName}+${obj.carInfo.ppxl},carId=${obj.carInfo.id}" th:if="${obj.inCount gt 0}" class="btn btn-warning add-order-href"><i class="fa fa-gavel"></i> 立即租车</a>
-                    <a href="javascript:void(0)" th:if="${obj.inCount le 0}" class="btn btn-default"><i class="fa fa-minus"></i> 车辆已租光</a>
+            <article class="container-fluid" style="border:1px #FFF solid; padding:1px;">
+                <section>
+                    <figure id="responsiveness" class="swipslider" style="">
+                        <ul class="sw-slides">
+                            <li class="sw-slide">
+                                <img th:src="${car.carInfo.tpdz1}"/>
+                            </li>
+                            <li class="sw-slide">
+                                <img th:src="${car.carInfo.tpdz2}"/>
+                            </li>
+                            <li class="sw-slide">
+                                <img th:src="${car.carInfo.tpdz3}"/>
+                            </li>
+                            <li class="sw-slide">
+                                <img th:src="${car.carInfo.tpdz4}"/>
+                            </li>
+                        </ul>
+                    </figure>
+                </section>
+            </article>
+            <div class="single-car-info">
+                <p class="title" th:text="${car.carInfo.brandName}+${car.carInfo.ppxl}+'  剩'+${car.inCount}+'辆'" style="margin-top:8px;"></p>
+                <p class="title" style="margin-top:-12px;">
+                    <span th:text="${car.carInfo.clxs}+' | '+${car.carInfo.fdjdl} + ${car.carInfo.czlx}+' | '+${car.carInfo.zwsl} + '座'"></span>
+                    <span class="money"><i class="fa fa-cny"></i> <em th:text="${#numbers.formatInteger(car.carInfo.rjj, 0)}"></em> /日均</span>
+
+                    <a href="javascript:void(0)" style="margin-top:10px;width:100%;" th:attr="carName=${car.carInfo.brandName}+${car.carInfo.ppxl},carId=${car.carInfo.id}" th:if="${car.inCount gt 0}" class="btn btn-warning add-order-href"><i class="fa fa-gavel"></i> 立即租车</a>
+                    <a href="javascript:void(0)" style="margin-top:10px;width:100%;" th:if="${car.inCount le 0}" class="btn btn-danger"><i class="fa fa-minus"></i> 该车型已租满</a>
                 </p>
+            </div>
+
+            <div class="container" style="margin-top:10px;">
+                <div class="panel panel-info">
+                    <div class="panel-heading"><span th:text="${car.carInfo.ppxl}"></span>基本信息</div>
+                    <div class="panel-body info-div">
+                        <div class="col-xs-6">品牌：<b th:text="${car.carInfo.brandName}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">车系：<b th:text="${car.carInfo.ppxl}" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">年代：<b th:text="${car.carInfo.ccnd}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">配置：<b th:text="${car.carInfo.pzlx}" th:remove="tag"></b></div>
+                    </div>
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-heading"><span th:text="${car.carInfo.ppxl}"></span>配置信息</div>
+                    <div class="panel-body info-div">
+                        <div class="col-xs-6">座位数：<b th:text="${car.carInfo.zwsl} + '座'" th:remove="tag"></b></div>
+                        <div class="col-xs-6">车门数：<b th:text="${car.carInfo.cmsl}+'门'" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">燃油：<b th:text="${car.carInfo.rllx}" th:remove="tag"></b></div>
+                        <div class="col-xs-6"><b th:text="${car.carInfo.rybh}" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">排量：<b th:text="${car.carInfo.pl}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">变速箱：<b th:text="${car.carInfo.bsxlx}" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">驱动：<b th:text="${car.carInfo.qdfs}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">进气：<b th:text="${car.carInfo.jqfs}" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">天窗：<b th:text="${car.carInfo.tclx}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">油容量：<b th:text="${car.carInfo.yxrl} + '升'" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">音箱：<b th:text="${car.carInfo.yxsl}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">座椅：<b th:text="${car.carInfo.zylx}" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">倒车雷达：<b th:text="${car.carInfo.dcld}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">气囊：<b th:text="${car.carInfo.qnsl}" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">影音：<b th:text="${car.carInfo.yylx}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">GPS导航：<b th:text="${car.carInfo.gps}" th:remove="tag"></b></div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </body>

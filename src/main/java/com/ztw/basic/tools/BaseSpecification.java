@@ -37,10 +37,10 @@ public class BaseSpecification<T> implements Specification<T> {
             (Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         String opt = criteria.getOperation();
         String key = criteria.getKey();
-        String value = criteria.getValue().toString();
+        String value = criteria.getValue()==null?"":criteria.getValue().toString();
         if (opt.equalsIgnoreCase(GRATE_EQUAL)) { //大于等于
             return builder.greaterThanOrEqualTo(
-                    root.<String> get(key), value);
+                    root.get(key), value);
         } else if(opt.equalsIgnoreCase(GRATE_THEN)) { //大于
             return builder.greaterThan(root.get(key), value);
         } else if(opt.equalsIgnoreCase(LESS_EQUAL)) { //小于等于

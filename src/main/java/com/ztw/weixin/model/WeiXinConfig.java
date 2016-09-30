@@ -22,13 +22,23 @@ public class WeiXinConfig{
     @Column(name = "aes_key")
     private String aesKey;
 
+    /** 微信url */
+    private String url;
+
     /** 事件模板Id */
     @Column(name = "event_temp_id")
     private String eventTempId;
 
-
     /** 用户关注时的消息提示 */
     private String hello;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getHello() {
         return hello;

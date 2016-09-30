@@ -15,7 +15,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    /** 订单类型，0：电话订单（即由管理员下单）；1：客户订单 */
+    /** 订单类型，0：电话订单（即由管理员下单）；1：客户订单，2：微信订单*/
     private String type;
 
     /** 客户Id */
@@ -169,6 +169,17 @@ public class Orders {
     /** 信息，如：取消原因等 */
     @Lob
     private String msg;
+
+    /** 如果是微信下单则会有此值 */
+    private String openid;
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
 
     public String getMsg() {
         return msg;

@@ -12,6 +12,7 @@
     <title>订单列表</title>
     <script type="text/javascript">
         $(function() {
+            $(".delete-obj-href").deleteFun();
         });
     </script>
 </head>
@@ -48,7 +49,11 @@
                 <tbody>
                     <tr th:each="obj : ${datas}">
                         <td>
-                            <span th:text="${obj.type=='0'?'管理下单':'客户下单'}" th:remove="tag"></span>
+                            <div th:switch="${obj.type}" th:remove="tag">
+                                <span th:case="0" th:remove="tag">管理下单</span>
+                                <span th:case="1" th:remove="tag">客户下单</span>
+                                <span th:case="2" th:remove="tag">微信下单</span>
+                            </div>
                         </td>
                         <td th:text="${obj.costumerName}+'/'+${obj.costumerPhone}"></td>
                         <td th:text="${obj.brandName}+''+${obj.carSerial}+'/'+${obj.carNo}">车辆</td>
@@ -89,6 +94,10 @@
                                 <div th:if="${obj.status eq '1'}">
                                     <a href="javascript:void(0)" class="green auth update-status-cls" th:attr="objId=${obj.id},legalCount=${obj.lllegalCount}, legalMoney=${obj.lllegalMoney}, legalScore=${obj.lllegalScore},depMoney=${obj.depositMoney}" sn="OrdersController.updateStatus"><i class="icon-pencil bigger-130"></i></a>
                                 </div>
+
+                                <a th:if="${obj.status eq '0'}" class="red auth delete-obj-href" th:title="'此操作不可逆，确定取消该订单吗？'" sn="OrdersController.updateStatus" th:href="'/admin/orders/updateStatus/'+${obj.id}+'/3'">
+                                    <i class="icon-remove bigger-130"></i>
+                                </a>
 
                                 <a class="green auth" title="订单详情" sn="OrdersController.show" th:href="'/admin/orders/show/'+${obj.id}">
                                     <i class="fa fa-eye bigger-130"></i>

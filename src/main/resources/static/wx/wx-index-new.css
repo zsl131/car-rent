@@ -1,0 +1,46 @@
+html, body {
+    background:#f8f8f8;
+}
+.single-car-info {
+    margin-top:10px; border-bottom:1px #ddd solid; border:1px #ddd solid; border-width:1px 0px 1px 0px; padding:10px 0px; background:#FFF;
+}
+.single-car-info img {
+    width:100%; border:none;
+}
+.single-car-info .title-p {
+    width:100%; margin-top:0px; font-size:14px; border-bottom:1px #eaeaea solid; padding-bottom:7px; position:relative;
+}
+.single-car-info .title-p a {
+    text-decoration:none;
+}
+
+.single-car-info .title-p .flag {
+    position:absolute; right:10px; font-size:24px; top:8px; color:#dfdfdf;
+}
+
+.single-car-info .title-p p {
+    font-size:12px; color:#999; margin:0px;
+}
+.single-car-info .title-p p.name {
+    font-size:15px; color:#365e86; padding-bottom:5px;
+}
+
+.single-car-info p.title b {
+    float:right; font-size:18px; color:#ff9600;
+}
+
+.single-car-info .price {
+     padding-top:10px;
+}
+.single-car-info .price .money {
+    color:#ff8a23; font-size:12px; color:#ddd; margin-top:5px; float:left;
+}
+
+
+.single-car-info .price .money i, .single-car-info .price .money b {
+     font-size:14px; color:#ff8a23;
+}
+
+.single-car-info .price a {
+    float:right; margin-right:5px;
+}

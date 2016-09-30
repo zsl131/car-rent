@@ -65,4 +65,29 @@ public class WeixinConstant {
             return jsonObj;
         }
     }
+
+    public static synchronized String getUserOpenId(String code) {
+        try {
+            if(code!=null && !"".equals(code.trim())) {
+//			https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("appid", getInstance().getWeiXinConfig().getAppID());
+                params.put("secret", getInstance().getWeiXinConfig().getAppsecret());
+                params.put("code", code);
+                params.put("grant_type", "authorization_code");
+                String result = InternetTools.doGet("https://api.weixin.qq.com/sns/oauth2/access_token", params);
+//				System.out.println(code+"获取openid="+result);
+                if(result==null) { //如果由于网络等原因，result为空时，再获取一次
+                    result = InternetTools.doGet("https://api.weixin.qq.com/sns/oauth2/access_token", params);
+                }
+                String res = JsonTools.getJsonParam(result, "openid");
+                if(res==null || "".equals(res)) {
+                    System.out.println("===未获取openid==="+result+"===code:"+code);
+                }
+                return res;
+            } return "";
+        } catch (Exception e) {
+            return "";
+        }
+    }
 }

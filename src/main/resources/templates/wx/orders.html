@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/wxModel">
+
+    <head>
+        <title th:text="'我的订单（'+${datas.getTotalElements()}+'）'">我的订单</title>
+        <link rel="stylesheet" type="text/css" href="/wx/wx-orders.css"/>
+    </head>
+    <body>
+        <div th:fragment="content">
+            <div th:if="${datas.getTotalElements() gt 0}" th:remove="tag">
+                <div th:each="obj : ${datas}" class="container" style="padding-top:15px;">
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><i class="fa fa-clock-o"></i> 订单日期：<span th:text="${#dates.format(obj.createDate, 'yyyy-MM-dd HH:mm:ss')}" th:remove="tag"></span></div>
+                        <div class="panel-body orders-info">
+                            <div class="col-xs-12">客户：<span th:text="${obj.costumerName}"></span>（<span th:text="${obj.costumerPhone}"></span>）</div>
+
+                            <div class="col-xs-12">车型：<span th:text="${obj.brandName}+${obj.carSerial}"></span></div>
+
+                            <div class="col-xs-12">归还期限：<span th:text="${obj.needBackDay}"></span>&nbsp;&nbsp;<span th:text="'租 '+${obj.days}+' 天'"></span></div>
+                            <div class="col-xs-12">所需费用：<span th:text="${obj.needMoney}+' 元'"></span>（<span th:text="${obj.curPrice}+'元/日'"></span>）</div>
+                            <div class="col-xs-12">当前状态：
+                                <div th:switch="${obj.status}" th:remove="tag">
+                                    <span th:case="0" class="red glyphicon glyphicon-star-empty">未提车</span>
+                                    <span th:case="1" class="blue glyphicon glyphicon-ok-circle">已提车</span>
+                                    <span th:case="2" class="blue glyphicon glyphicon-ok">已归还</span>
+                                    <span th:case="3" class="red glyphicon glyphicon-minus" th:title="'取消原因：'+${obj.msg}">已取消</span>
+                                    <span th:case="10" class="green glyphicon glyphicon-star">已完结</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:include="fragments/page :: pager" style="margin:10px 10px 8px 0px;"></div>
+            </div>
+            <div th:if="${datas.getTotalElements() le 0}" class="container text-center" style="padding-top:50px">
+                <div class="alert ">
+                    <i class="fa fa-tv text-center" style="font-size:80px;"></i>
+                    <p style="font-size:22px; line-height:80px;">空空如也~~</p>
+                    <a href="/wx/index" class="btn btn-info btn-lg"><i class="fa fa-search-plus"></i> 现在找车</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -31,12 +31,22 @@ public class AppConfigController {
     @AdminAuth(name="系统配置", orderNum=1, icon="glyphicon glyphicon-cog")
     @RequestMapping(value="index", method= RequestMethod.GET)
     public String index(Model model, HttpServletRequest request) {
-        model.addAttribute("appConfig", appConfigService.loadOne());
+        AppConfig config = appConfigService.loadOne();
+        if(config.getAbout()!=null) {
+            config.setAbout(config.getAbout().replaceAll("</p><p>", "\\\n").replaceAll("<p>", "").replaceAll("</p>", ""));
+        }
+        model.addAttribute("appConfig", config);
         return "admin/appConfig/index";
     }
 
     @RequestMapping(value="index", method=RequestMethod.POST)
     public String index(Model model, AppConfig appConfig, HttpServletRequest request) {
+        String about = appConfig.getAbout();
+        about = about==null?"":about;
+        StringBuffer sb = new StringBuffer("<p>");
+        sb.append(about.replaceAll("\\n", "</p><p>")).append("</p>");
+
+        appConfig.setAbout(sb.toString());
         appConfigServiceImpl.addOrUpdate(appConfig);
         request.getSession().setAttribute("appConfig", appConfig); //修改后需要修改一次Session中的值
         return "redirect:/admin/appConfig/index";

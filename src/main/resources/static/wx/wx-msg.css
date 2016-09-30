@@ -1,0 +1,36 @@
+.single-msg {
+    border-bottom:1px #dedede solid; padding:12px 0px; margin-top:5px; margin-left:15px; margin-right:10px;
+}
+
+.single-msg .mine {
+    width:80%; float:left; text-align:left;
+}
+
+.single-msg .mine .title {
+    border-bottom:1px #c6e3ff solid; float:left; padding:0px 5px 1px 0px; color:#888;
+}
+
+.single-msg .mine .title b {
+    border:1px #c6e3ff solid; border-radius:14px;padding:3px 4px; color:#c6e3ff; margin-right:5px; margin-left:-9px;
+}
+
+.single-msg .mine .content {
+    width:100%;float:left;
+}
+
+
+.single-msg .reply {
+    width:80%; float:right; text-align:right; margin-top:10px;
+}
+
+.single-msg .reply .title {
+    border-bottom:1px #ffd4c6 solid; float:right; padding:0px 5px 1px 0px; color:#888;
+}
+
+.single-msg .reply .title b {
+    border:1px #ffd4c6 solid; border-radius:14px;padding:3px 4px; color:#ffd4c6; margin-right:5px; margin-left:-9px;
+}
+
+.single-msg .reply .content {
+    width:100%;float:right;
+}

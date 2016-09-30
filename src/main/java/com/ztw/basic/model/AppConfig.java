@@ -1,11 +1,6 @@
 package com.ztw.basic.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 系统配置
@@ -42,7 +37,19 @@ public class AppConfig {
 	
 	/** 页末联系人 */
 	private String contant;
-	
+
+	/** 关于 */
+	@Lob
+	private String about;
+
+	public String getAbout() {
+		return about;
+	}
+
+	public void setAbout(String about) {
+		this.about = about;
+	}
+
 	public String getContant() {
 		return contant;
 	}

@@ -1,20 +1,22 @@
 package com.ztw.web.controller.wx;
 
+import com.ztw.basic.iservice.IAppConfigService;
 import com.ztw.basic.tools.BaseSpecification;
 import com.ztw.basic.tools.PageableTools;
-import com.ztw.basic.tools.ParamFilterTools;
 import com.ztw.basic.tools.SearchCriteria;
-import com.ztw.car.iservice.ICarBrandService;
-import com.ztw.car.iservice.ICarInfoService;
-import com.ztw.car.iservice.ICarService;
-import com.ztw.car.iservice.ICarTypeService;
+import com.ztw.car.iservice.*;
 import com.ztw.car.model.CarInfo;
+import com.ztw.car.model.Orders;
 import com.ztw.web.controller.app.CarInfoDto;
+import com.ztw.weixin.iservice.IWeixinMessageService;
+import com.ztw.weixin.model.WeixinMessage;
+import com.ztw.weixin.tools.WeixinUserTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -40,6 +42,55 @@ public class WeixinIndexController {
 
     @Autowired
     private ICarService carService;
+
+    @Autowired
+    private IAppConfigService appConfigService;
+
+    @Autowired
+    private IOrdersService ordersService;
+
+    @Autowired
+    private IWeixinMessageService weixinMessageService;
+
+    /** 我的订单 */
+    @RequestMapping(value = "orders", method = RequestMethod.GET)
+    public String orders(Model model, Integer page, HttpServletRequest request) {
+        String openid = WeixinUserTools.getOpenid(request); //获取Openid
+        Specifications<Orders> params = Specifications.where(new BaseSpecification<>(new SearchCriteria("openid", "eq", openid)));
+        Page<Orders> datas = ordersService.findAll(params, PageableTools.basicPage(page, "desc", "createDate"));
+        model.addAttribute("datas", datas);
+        return "wx/orders";
+    }
+
+    /** 我的消息 */
+    @RequestMapping(value = "msgs", method = RequestMethod.GET)
+    public String msgs(Model model, Integer page, HttpServletRequest request) {
+        String openid = WeixinUserTools.getOpenid(request); //获取Openid
+        Specifications<WeixinMessage> params = Specifications.where(new BaseSpecification<>(new SearchCriteria("openid", "eq", openid)));
+        Page<WeixinMessage> datas = weixinMessageService.findAll(params, PageableTools.basicPage(page, "desc", "createDate"));
+        model.addAttribute("datas", datas);
+        return "wx/msgs";
+    }
+
+    /** 关于 */
+    @RequestMapping(value = "about", method = RequestMethod.GET)
+    public String about(Model model, HttpServletRequest request) {
+        model.addAttribute("appConfig", appConfigService.loadOne());
+        return "wx/about";
+    }
+
+    /** 车辆详情 */
+    @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
+    public String detail(Model model, @PathVariable Integer id, HttpServletRequest request) {
+        CarInfo carInfo = carInfoService.findOne(id);
+        if(carInfo==null) {
+            model.addAttribute("noData", true);
+        } else {
+            model.addAttribute("noData", false);
+            model.addAttribute("car", new CarInfoDto(carInfo, carService.queryCount(id, "1")));
+        }
+        return "wx/detail";
+    }
 
     /** 微信首页 */
     @RequestMapping(value = "index", method = RequestMethod.GET)

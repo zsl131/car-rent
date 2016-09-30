@@ -1,0 +1,25 @@
+#responsiveness img {
+    width:100%;
+}
+
+div.info-div div {
+    color:#757575; line-height:30px;
+}
+
+.single-car-info {
+    border-top:1px #f0f0f0 solid;
+}
+
+.single-car-info p.title {
+}
+
+.single-car-info p.title .money {
+    float:right; margin-right:5px; color:#999; font-size:13px;
+}
+
+.single-car-info .money em {
+    font-size:18px; color:#ff8a23; font-weight:bold;
+}
+.single-car-info p.title .money i {
+    font-size:16px; color:#FF8a23;
+}

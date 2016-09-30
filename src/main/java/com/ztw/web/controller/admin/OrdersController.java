@@ -20,6 +20,8 @@ import com.ztw.deposit.service.IDepositService;
 import com.ztw.legal.service.ILegalService;
 import com.ztw.people.iservice.IPeopleService;
 import com.ztw.people.model.People;
+import com.ztw.weixin.tools.WeixinConstant;
+import com.ztw.weixin.tools.WeixinXmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -107,6 +109,16 @@ public class OrdersController {
             }
             Date date = new Date();
             ordersService.updateStatus(id, status, msg, date, DateTools.date2Str(date), date.getTime());
+            Orders orders = ordersService.findOne(id);
+            if(orders!=null && orders.getOpenid()!=null && !"".equals(orders.getOpenid())) {
+                String state = "未知状态";
+                if("0".equals(status)) {state = "未提车";}
+                else if("1".equals(status)) {state = "已提车";}
+                else if("2".equals(status)) {state = "车辆已归还";}
+                else if("3".equals(status)) {state = "订单取消";}
+                else if("10".equals(status)) {state = "已完结（压金已退）";}
+                WeixinXmlUtil.eventRemind("订单状态发生变化", orders.getOpenid(), "订单提醒", "车型："+orders.getBrandName()+orders.getCarSerial()+"\\n订单状态变更为：" + state, WeixinConstant.getInstance().getWeiXinConfig().getUrl() + "/wx/orders");
+            }
             return "1";
         } catch (Exception e) {
             e.printStackTrace();

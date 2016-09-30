@@ -9,7 +9,6 @@
 	<title>网站配置管理</title>
 	<script type="text/javascript">
 		$(function() {
-			//$("#addForm").platformvalidate();
 		});
 	</script>
 	</head>
@@ -42,6 +41,12 @@
 					<div class="input-group">
 						<div class="input-group-addon">联系人：</div>
 						<input name="contant" type="text" class="form-control" th:value="${appConfig.contant}" placeholder="网站联系人" />
+					</div>
+				</div>
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">关于我们：</div>
+						<textarea class="form-control" name="about" th:text="${appConfig.about}" style="height:220px; resize:none;" placeholder="可输入“关于我们”的一些介绍"></textarea>
 					</div>
 				</div>
 				<button type="submit" class="btn btn-primary submit-update-btn">保存设置</button>

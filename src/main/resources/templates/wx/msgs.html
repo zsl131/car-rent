@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/wxModel">
+
+    <head>
+        <title th:text="'我的消息（'+${datas.getTotalElements()}+'）'">我的消息</title>
+        <link rel="stylesheet" type="text/css" href="/wx/wx-msg.css"/>
+    </head>
+    <body>
+        <div th:fragment="content">
+            <div th:each="msg : ${datas}" class="container single-msg">
+                <div class="mine">
+                    <p class="title">
+                        <b>我</b><span th:text="${#dates.format(msg.createDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                    </p>
+                    <p class="content" th:text="${msg.content}"></p>
+                </div>
+                <div class="reply" th:if="${msg.replyDate ne null}">
+                    <p class="title">
+                        <b>回</b><span th:text="${#dates.format(msg.replyDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                    </p>
+                    <p class="content" th:text="${msg.reply}"></p>
+                </div>
+            </div>
+
+            <div th:include="fragments/page :: pager" style="margin:10px 10px 8px 0px;"></div>
+        </div>
+    </body>
+</html>

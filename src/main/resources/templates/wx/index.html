@@ -12,22 +12,26 @@
         <link rel="stylesheet" type="text/css" href="/wx/scroll-img/dist/swipeslider.css"/>
         <script type="text/javascript" src="/wx/wx-index.js"></script>-->
         <script type="text/javascript" src="/wx/wx-add-order.js"></script>
-        <link rel="stylesheet" type="text/css" href="/wx/wx-index.css"/>
+        <link rel="stylesheet" type="text/css" href="/wx/wx-index-new.css"/>
     </head>
     <body>
         <div th:fragment="content">
             <div th:each="obj : ${datas}" class="container-fluid single-car-info">
-                <img th:src="${obj.carInfo.tpdz1}"/>
-                <p >
-                    <p class="title" th:text="${obj.carInfo.brandName}+${obj.carInfo.ppxl}+'  剩'+${obj.inCount}+'辆'"></p>
-                    <p class="title">
-                        <span th:text="${obj.carInfo.clxs}+' | '+${obj.carInfo.fdjdl} + ${obj.carInfo.czlx}+' | '+${obj.carInfo.zwsl} + '座'"></span>
-                        <b class="text-right" th:text="${obj.carInfo.rjj}+' 元/天'"></b>
-                    </p>
-                    <a href="" class="btn btn-info"><i class="fa fa-eye"></i> 查看详情</a>
-                    <a href="javascript:void(0)" th:attr="carName=${obj.carInfo.brandName}+${obj.carInfo.ppxl},carId=${obj.carInfo.id}" th:if="${obj.inCount gt 0}" class="btn btn-warning add-order-href"><i class="fa fa-gavel"></i> 立即租车</a>
-                    <a href="javascript:void(0)" th:if="${obj.inCount le 0}" class="btn btn-default"><i class="fa fa-minus"></i> 车辆已租光</a>
-                </p>
+                <div class="col-xs-5" style="padding:4px;"><a th:href="'/wx/detail/'+${obj.carInfo.id}+'?openid='+${#httpServletRequest.getParameter('openid')}"><img th:src="${obj.carInfo.tpdz1}"/></a></div>
+                <div class="col-xs-7" style="padding:4px;">
+                    <div class="title-p">
+                        <a th:href="'/wx/detail/'+${obj.carInfo.id}+'?openid='+${#httpServletRequest.getParameter('openid')}">
+                        <p class="name" th:text="${obj.carInfo.brandName}+${obj.carInfo.ppxl}+'  剩'+${obj.inCount}+'辆'"></p>
+                        <p th:text="${obj.carInfo.clxs}+' | '+${obj.carInfo.fdjdl} + ${obj.carInfo.czlx}+' | '+${obj.carInfo.zwsl} + '座'"></p>
+                        <span class="flag fa fa-angle-right"></span>
+                        </a>
+                    </div>
+                    <div class="price">
+                        <span class="money"><i class="fa fa-cny"></i> <b th:text="${#numbers.formatInteger(obj.carInfo.rjj, 0)}"></b> /日均</span>
+                        <a href="javascript:void(0)" th:attr="carName=${obj.carInfo.brandName}+${obj.carInfo.ppxl},carId=${obj.carInfo.id}" th:if="${obj.inCount gt 0}" class="btn btn-warning btn-sm add-order-href"><i class="fa fa-gavel"></i> 立即租车</a>
+                        <a href="javascript:void(0)" th:if="${obj.inCount le 0}" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> 已租满</a>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

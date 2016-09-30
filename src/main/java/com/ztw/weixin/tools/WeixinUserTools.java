@@ -12,11 +12,13 @@ import java.util.Date;
  */
 public class WeixinUserTools {
 
+    public static final String SESSION_OPENID = "openid";
+
     public static String getOpenid(HttpServletRequest request) {
         if(request==null) {return null;}
         String openid = request.getParameter("openid"); //先获取地址栏中的参数
         if(openid==null || "".equals(openid) || "null".equalsIgnoreCase(openid)) {
-            openid = (String) request.getSession().getAttribute("openid");
+            openid = (String) request.getSession().getAttribute(SESSION_OPENID);
         }
         return openid;
     }
