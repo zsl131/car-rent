@@ -13,9 +13,21 @@
         <script type="text/javascript" src="/wx/wx-index.js"></script>-->
         <script type="text/javascript" src="/wx/wx-add-order.js"></script>
         <link rel="stylesheet" type="text/css" href="/wx/wx-index-new.css"/>
+        <link rel="stylesheet" type="text/css" href="/wx/type-list.css"/>
     </head>
     <body>
         <div th:fragment="content">
+
+            <div class="container-fluid" th:with="typeId=${#httpServletRequest.getParameter('typeId')}">
+                <ul class="type-list-ul">
+                    <li>
+                        <a th:class="'btn btn-sm '+ ${(typeId eq null)?'btn-info':'btn-default'}" th:href="'/wx/index?openid='+${#httpServletRequest.getParameter('openid')}">全部</a>
+                    </li>
+                    <li th:each="ct : ${typeList}">
+                        <a th:class="'btn btn-sm '+ ${(typeId == ''+ct.id)?'btn-info':'btn-default'}" th:href="'/wx/index?typeId='+${ct.id}+'&amp;openid='+${#httpServletRequest.getParameter('openid')}" th:text="${ct.name}"></a>
+                    </li>
+                </ul>
+            </div>
             <div th:each="obj : ${datas}" class="container-fluid single-car-info">
                 <div class="col-xs-5" style="padding:4px;"><a th:href="'/wx/detail/'+${obj.carInfo.id}+'?openid='+${#httpServletRequest.getParameter('openid')}"><img th:src="${obj.carInfo.tpdz1}"/></a></div>
                 <div class="col-xs-7" style="padding:4px;">

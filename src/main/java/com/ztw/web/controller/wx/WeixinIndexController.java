@@ -98,7 +98,7 @@ public class WeixinIndexController {
 //        Page<CarInfo> datas = carInfoService.findAll(new ParamFilterTools<CarInfo>().buildSpecification(model, request), PageableTools.basicPage(page));
 //        model.addAttribute("datas", datas);
 //
-//        model.addAttribute("typeList", carTypeService.findAll()); //车辆类型列表
+        model.addAttribute("typeList", carTypeService.findAll()); //车辆类型列表
 //        model.addAttribute("brandList", carBrandService.findAll()); //车辆品牌列表
 
         List<CarInfoDto> res = new ArrayList<>();

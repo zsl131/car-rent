@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/wxModel">
+
+    <head>
+        <title>汽车收售</title>
+        <!--<script type="text/javascript" src="/wx/scroll-img/dist/swipeslider.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/wx/scroll-img/css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="/wx/scroll-img/dist/swipeslider.css"/>
+        <script type="text/javascript" src="/wx/wx-index.js"></script>-->
+        <script type="text/javascript" src="/wx/wx-add-order.js"></script>
+        <link rel="stylesheet" type="text/css" href="/wx/wx-index-new.css"/>
+        <link rel="stylesheet" type="text/css" href="/wx/type-list.css"/>
+    </head>
+    <body>
+        <div th:fragment="content">
+
+            <div th:each="obj : ${datas}" class="container-fluid single-car-info">
+                <div class="col-xs-5" style="padding:4px;"><a th:href="'/wx/car/detail?id='+${obj.car.id}+'&amp;openid='+${#httpServletRequest.getParameter('openid')}"><img th:src="${obj.info.tpdz1}"/></a></div>
+                <div class="col-xs-7" style="padding:4px;">
+                    <div class="title-p">
+                        <a th:href="'/wx/detail/'+${obj.info.id}+'?openid='+${#httpServletRequest.getParameter('openid')}">
+                        <p class="name" th:text="${obj.info.brandName}+${obj.info.ppxl}+${obj.car.id}"></p>
+                        <p th:text="${obj.info.clxs}+' | '+${obj.info.fdjdl} + ${obj.info.czlx}+' | '+${obj.info.zwsl} + '座'"></p>
+                        <span class="flag fa fa-angle-right"></span>
+                        </a>
+                    </div>
+                    <div class="price">
+                        <span class="money">售价：<i class="fa fa-cny"></i> <b th:text="${(obj.car.price eq null or obj.car.price le 0)?'面议':#numbers.formatInteger(obj.car.price, 0)+' 元'}"></b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

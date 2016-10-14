@@ -1,6 +1,9 @@
 package com.ztw.car.iservice;
 
+import com.ztw.car.dto.CarDto;
 import com.ztw.car.model.Car;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -43,4 +46,10 @@ public interface ICarService extends JpaRepository<Car, Integer>, JpaSpecificati
 
     @Query("SELECT COUNT(c.id) FROM Car c WHERE c.infoId=?1 AND c.status=?2")
     public Long queryCount(Integer infoId, String status);
+
+    @Query("SELECT new com.ztw.car.dto.CarDto(c, ci) FROM Car c, CarInfo ci where c.saleFlag=1 AND ci.id = c.infoId")
+    Page<CarDto> querySale(Pageable pageable);
+
+    @Query("SELECT new com.ztw.car.dto.CarDto(c, ci) FROM Car c, CarInfo ci WHERE ci.id=c.infoId AND c.id=?1")
+    CarDto queryOne(Integer id);
 }

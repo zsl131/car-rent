@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/wxModel">
+
+    <head>
+        <title th:text="${carDto.info.brandName}+${carDto.info.ppxl}+' 详情'">车辆详情</title>
+        <script type="text/javascript" src="/wx/scroll-img/dist/swipeslider.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/wx/scroll-img/css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="/wx/scroll-img/dist/swipeslider.css"/>
+
+        <script type="text/javascript" src="/wx/wx-index.js"></script>
+        <script type="text/javascript" src="/wx/wx-add-order.js"></script>
+        <script type="text/javascript" src="/wx/wx-detail.js"></script>
+        <link rel="stylesheet" type="text/css" href="/wx/wx-index.css"/>
+        <link rel="stylesheet" type="text/css" href="/wx/wx-detail.css"/>
+    </head>
+    <body>
+        <div th:fragment="content">
+            <article class="container-fluid" style="border:1px #FFF solid; padding:1px;">
+                <section>
+                    <figure id="responsiveness" class="swipslider" style="">
+                        <ul class="sw-slides">
+                            <li class="sw-slide">
+                                <img th:src="${carDto.info.tpdz1}"/>
+                            </li>
+                            <li class="sw-slide">
+                                <img th:src="${carDto.info.tpdz2}"/>
+                            </li>
+                            <li class="sw-slide">
+                                <img th:src="${carDto.info.tpdz3}"/>
+                            </li>
+                            <li class="sw-slide">
+                                <img th:src="${carDto.info.tpdz4}"/>
+                            </li>
+                        </ul>
+                    </figure>
+                </section>
+            </article>
+            <div class="single-car-info">
+                <p class="title" th:text="${carDto.info.brandName}+${carDto.info.ppxl}" style="margin-top:8px;"></p>
+                <p class="title" style="margin-top:-12px;">
+                    <span th:text="${carDto.info.clxs}+' | '+${carDto.info.fdjdl} + ${carDto.info.czlx}+' | '+${carDto.info.zwsl} + '座'"></span>
+                    <span class="money">售价：<i class="fa fa-cny"></i> <em th:text="${(carDto.car.price eq null or carDto.car.price le 0)?'面议':#numbers.formatInteger(carDto.car.price, 0)+' 元'}"></em></span>
+                </p>
+            </div>
+
+            <div class="container" style="margin-top:10px;">
+                <div class="panel panel-info">
+                    <div class="panel-heading"><span th:text="${carDto.info.ppxl}"></span>基本信息</div>
+                    <div class="panel-body info-div">
+                        <div class="col-xs-6">品牌：<b th:text="${carDto.info.brandName}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">车系：<b th:text="${carDto.info.ppxl}" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">年代：<b th:text="${carDto.info.ccnd}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">配置：<b th:text="${carDto.info.pzlx}" th:remove="tag"></b></div>
+                    </div>
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-heading"><span th:text="${carDto.info.ppxl}"></span>配置信息</div>
+                    <div class="panel-body info-div">
+                        <div class="col-xs-6">座位数：<b th:text="${carDto.info.zwsl} + '座'" th:remove="tag"></b></div>
+                        <div class="col-xs-6">车门数：<b th:text="${carDto.info.cmsl}+'门'" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">燃油：<b th:text="${carDto.info.rllx}" th:remove="tag"></b></div>
+                        <div class="col-xs-6"><b th:text="${carDto.info.rybh}" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">排量：<b th:text="${carDto.info.pl}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">变速箱：<b th:text="${carDto.info.bsxlx}" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">驱动：<b th:text="${carDto.info.qdfs}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">进气：<b th:text="${carDto.info.jqfs}" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">天窗：<b th:text="${carDto.info.tclx}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">油容量：<b th:text="${carDto.info.yxrl} + '升'" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">音箱：<b th:text="${carDto.info.yxsl}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">座椅：<b th:text="${carDto.info.zylx}" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">倒车雷达：<b th:text="${carDto.info.dcld}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">气囊：<b th:text="${carDto.info.qnsl}" th:remove="tag"></b></div>
+
+                        <div class="col-xs-6">影音：<b th:text="${carDto.info.yylx}" th:remove="tag"></b></div>
+                        <div class="col-xs-6">GPS导航：<b th:text="${carDto.info.gps}" th:remove="tag"></b></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

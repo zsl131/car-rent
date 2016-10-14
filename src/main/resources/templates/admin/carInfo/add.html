@@ -37,13 +37,16 @@
 				<div class="form-group form-group-lg">
 					<div class="input-group input-group-lg">
 						<div class="input-group-addon">车辆品牌</div>
-						<div class="form-control form-inline">
+						<div class="form-control1 form-inline" style="float:left;padding:5px; border:1px #ddd solid;">
 							<div th:each="tl : ${brandList}" th:remove="tag">
-								<input type="radio" class="my-radio-style" name="brandId" th:value="${tl.id}" th:attr="data-labelauty=${tl.name}"/>
+								<p style="float:left; margin:12px 0px;">
+									<input type="radio" class="my-radio-style" name="brandId" th:value="${tl.id}" th:attr="data-labelauty=${tl.name}+'&nbsp;'"/>
+								</p>
 							</div>
-							<a href="/admin/carBrand/add" class="icon-plus">新增</a>
+							<a href="/admin/carBrand/add" class="icon-plus" style="float:left; font-size:20px; line-height:40px;">新增</a>
+							<input type="text" name="ppxl" th:value="${carInfo.ppxl}" class="form-control" placeholder="请输入品牌系列，如：品牌选择大众时，则可输入：迈腾、朗逸、捷达……"/>
 						</div>
-						<input type="text" name="ppxl" th:value="${carInfo.ppxl}" class="form-control" placeholder="请输入品牌系列，如：品牌选择大众时，则可输入：迈腾、朗逸、捷达……"/>
+
 					</div>
 				</div>
 

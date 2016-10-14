@@ -41,8 +41,43 @@ public class Car {
     @Column(name = "frame_no")
     private String frameNo;
 
-    /** 状态，1：在库；2：已租；3：维修；10：报废 */
+    /** 状态，1：在库；2：已租；3：维修；4：已售；10：报废 */
     private String status;
+
+    /** 销售标记，1：可售；0：不可售 */
+    @Column(name = "sale_flag")
+    private Integer saleFlag;
+
+    /** 如果可出售，设计售价 */
+    private Float price;
+
+    /** 来源标识，1：新购； 2：二手购 */
+    @Column(name = "from_flag")
+    private Integer fromFlag;
+
+    public Integer getFromFlag() {
+        return fromFlag;
+    }
+
+    public void setFromFlag(Integer fromFlag) {
+        this.fromFlag = fromFlag;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public Integer getSaleFlag() {
+        return saleFlag;
+    }
+
+    public void setSaleFlag(Integer saleFlag) {
+        this.saleFlag = saleFlag;
+    }
 
     public String getCarSerial() {
         return carSerial;

@@ -53,9 +53,37 @@
 					</div>
 				</div>
 
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">车辆来源</div>
+						<div class="form-control">
+							<input type="radio" name="fromFlag" value="1" th:checked="${car.fromFlag == 1}?'checked'" data-labelauty="新购"/>
+							<input type="radio" name="fromFlag" value="2" th:checked="${car.fromFlag == 2}?'checked'" data-labelauty="二手购"/>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">是否出售</div>
+						<div class="form-control">
+							<input type="radio" name="saleFlag" value="1" th:checked="${car.saleFlag eq 1}?'checked'" data-labelauty="可出售"/>
+							<input type="radio" name="saleFlag" value="0" th:checked="${car.saleFlag eq 0}?'checked'" data-labelauty="不出售"/>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">此车售价</div>
+						<input type="text" name="price" th:value="${car.price}" onkeyup="this.value=this.value.replace(/\D/g,'')" class="form-control" placeholder="请输入此车的出售价格"/>
+					</div>
+				</div>
+
 				<input type="hidden" name="token" th:value="${session.token}"/>
 				<button type="submit" class="btn btn-primary">确定提交</button>
-				<span class="remind-red">提交后将不可以修改，请检查信息是否正确无误！</span>
+				<button type="button" class="btn btn-default" onclick="history.back(-1)">返回上级</button>
+				<span class="remind-red">提交后将车牌号码、发动机号码和车架号码不可以修改，请检查信息是否正确无误！</span>
 			</form>
 			<script type="text/javascript" src="/admin/valid/car-valid.js"></script>
 		</div>

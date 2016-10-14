@@ -1,0 +1,10 @@
+ul.type-list-ul {
+    width:100%; float:left; margin-top:18px; padding:0px;
+}
+ul.type-list-ul li {
+    list-style:none; display:inline; margin:4px; float:left;
+}
+
+ul.type-list-ul li a {
+
+}
