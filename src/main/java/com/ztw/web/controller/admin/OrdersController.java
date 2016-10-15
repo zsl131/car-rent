@@ -40,7 +40,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "admin/orders")
-@AdminAuth(name = "订单管理",psn = "应用管理",orderNum = 1,porderNum = 1, pentity = 0)
+@AdminAuth(name = "租车订单管理",psn = "应用管理",orderNum = 1,porderNum = 1, pentity = 0)
 public class OrdersController {
 
     @Autowired

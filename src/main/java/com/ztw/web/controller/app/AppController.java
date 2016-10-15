@@ -51,6 +51,9 @@ public class AppController {
     @Autowired
     private IWeixinUserService weixinUserService;
 
+    @Autowired
+    private IBuyService buyService;
+
     /** 品牌 */
     @RequestMapping(value = "brands", method = RequestMethod.GET)
     public List<CarBrand> brands(HttpServletRequest request) {
@@ -207,6 +210,82 @@ public class AppController {
           .append("\\n姓名：").append(name)
           .append("\\n请赶紧跟进吧！");
         WeixinXmlUtil.eventRemind(adminOpenid, "租车新订单通知", "租车提醒", "消息内容："+sb.toString(), null);
+
+        return new ResDto(ResDto.SUC, ResDto.OK);
+    }
+
+    /** 下买车订单 */
+    @RequestMapping(value = "addBuy", method = RequestMethod.GET)
+    public ResDto addBuy(HttpServletRequest request) {
+        String name = "", phone = "", identity = "", remind = "";
+        Integer carInfoId = 0, carId = 0;
+
+        name = request.getParameter("name"); //姓名
+        phone = request.getParameter("phone"); //手机号码
+        identity = request.getParameter("identity"); //身份证号
+        remind = request.getParameter("remind"); //备注
+
+        if(phone==null || phone.length()!=11) {return new ResDto(ResDto.ERROR, "手机号码不能为空");}
+
+        try { carInfoId = Integer.parseInt(request.getParameter("infoId"));} catch (NumberFormatException e) {}
+        try { carId = Integer.parseInt(request.getParameter("carId"));} catch (NumberFormatException e) {}
+
+        CarInfo info = null; Car car = null;
+        People p = null;
+        if(carInfoId!=null && carInfoId>0) {
+            info = carInfoService.findById(carInfoId);
+        }
+        if(identity!=null && !"".equals(identity)) {
+            p = peopleService.findByIdentity(identity);
+        }
+        if(carId!=null && carId>0) {
+            car = carService.findOne(carId);
+        }
+
+//        Orders orders = new Orders();
+        Buy buy = new Buy();
+
+        buy.setCostumerName(name);
+        buy.setCostumerIdentity(identity);
+        buy.setCostumerPhone(phone);
+
+        if(p!=null) {
+            buy.setCostumerId(p.getId());
+            buy.setCostumerAddress(p.getAddress());
+            buy.setCostumerAge(p.getAge());
+            buy.setCostumerIdentity(p.getIdentity());
+            buy.setCostumerName(p.getName());
+            buy.setCostumerSex(p.getSex());
+        }
+        if(info!=null) {
+            buy.setBrandName(info.getBrandName());
+            buy.setBrandId(info.getBrandId());
+            buy.setCarSerial(info.getPpxl());
+            buy.setCarType(info.getTypeName());
+            buy.setTypeId(info.getTypeId());
+            buy.setInfoId(info.getId());
+        }
+        if(car!=null) {
+            buy.setCarNo(car.getCarNo());
+            buy.setCarId(car.getId());
+        }
+
+        buy.setCreateDate(new Date());
+        String openid = WeixinUserTools.getOpenid(request);
+        if(openid!=null && !"".equals(openid)) {
+            buy.setOpenid(openid); //设置Openid
+        }
+
+        buyService.save(buy);
+
+        List<String> adminOpenid = weixinUserService.findAdmin();
+        StringBuffer sb = new StringBuffer();
+        sb.append("\\n车型：").append(info==null?"未选择":info.getBrandName()+info.getPpxl())
+                .append("\\n车牌：").append(car==null?"未选择":car.getCarNo())
+                .append("\\n电话：").append(phone)
+                .append("\\n姓名：").append(name)
+                .append("\\n请赶紧跟进吧！");
+        WeixinXmlUtil.eventRemind(adminOpenid, "购车新订单通知", "购车提醒", "消息内容："+sb.toString(), null);
 
         return new ResDto(ResDto.SUC, ResDto.OK);
     }

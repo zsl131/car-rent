@@ -18,6 +18,9 @@
     <body>
         <div th:fragment="content">
 
+            <div class="container-fluid" style="margin-top:18px;">
+                <a href="/wx/about" th:href="'/wx/about?openid='+${#httpServletRequest.getParameter('openid')}" class="btn btn-danger" style="width:100%;">我有二手车出售</a>
+            </div>
             <div th:each="obj : ${datas}" class="container-fluid single-car-info">
                 <div class="col-xs-5" style="padding:4px;"><a th:href="'/wx/car/detail?id='+${obj.car.id}+'&amp;openid='+${#httpServletRequest.getParameter('openid')}"><img th:src="${obj.info.tpdz1}"/></a></div>
                 <div class="col-xs-7" style="padding:4px;">

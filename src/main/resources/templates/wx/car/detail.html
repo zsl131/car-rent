@@ -12,7 +12,7 @@
         <link rel="stylesheet" type="text/css" href="/wx/scroll-img/dist/swipeslider.css"/>
 
         <script type="text/javascript" src="/wx/wx-index.js"></script>
-        <script type="text/javascript" src="/wx/wx-add-order.js"></script>
+        <script type="text/javascript" src="/wx/wx-add-buy.js"></script>
         <script type="text/javascript" src="/wx/wx-detail.js"></script>
         <link rel="stylesheet" type="text/css" href="/wx/wx-index.css"/>
         <link rel="stylesheet" type="text/css" href="/wx/wx-detail.css"/>
@@ -44,6 +44,7 @@
                 <p class="title" style="margin-top:-12px;">
                     <span th:text="${carDto.info.clxs}+' | '+${carDto.info.fdjdl} + ${carDto.info.czlx}+' | '+${carDto.info.zwsl} + '座'"></span>
                     <span class="money">售价：<i class="fa fa-cny"></i> <em th:text="${(carDto.car.price eq null or carDto.car.price le 0)?'面议':#numbers.formatInteger(carDto.car.price, 0)+' 元'}"></em></span>
+                    <a href="javascript:void(0)" style="margin-top:10px;width:100%;" th:attr="carName=${carDto.info.brandName}+${carDto.info.ppxl},carInfoId=${carDto.info.id},carId=${carDto.car.id}" class="btn btn-warning add-order-href"><i class="fa fa-gavel"></i> 我想购买此车</a>
                 </p>
             </div>
 

@@ -34,7 +34,6 @@ public class WeixinCarController {
 
     @RequestMapping(value = "detail", method = RequestMethod.GET)
     public String detail(Model model, Integer id, HttpServletRequest request) {
-        System.out.println("========"+id);
         CarDto cd = carService.queryOne(id);
         model.addAttribute("carDto", cd);
         return "wx/car/detail";

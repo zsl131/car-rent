@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="fragments/adminModel">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<script type="text/javascript" src="/validate/bootstrapValidator.js"></script>
+	<script type="text/javascript" src="/pub-js/identityValid.js"></script>
+	<script type="text/javascript" src="/admin/business/orders-add.js"></script>
+	<link type="text/css" rel="stylesheet" href="/admin/business/orders-add.css"/>
+
+	<link type="text/css" rel="stylesheet" href="/js-lib/jquery-labelauty.css"/>
+	<script type="text/javascript" src="/js-lib/jquery-labelauty.js"></script>
+
+	<script type="text/javascript" src="/pub-js/camera.js"></script>
+	<script type="text/javascript" src="/pub-js/reader-idr210.js"></script>
+
+	<title>编辑订单信息</title>
+
+	<script type="text/javascript">
+			$(function() {
+				$(':input').labelauty();
+			});
+		</script>
+</head>
+<body>
+<div th:fragment="content" th:remove="tag">
+	<div class="header lighter smaller blue">
+		<h3><i class="icon-plus"></i>&nbsp;编辑订单信息</h3>
+		<div th:replace="admin/orders/nav :: content" th:remove="tag"></div>
+	</div>
+
+	<form method="POST" th:object="${orders}" enctype="multipart/form-data" id="dataForm">
+		<div class="panel panel-info">
+			<div class="panel-heading"><b class="glyphicon glyphicon-user"></b> <b>客户信息</b> 第一步、完善客户信息。若已连接身份证阅读器可直接点击“<b>读取并查询客户信息</b>”按钮。</div>
+			<div class="panel-body">
+				<input type="hidden" name="costumerSex" th:value="${orders.costumerSex}"/>
+				<input type="hidden" name="costumerAge" th:value="${orders.costumerAge}"/>
+				<div class="input-group input-group-lg" style="width:60%;padding-bottom:10px;">
+					<input type='text' class='form-control' name='param' placeholder="输入客户身份证号"/>
+					<span class="input-group-addon search-datas-span" id="search-people-id"><b class="fa fa-search"></b> 读取并查询客户信息</span>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">客户姓名</div>
+						<input type="text" name="costumerName" th:value="${orders.costumerName}" class="form-control need-check" id="name" placeholder="请输入客户姓名"/>
+
+						<div class="input-group-addon">身份证号</div>
+						<input type="text" name="costumerIdentity" th:value="${orders.costumerIdentity}" class="form-control need-check" id="identity" placeholder="请输入身份证号"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">联系电话</div>
+						<input type="text" name="costumerPhone" th:value="${orders.costumerPhone}" class="form-control need-check" id="phone" placeholder="请输入手机号码"/>
+
+						<div class="input-group-addon">联系地址</div>
+						<input type="text" name="costumerAddress" th:value="${orders.costumerAddress}" class="form-control need-check" id="address" placeholder="请输入联系地址"/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4 text-center">
+						<div class="upload-info-div">
+							<div th:if="${people eq null or people.idenPic eq NULL or people.idenPic eq ''}" th:remove="tag">
+								上传身份证<b class="remind-red">正面</b>照片
+							</div>
+							<div th:unless="${people eq null or people.idenPic eq NULL or people.idenPic eq ''}" th:remove="tag">
+								<a th:href="${people.idenPic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${people.idenPic}"/></a>
+							</div>
+						</div>
+						<input type="hidden" class="need-input-val need-check" name="idenPic" th:value="${people ne null ? people.idenPic:''}" placeholder="请上传身份证照片"/>
+						<button type="button" class="btn btn-info" id="id-photo" onclick="myupload('上传身份证正面', '/people/', this)">上传身份证（正面）</button>
+					</div>
+
+					<div class="col-md-4 text-center">
+						<div class="upload-info-div">
+							<div th:if="${people eq null or people.idenBackPic eq NULL or people.idenBackPic eq ''}" th:remove="tag">
+								上传身份证<b class="remind-red">反面</b>照片
+							</div>
+							<div th:unless="${people eq null or people.idenBackPic eq NULL or people.idenBackPic eq ''}" th:remove="tag">
+								<a th:href="${people.idenBackPic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${people.idenBackPic}"/></a>
+							</div>
+						</div>
+						<input type="hidden" class="need-input-val" name="idenBackPic" th:value="${people ne null ? people.idenBackPic:''}"/>
+						<button type="button" class="btn btn-info" onclick="myupload('上传身份证反面', '/people/', this)">上传身份证（反面）</button>
+					</div>
+
+					<div class="col-md-4 text-center">
+						<div class="upload-info-div">
+							<div th:if="${people eq null or people.drivePic eq NULL or people.drivePic eq ''}" th:remove="tag">
+								上传<b class="remind-red">驾驶证</b>照片
+							</div>
+							<div th:unless="${people eq null or people.drivePic eq NULL or people.drivePic eq ''}" th:remove="tag">
+								<a th:href="${people.drivePic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${people.drivePic}"/></a>
+							</div>
+						</div>
+						<input type="hidden" class="need-input-val need-check" name="drivePic" th:value="${people ne null ? people.drivePic:''}" placeholder="请上传驾驶证照片"/>
+						<button type="button" class="btn btn-info" onclick="myupload('上传驾驶证', '/people/', this)">上传驾驶证</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-info">
+			<div class="panel-heading"><b class="fa fa-car"></b><b> 车辆信息</b> 第二步、输入车牌号码或车辆品牌名称或车辆品牌系列名称搜索可出租的在库车辆。</div>
+			<div class="panel-body">
+				<input name="carId" type="hidden" th:value="${orders.carId}" class="need-check" placeholder="请选择出租车辆"/>
+				<div class="input-group input-group-lg">
+					<input type='text' class='form-control' name='param' placeholder="输入车牌号码、品牌名称或品牌系列名称搜索"/>
+					<span class="input-group-addon search-datas-span" id="search-car-id"><b class="fa fa-search"></b> 搜索在库车辆</span>
+
+					<span class="input-group-addon"><b class="fa fa-car"></b> 当前选中车辆</span>
+					<span class='form-control fa fa-car' style="color:#F00;" th:text="'  '+${orders.brandName}+${orders.carSerial}+'/'+${orders.carNo}"></span>
+				</div>
+				<div id="show-cars"></div>
+			</div>
+		</div>
+		<div class="panel panel-info">
+			<div class="panel-heading"><b class="fa fa-shopping-basket"></b><b> 订单信息</b> 第三步、完善订单信息，上传相关档案图像。</div>
+			<div class="panel-body">
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">车辆单价</div>
+						<input type="text" name="price" class="form-control" th:value="${orders.curPrice}" placeholder="选择车辆后自动显示单价" readonly="readonly"/>
+
+						<div class="input-group-addon">租车天数</div>
+						<input type="text" name="days" th:value="${orders.days}" class="form-control need-check" placeholder="请输入租赁天数" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+
+						<div class="input-group-addon">应付金额</div>
+						<input type="text" name="needMoney" readonly="readonly" th:value="${orders.needMoney}" class="form-control" placeholder="输入天数自动生成"/>
+
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+
+						<div class="input-group-addon">实付金额</div>
+						<input type="text" name="money" th:value="${orders.money}" class="form-control need-check" placeholder="请输入实付金额" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+
+						<div class="input-group-addon">压金金额</div>
+						<input type="text" name="depositMoney" th:value="${orders.depositMoney}" class="form-control need-check" placeholder="请输入压金金额" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+
+						<div class="input-group-addon">是否提车</div>
+						<div class="form-control">
+							<input type="radio" name="status" value="0" th:checked="${orders.status == '0'}?'checked'" data-labelauty="未提车"/>
+							<input type="radio" name="status" value="1" th:checked="${orders.status == '1'}?'checked'" data-labelauty="已提车"/>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" style="padding-bottom:10px;">
+					<div class="col-md-4 text-center">
+						<div class="upload-info-div">
+							<div th:if="${orders.agreementPic eq NULL or orders.agreementPic eq ''}" th:remove="tag">
+								上传<b class="remind-red">车辆租赁协议</b>照片
+							</div>
+							<div th:unless="${orders.agreementPic eq NULL or orders.agreementPic eq ''}" th:remove="tag">
+								<a th:href="${orders.agreementPic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${orders.agreementPic}"/></a>
+							</div>
+						</div>
+						<input type="hidden" class="need-input-val need-check" th:value="${orders.agreementPic}" name="agreementPic" placeholder="请上传车辆租赁协议"/>
+						<button type="button" class="btn btn-info" id="" onclick="myupload('上传车辆租赁协议', '/orders/', this)">上传车辆租赁协议</button>
+					</div>
+
+					<div class="col-md-4 text-center">
+						<div class="upload-info-div">
+							<div th:if="${orders.receiptPic eq NULL or orders.receiptPic eq ''}" th:remove="tag">
+								上传<b class="remind-red">收款收据</b>照片
+							</div>
+							<div th:unless="${orders.receiptPic eq NULL or orders.receiptPic eq ''}" th:remove="tag">
+								<a th:href="${orders.receiptPic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${orders.receiptPic}"/></a>
+							</div>
+						</div>
+						<input type="hidden" class="need-input-val" name="receiptPic" th:value="${orders.receiptPic}"/>
+						<button type="button" class="btn btn-info" onclick="myupload('上传收款收据', '/orders/', this)">上传收款收据</button>
+					</div>
+
+					<div class="col-md-4 text-center">
+						<div class="upload-info-div">
+							<div th:if="${orders.depositPic eq NULL or orders.depositPic eq ''}" th:remove="tag">
+								上传<b class="remind-red">压金收据</b>照片
+							</div>
+							<div th:unless="${orders.depositPic eq NULL or orders.depositPic eq ''}" th:remove="tag">
+								<a th:href="${orders.depositPic}" title="点击查看大图" target="_blank" class="upload-img-href"><img th:src="${orders.depositPic}"/></a>
+							</div>
+						</div>
+						<input type="hidden" class="need-input-val" name="depositPic" th:value="${orders.depositPic}"/>
+						<button type="button" class="btn btn-info" onclick="myupload('上传压金收据', '/orders/', this)">上传压金收据</button>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group input-group-lg">
+						<div class="input-group-addon">备注信息</div>
+						<textarea name="remind" th:text="${orders.remind}" placeholder="请输入备注信息，可以为空" rows="10" style="width:100%;"></textarea>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<input type="hidden" name="token" th:value="${session.token}"/>
+		<button type="submit" class="btn btn-primary">确定提交</button>
+	</form>
+	<object classid="clsid:5EB842AE-5C49-4FD8-8CE9-77D4AF9FD4FF" id="IdrControl1" width="0" height="0" ></object>
+</div>
+</body>
+</html>
